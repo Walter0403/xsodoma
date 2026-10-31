@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XSodoma — Vídeos Adultos Grátis</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Reset e Base */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+:root {
+  --preto: #000000;
+  --preto-card: #0D0D0D;
+  --cinza-escuro: #1A1A1A;
+  --cinza-medio: #2A2A2A;
+  --cinza-borda: #333333;
+  --texto-principal: #FFFFFF;
+  --texto-secundario: #B3B3B3;
+  --vermelho: #E8412C;
+  --vermelho-hover: #FF5940;
+}
+
+body {
+  background: var(--preto);
+  color: var(--texto-principal);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.header {
+  background: var(--preto);
+  border-bottom: 1px solid var(--cinza-borda);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 140px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem 0.5rem 0.8rem;
+  color: var(--texto-principal);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--cinza-medio);
+}
+
+.search-input::placeholder {
+  color: var(--texto-secundario);
+}
+
+.search-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-btn:hover {
+  color: var(--texto-principal);
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--cinza-borda);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--texto-secundario);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  color: var(--texto-principal);
+}
+
+.nav-item.active {
+  color: var(--texto-principal);
+  border-bottom-color: var(--vermelho);
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.top-badge {
+  background: var(--vermelho);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+/* Filters */
+.filters {
+  background: var(--preto);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--cinza-borda);
+}
+
+.filters-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-label {
+  color: var(--texto-secundario);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.filter-select {
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 4px;
+  color: var(--texto-principal);
+  padding: 0.6rem 0.8rem;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  min-width: 150px;
+}
+
+.filter-select:hover {
+  border-color: var(--cinza-medio);
+}
+
+/* Ad Space */
+.ad-space {
+  background: var(--cinza-escuro);
+  border: 1px dashed var(--cinza-borda);
+  border-radius: 4px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 1400px;
+  position: relative;
+}
+
+.ad-label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--cinza-medio);
+  color: var(--texto-secundario);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.ad-placeholder {
+  color: var(--texto-secundario);
+  font-size: 13px;
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.video-count {
+  color: var(--texto-secundario);
+  font-size: 13px;
+  margin: 1.5rem 0 1rem;
+}
+
+/* Layout Principal */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Video Grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar .video-card {
+  display: flex;
+  gap: 0.8rem;
+  background: var(--preto-card);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.sidebar .video-card:hover {
+  background: var(--cinza-escuro);
+}
+
+.sidebar .video-thumb {
+  position: relative;
+  width: 160px;
+  height: 90px;
+  flex-shrink: 0;
+  background: var(--cinza-escuro);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.sidebar .video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sidebar .video-duration {
+  position: absolute;
+  bottom: 0.3rem;
+  right: 0.3rem;
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sidebar .video-info {
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sidebar .video-title {
+  color: var(--texto-principal);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sidebar .video-meta {
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+.video-card {
+  background: var(--preto-card);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+}
+
+.video-thumb {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: var(--cinza-escuro);
+  overflow: hidden;
+}
+
+.video-thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-rating {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  background: white;
+  border: 3px solid var(--vermelho);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #000;
+  transform: rotate(-6deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.rating-value {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.rating-max {
+  font-size: 9px;
+  color: #666;
+}
+
+.video-duration {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.video-new-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--vermelho);
+  color: white;
+  padding: 0.25rem 0.6rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.video-info {
+  padding: 1rem;
+}
+
+.video-title {
+  color: var(--texto-principal);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-meta {
+  display: flex;
+  gap: 1rem;
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.page-btn {
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  color: var(--texto-principal);
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: var(--cinza-medio);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-info {
+  color: var(--texto-secundario);
+  font-size: 14px;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Loading/Error */
+.loading, .error {
+  text-align: center;
+  padding: 3rem;
+  color: var(--texto-secundario);
+}
+
+.error {
+  color: var(--vermelho);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.97);
+  z-index: 200;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.modal.active {
+  display: block;
+}
+
+.modal-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--texto-principal);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.close-btn {
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  color: var(--texto-principal);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: var(--cinza-medio);
+}
+
+.video-player {
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.video-player iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-player::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.3) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.video-details {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 1.5rem;
+}
+
+.video-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--cinza-borda);
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  color: var(--texto-secundario);
+  font-size: 13px;
+}
+
+.stat-item strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+  margin-right: 0.3rem;
+}
+
+.video-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0;
+}
+
+.tag {
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  color: var(--texto-secundario);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tag:hover {
+  background: var(--vermelho);
+  border-color: var(--vermelho);
+  color: white;
+}
+
+/* Sidebar no Modal */
+.sidebar .video-card {
+  background: transparent;
+  border-radius: 0;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--cinza-borda);
+}
+
+.sidebar .video-card:last-child {
+  border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-top {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .logo {
+    width: 150px;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .nav {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  .filters {
+    padding: 1rem;
+  }
+
+  .filters-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .container {
+    padding: 0 1rem 3rem;
+  }
+
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .video-title {
+    font-size: 13px;
+  }
+
+  .modal {
+    padding: 1rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-top">
+    <div class="logo">
+      <img src="../uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg" alt="XSodoma">
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input
+          type="search"
+          id="searchInput"
+          class="search-input"
+          placeholder="all"
+          autocomplete="off"
+        >
+        <button id="searchBtn" class="search-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-item active" data-filter="latest">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      Mais recentes
+    </button>
+
+    <button class="nav-item" data-filter="top-weekly">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+        <polyline points="17 6 23 6 23 12"></polyline>
+      </svg>
+      Top da semana
+    </button>
+
+    <button class="nav-item" data-filter="most-popular">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+      Mais vistos
+    </button>
+
+    <button class="nav-item" data-filter="top-rated">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      Melhor avaliados
+    </button>
+
+    <button class="nav-item" data-filter="longest">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      Longos
+    </button>
+
+    <button class="nav-item" data-tag="loira">
+      <span class="top-badge">TOP</span>
+      Loiras
+    </button>
+
+    <button class="nav-item" data-tag="morena">
+      Morenas
+    </button>
+
+    <button class="nav-item" data-tag="ruiva">
+      Ruivas
+    </button>
+
+    <button class="nav-item" data-tag="amador">
+      Amador
+    </button>
+
+    <button class="nav-item" id="categoriesBtn">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+        <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+      </svg>
+      Categorias
+    </button>
+  </nav>
+</header>
+
+
+<!-- Main Content -->
+<main class="container">
+  <!-- Ad Space Topo -->
+  <div class="ad-space">
+    <span class="ad-label">PUBLICIDADE</span>
+    <p class="ad-placeholder">
+      Espaço reservado para anúncio 728x90.<br>
+      Cole aqui o script da sua rede.
+    </p>
+  </div>
+
+  <div id="videoCount" class="video-count"></div>
+
+  <!-- Video Grid -->
+  <div id="videoGrid" class="video-grid"></div>
+
+  <div id="loading" class="loading">Carregando...</div>
+  <div id="error" class="error" style="display: none;"></div>
+
+  <!-- Pagination -->
+  <nav class="pagination" id="pagination" style="display: none;">
+    <button id="prevBtn" class="page-btn">Anterior</button>
+    <span id="pageInfo" class="page-info"></span>
+    <button id="nextBtn" class="page-btn">Próximo</button>
+  </nav>
+
+  <!-- Ad Space Rodapé -->
+  <div class="ad-space" style="margin-top: 3rem;">
+    <span class="ad-label">PUBLICIDADE</span>
+    <p class="ad-placeholder">
+      Espaço reservado para anúncio 728x90.<br>
+      Cole aqui o script da sua rede.
+    </p>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer style="background: var(--preto); border-top: 1px solid var(--cinza-borda); padding: 2rem; text-align: center; color: var(--texto-secundario); font-size: 12px; margin-top: 2rem;">
+  <p>&copy; 2026 XSodoma. Todos os direitos reservados.</p>
+  <p style="margin-top: 0.5rem;">Este site contém conteúdo adulto. Você deve ter 18+ anos para acessar.</p>
+</footer>
+
+<!-- Modal de Anúncio Pré-Vídeo -->
+<div id="prerollAdModal" class="modal" style="align-items: center; justify-content: center; display: none;">
+  <div style="background: var(--preto-card); border-radius: 8px; padding: 2rem; max-width: 600px; text-align: center; position: relative;">
+    <span class="ad-label" style="top: 1rem; left: 1rem;">PUBLICIDADE</span>
+
+    <div style="margin: 2rem 0;">
+      <p style="color: var(--texto-secundario); margin-bottom: 1rem;">Aguarde alguns segundos...</p>
+      <div class="ad-space" style="min-height: 300px; margin: 0;">
+        <p class="ad-placeholder">
+          Cole aqui o script do anúncio pré-roll<br>
+          (Anúncio exibido antes do vídeo)
+        </p>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+      <button id="skipAdBtn" class="page-btn" style="display: none;">
+        Pular anúncio (<span id="skipTimer">5</span>s)
+      </button>
+      <button id="closeAdBtn" class="page-btn">
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle" class="modal-title"></h2>
+      <button id="closeModal" class="close-btn">Fechar</button>
+    </div>
+
+    <!-- Layout com Player + Sidebar -->
+    <div class="main-layout">
+      <!-- Coluna Principal -->
+      <div>
+        <div class="video-player">
+          <iframe id="modalPlayer" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-details">
+          <div class="video-stats" id="modalStats"></div>
+          <div class="video-tags" id="modalTags"></div>
+        </div>
+      </div>
+
+      <!-- Sidebar com vídeos relacionados + anúncio -->
+      <aside class="sidebar">
+        <div id="relatedVideos"></div>
+
+        <!-- Anúncio na Sidebar -->
+        <div class="ad-space" style="margin: 1rem 0 0 0;">
+          <span class="ad-label">PUBLICIDADE</span>
+          <p class="ad-placeholder">Anúncio 300x250</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="eporner-api.js"></script>
+<script>
+// Configuração
+const API_BASE = 'https://www.eporner.com/api/v2/video/search/';
+let currentPage = 1;
+let currentQuery = 'all';
+let currentOrder = 'latest';
+let perPage = 24;
+let thumbSize = 'medium';
+
+// Contador de vídeos assistidos
+let videosWatched = 0;
+const AD_FREQUENCY = 3; // Mostra anúncio a cada 3 vídeos
+
+// Elementos
+const videoGrid = document.getElementById('videoGrid');
+const loading = document.getElementById('loading');
+const errorDiv = document.getElementById('error');
+const videoCount = document.getElementById('videoCount');
+const pagination = document.getElementById('pagination');
+const modal = document.getElementById('videoModal');
+const prerollAdModal = document.getElementById('prerollAdModal');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+
+// Carregar vídeos
+async function loadVideos() {
+  try {
+    loading.style.display = 'block';
+    errorDiv.style.display = 'none';
+    videoGrid.innerHTML = '';
+
+    const url = `${API_BASE}?query=${encodeURIComponent(currentQuery)}&per_page=${perPage}&page=${currentPage}&thumbsize=${thumbSize}&order=${currentOrder}`;
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Erro ao carregar vídeos');
+
+    const data = await response.json();
+
+    renderVideos(data.videos);
+    updatePagination(data);
+
+    videoCount.textContent = `${data.count.toLocaleString('pt-BR')} caixas no acervo, ${data.videos.length} nesta prateleira.`;
+
+    loading.style.display = 'none';
+  } catch (error) {
+    loading.style.display = 'none';
+    errorDiv.style.display = 'block';
+    errorDiv.textContent = 'Erro ao carregar vídeos: ' + error.message;
+  }
+}
+
+// Renderizar vídeos
+function renderVideos(videos) {
+  videoGrid.innerHTML = videos.map((video, index) => {
+    const isNew = isNewVideo(video.added);
+
+    return `
+      <div class="video-card" onclick="openModal('${video.id}')">
+        <div class="video-thumb">
+          <img src="${video.default_thumb.src}" alt="${video.title}" loading="lazy">
+          <div class="video-rating">
+            <div class="rating-value">${(video.rate / 20).toFixed(2)}</div>
+            <div class="rating-max">de 5</div>
+          </div>
+          <div class="video-duration">${formatDuration(video.length_sec)}</div>
+          ${isNew ? '<div class="video-new-badge">NOVO</div>' : ''}
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">${video.title}</h3>
+          <div class="video-meta">
+            <span>${formatViews(video.views)} views</span>
+            <span>Nota ${(video.rate / 20).toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Abrir modal
+async function openModal(videoId) {
+  try {
+    // Incrementar contador de vídeos assistidos
+    videosWatched++;
+
+    // Mostrar anúncio pré-roll a cada 3 vídeos
+    if (videosWatched % AD_FREQUENCY === 0) {
+      await showPrerollAd();
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    const url = `https://www.eporner.com/api/v2/video/id/?id=${videoId}`;
+    const response = await fetch(url);
+    const video = await response.json();
+
+    document.getElementById('modalTitle').textContent = video.title;
+    document.getElementById('modalPlayer').src = video.embed;
+
+    document.getElementById('modalStats').innerHTML = `
+      <div class="stat-item"><strong>Duração:</strong> ${formatDuration(video.length_sec)}</div>
+      <div class="stat-item"><strong>Views:</strong> ${video.views.toLocaleString('pt-BR')}</div>
+      <div class="stat-item"><strong>Nota:</strong> ${(video.rate / 20).toFixed(2)} de 5</div>
+      <div class="stat-item"><strong>Adicionado:</strong> ${video.added}</div>
+    `;
+
+    document.getElementById('modalTags').innerHTML = video.keywords.split(',').slice(0, 20).map(tag =>
+      `<span class="tag">${tag.trim()}</span>`
+    ).join('');
+
+    // Carregar vídeos relacionados
+    loadRelatedVideos(video.keywords);
+
+  } catch (error) {
+    console.error('Erro ao abrir vídeo:', error);
+  }
+}
+
+// Carregar vídeos relacionados para a sidebar
+async function loadRelatedVideos(keywords) {
+  try {
+    const query = keywords.split(',')[0].trim();
+    const url = `${API_BASE}?query=${encodeURIComponent(query)}&per_page=6&page=1&thumbsize=small&order=top-rated`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const relatedContainer = document.getElementById('relatedVideos');
+    if (relatedContainer && data.videos) {
+      relatedContainer.innerHTML = data.videos.slice(0, 5).map(video => `
+        <div class="video-card" onclick="openModal('${video.id}')">
+          <div class="video-thumb">
+            <img src="${video.default_thumb.src}" alt="${video.title}" loading="lazy">
+            <div class="video-duration">${formatDuration(video.length_sec)}</div>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">${video.title}</h3>
+            <div class="video-meta">
+              <span>${formatViews(video.views)} views</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (error) {
+    console.error('Erro ao carregar relacionados:', error);
+  }
+}
+
+// Mostrar anúncio pré-roll
+function showPrerollAd() {
+  return new Promise((resolve) => {
+    prerollAdModal.style.display = 'flex';
+
+    let countdown = 5;
+    const skipBtn = document.getElementById('skipAdBtn');
+    const skipTimer = document.getElementById('skipTimer');
+    const closeBtn = document.getElementById('closeAdBtn');
+
+    // Countdown para permitir pular
+    const timer = setInterval(() => {
+      countdown--;
+      skipTimer.textContent = countdown;
+
+      if (countdown <= 0) {
+        clearInterval(timer);
+        skipBtn.style.display = 'block';
+        skipBtn.textContent = 'Pular anúncio';
+      }
+    }, 1000);
+
+    // Evento para pular anúncio
+    const skipHandler = () => {
+      clearInterval(timer);
+      prerollAdModal.style.display = 'none';
+      skipBtn.removeEventListener('click', skipHandler);
+      closeBtn.removeEventListener('click', skipHandler);
+      resolve();
+    };
+
+    skipBtn.addEventListener('click', skipHandler);
+    closeBtn.addEventListener('click', skipHandler);
+
+    // Reset do botão
+    skipBtn.style.display = 'none';
+    skipTimer.textContent = '5';
+  });
+}
+
+// Fechar modal
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('modalPlayer').src = '';
+}
+
+// Atualizar paginação
+function updatePagination(data) {
+  const totalPages = Math.ceil(data.count / perPage);
+
+  if (totalPages <= 1) {
+    pagination.style.display = 'none';
+    return;
+  }
+
+  pagination.style.display = 'flex';
+  document.getElementById('pageInfo').textContent = `Página ${currentPage} de ${totalPages}`;
+  document.getElementById('prevBtn').disabled = currentPage === 1;
+  document.getElementById('nextBtn').disabled = currentPage === totalPages;
+}
+
+// Utilitários
+function formatDuration(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function formatViews(views) {
+  if (views >= 1000000) return (views / 1000000).toFixed(1) + 'M';
+  if (views >= 1000) return (views / 1000).toFixed(1) + 'K';
+  return views.toString();
+}
+
+function isNewVideo(dateString) {
+  const addedDate = new Date(dateString);
+  const now = new Date();
+  const diffDays = (now - addedDate) / (1000 * 60 * 60 * 24);
+  return diffDays <= 30;
+}
+
+// Event Listeners
+searchBtn.addEventListener('click', () => {
+  currentQuery = searchInput.value.trim() || 'all';
+  currentPage = 1;
+  loadVideos();
+});
+
+searchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    currentQuery = searchInput.value.trim() || 'all';
+    currentPage = 1;
+    loadVideos();
+  }
+});
+
+document.querySelectorAll('.nav-item[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentOrder = btn.dataset.filter;
+    currentPage = 1;
+    loadVideos();
+  });
+});
+
+document.querySelectorAll('.nav-item[data-tag]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentQuery = btn.dataset.tag;
+    searchInput.value = btn.dataset.tag;
+    currentPage = 1;
+    loadVideos();
+  });
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    loadVideos();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  currentPage++;
+  loadVideos();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('closeModal').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeModal();
+});
+
+// Iniciar
+loadVideos();
+</script>
+
+</body>
+</html>

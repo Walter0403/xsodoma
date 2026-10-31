@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xSodoma — acervo</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;900&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================================================
+   Tokens
+   =========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* preto e cinza — o vermelho da etiqueta é a única cor da página */
+  --noite:      #0A0A0A;
+  --noite-2:    #111111;
+  --caixa:      #181818;
+  --trilho:     #2B2B2B;
+  --prateleira: #3F3F3F;
+
+  /* texto */
+  --texto:   #ECECEC;
+  --texto-2: #9C9C9C;
+
+  /* papel e etiqueta */
+  --papel:    #F2F0EB;
+  --papel-2:  #D6D2C8;
+  --etiqueta: #E8412C;
+  --fachada:  #DCDCDC;
+
+  /* escala tipográfica */
+  --t-label: 0.75rem;
+  --t-meta:  0.84375rem;
+  --t-corpo: 0.9375rem;
+  --t-titulo: 1.0625rem;
+
+  /* ritmo */
+  --gap: 1.25rem;
+  --raio: 2px;
+  --largura-max: 1400px;
+}
+
+/* ===========================================================================
+   Base
+   =========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--noite);
+  color: var(--texto);
+  font-family: Archivo, system-ui, -apple-system, sans-serif;
+  font-size: var(--t-corpo);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+:where(a) { color: var(--fachada); }
+
+:focus-visible {
+  outline: 2px solid var(--fachada);
+  outline-offset: 2px;
+}
+
+.oculto-visual {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ===========================================================================
+   Letreiro
+   =========================================================================== */
+
+.fachada {
+  border-bottom: 1px solid var(--trilho);
+  background: var(--noite-2);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.fachada__interno,
+.avisos,
+.controles,
+.acervo {
+  max-width: var(--largura-max);
+  margin-inline: auto;
+}
+
+/* linha 1: logo, busca, ações */
+.barra {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.75rem 1.5rem;
+}
+
+/* linha 2: navegação */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  border-top: 1px solid var(--trilho);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.menu::-webkit-scrollbar { display: none; }
+
+.menu__link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  padding: 0.7rem 0;
+  font-size: var(--t-meta);
+  font-weight: 500;
+  color: var(--texto-2);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  min-height: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.menu__link:hover { color: var(--texto); }
+
+.menu__link[aria-current="true"] {
+  color: var(--texto);
+  border-bottom-color: var(--etiqueta);
+}
+
+.menu__selo {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: var(--etiqueta);
+  color: #fff;
+  border-radius: 2px;
+  padding: 0.1rem 0.28rem;
+  line-height: 1.4;
+}
+
+.menu__icone {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ===========================================================================
+   Busca da barra superior, com sugestões
+   =========================================================================== */
+
+.busca {
+  position: relative;
+  flex: 1 1 auto;
+  max-width: 42rem;
+}
+
+.busca__campo {
+  display: flex;
+  background: var(--caixa);
+  border: 1px solid var(--trilho);
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+
+.busca__campo:focus-within { border-color: var(--etiqueta); }
+
+.busca__campo input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0.6rem 0.8rem;
+  min-height: 2.6rem;
+}
+
+.busca__campo input:focus-visible { outline: none; }
+
+.busca__botao {
+  flex: 0 0 auto;
+  display: grid;
+  place-content: center;
+  width: 3rem;
+  background: var(--caixa);
+  border: 0;
+  border-left: 1px solid var(--trilho);
+  border-radius: 0;
+  min-height: 0;
+  padding: 0;
+  color: var(--texto-2);
+  cursor: pointer;
+}
+
+.busca__botao:hover { background: var(--etiqueta); color: #fff; }
+
+.busca__botao svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* --------------------------------------------------------------------------
+   Lista de sugestões
+   -------------------------------------------------------------------------- */
+
+.sugestoes {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: var(--caixa);
+  border: 1px solid var(--prateleira);
+  border-radius: var(--raio);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  max-height: 22rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+}
+
+.sugestoes[hidden] { display: none; }
+
+.sugestao {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--raio);
+  font-size: var(--t-meta);
+  cursor: pointer;
+}
+
+.sugestao[aria-selected="true"],
+.sugestao:hover {
+  background: var(--trilho);
+}
+
+.sugestao__icone {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 auto;
+  stroke: var(--texto-2);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.sugestao__termo { flex: 1 1 auto; min-width: 0; }
+
+.sugestao__termo b {
+  color: #fff;
+  font-weight: 600;
+}
+
+.sugestao__tipo {
+  flex: 0 0 auto;
+  font-size: 0.6875rem;
+  color: var(--texto-2);
+  border: 1px solid var(--trilho);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+}
+
+.sugestoes__vazio {
+  padding: 0.6rem;
+  font-size: var(--t-meta);
+  color: var(--texto-2);
+}
+
+/* --------------------------------------------------------------------------
+   Letreiro — a logo em imagem
+
+   A arte (2752x1536) é quase toda preta em volta do letreiro. Em vez de
+   recortar com transform/clip (que brigam com o layout e quebram fácil), a
+   imagem entra inteira e o cabeçalho absorve a sobra com margem negativa.
+
+   O fundo da arte é preto chapado; mix-blend-mode: screen descarta esse preto e
+   preserva o fogo. Sem ele apareceria um retângulo mais escuro que a fachada.
+   -------------------------------------------------------------------------- */
+
+.letreiro {
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(7.5rem, 16vw, 11rem);
+  margin: -1.1rem 0 -1.7rem;  /* come a moldura preta da arte */
+}
+
+.letreiro img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: screen;
+}
+
+/* Se a imagem não carregar, o texto abaixo aparece no lugar dela.
+   Sem isso o navegador mostra o ícone de imagem quebrada. */
+.letreiro__texto {
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.letreiro__texto span { color: var(--etiqueta); }
+
+@media (max-width: 30rem) {
+  .letreiro { width: 8.5rem; margin: -0.85rem 0 -1.3rem; }
+
+  .barra {
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .busca { flex: 1 1 100%; max-width: none; order: 3; }
+
+  .menu { gap: 1.1rem; padding-inline: 1rem; }
+}
+
+@media (min-width: 30.0625rem) and (max-width: 50rem) {
+  .busca { max-width: 26rem; }
+}
+
+/* ===========================================================================
+   Anúncios
+
+   Espaço reservado com altura mínima de propósito: se o anúncio entra depois,
+   sem altura reservada o conteúdo pula (o navegador chama isso de CLS e o
+   Google penaliza). Melhor um espaço vazio do que um layout que sacode.
+   =========================================================================== */
+
+.anuncio {
+  position: relative;
+  display: grid;
+  place-content: center;
+  gap: 0.25rem;
+  text-align: center;
+  background: var(--noite-2);
+  border: 1px dashed var(--trilho);
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+
+.anuncio--faixa {
+  min-height: 6.25rem;   /* ~100px */
+  margin-bottom: 1.75rem;
+}
+
+.anuncio--retangulo {
+  min-height: 15.625rem; /* 250px */
+}
+
+/* no meio da grade, ocupa a linha inteira */
+.anuncio--grade {
+  grid-column: 1 / -1;
+  margin-block: 0.25rem;
+}
+
+/* anulando o padrão de lista: o anúncio na grade é um <li>, mas não é caixa */
+li.anuncio { list-style: none; }
+
+.anuncio--player {
+  margin-top: 1.25rem;
+}
+
+/* O rótulo não é decoração: publicidade precisa ser identificável
+   (CDC art. 36 e as normas do CONAR). Deixe visível. */
+.anuncio__rotulo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+  background: var(--trilho);
+  padding: 0.1rem 0.42rem;
+  border-bottom-right-radius: var(--raio);
+}
+
+.anuncio__vazio {
+  font-size: 0.75rem;
+  color: var(--texto-2);
+  padding: 1rem;
+  max-width: 34ch;
+  line-height: 1.5;
+}
+
+.anuncio__vazio code {
+  font-family: "Courier Prime", ui-monospace, monospace;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.05em 0.3em;
+  border-radius: 2px;
+}
+
+@media (max-width: 34rem) {
+  .anuncio--faixa { min-height: 3.125rem; }  /* 320x50 */
+  .anuncio--retangulo { min-height: 15.625rem; }
+}
+
+/* ===========================================================================
+   Gaveta de categorias
+   =========================================================================== */
+
+.gaveta {
+  padding: 0;
+  border: 0;
+  background: var(--noite-2);
+  color: var(--texto);
+  max-width: none;
+  width: min(28rem, 100%);
+  max-height: 100dvh;
+  margin: 0 0 0 auto;   /* encosta na direita */
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.gaveta::backdrop { background: rgba(0, 0, 0, 0.72); }
+
+.gaveta__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--trilho);
+  flex: 0 0 auto;
+}
+
+.gaveta__topo h2 {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.gaveta__corpo {
+  padding: 1.25rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1 1 auto;
+}
+
+.cat-grupo { margin-bottom: 1.75rem; }
+.cat-grupo:last-child { margin-bottom: 0; }
+
+.cat-grupo__titulo {
+  margin: 0 0 0.65rem;
+  font-size: var(--t-label);
+  font-weight: 600;
+  color: var(--texto-2);
+}
+
+.cat-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cat-item {
+  font: inherit;
+  font-size: var(--t-meta);
+  color: var(--texto);
+  background: var(--caixa);
+  border: 1px solid var(--trilho);
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  min-height: 0;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.cat-item:hover,
+.cat-item:focus-visible {
+  border-color: var(--etiqueta);
+  background: #221A19;
+  color: #fff;
+}
+
+@media (max-width: 34rem) {
+  .gaveta { width: 100%; }
+  .gaveta__topo { padding: 0.9rem 1rem; }
+  .gaveta__corpo { padding: 1rem; }
+  .cat-grupo { margin-bottom: 1.4rem; }
+  .cat-item { padding: 0.55rem 0.95rem; }  /* alvo de toque maior */
+}
+
+/* ===========================================================================
+   Ajustes de celular
+   =========================================================================== */
+
+@media (max-width: 34rem) {
+
+  /* duas colunas: cabe mais acervo na tela sem apertar o texto */
+  .prateleira {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem 0.6rem;
+  }
+
+  .lombada { padding: 0.45rem 0.5rem 0.55rem; gap: 0.3rem; }
+
+  .lombada__titulo {
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 3;
+  }
+
+  .ficha { font-size: 0.6875rem; gap: 0.1rem 0.45rem; }
+
+  .etiqueta-nota { width: 2.5rem; height: 2.5rem; top: 0.35rem; left: 0.35rem; }
+  .etiqueta-nota__valor { font-size: 0.75rem; }
+  .etiqueta-nota__de { font-size: 0.4rem; }
+
+  .capa__contador { font-size: 0.625rem; padding: 0.14rem 0.32rem; }
+
+  .selo-novo { font-size: 0.5rem; padding: 0.12rem 0.3rem; }
+
+  .acervo { padding: 1.25rem 1rem 3rem; }
+
+  .controles { padding: 1rem; gap: 0.6rem 0.75rem; }
+  .controles .campo { flex: 1 1 8rem; }
+
+  /* 16px evita o zoom automático do iOS ao focar o campo */
+  input, select, button { font-size: 1rem; }
+
+  .busca__campo input { padding: 0.62rem 0.7rem; }
+
+  /* ficha em tela cheia no celular */
+  dialog.ficha-caixa {
+    width: 100%;
+    max-width: none;
+    max-height: 100dvh;
+    height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .ficha-caixa__topo { padding: 0.9rem 1rem; position: sticky; }
+  .ficha-caixa__titulo { font-size: 1rem; }
+  .ficha-caixa__corpo { padding: 1rem; }
+
+  .paginacao { margin-top: 1.75rem; }
+  .paginacao .botao { flex: 1 1 auto; }
+
+  .aviso-lista { font-size: 0.8125rem; }
+}
+
+/* respeita a barra de gestos do iPhone */
+@supports (padding: max(0px)) {
+  @media (max-width: 34rem) {
+    .acervo { padding-bottom: max(3rem, env(safe-area-inset-bottom)); }
+    .gaveta__corpo { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  }
+}
+
+/* ===========================================================================
+   Aviso pregado na parede (status de CORS e afins)
+   =========================================================================== */
+
+.avisos { padding: 1.5rem 1.5rem 0; }
+
+.aviso {
+  position: relative;
+  background: var(--papel);
+  color: #1A1A17;
+  padding: 1rem 1.125rem;
+  border-radius: var(--raio);
+  font-size: var(--t-meta);
+  line-height: 1.5;
+  max-width: 78ch;
+}
+
+/* pedaço de fita adesiva */
+.aviso::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 1.75rem;
+  width: 68px;
+  height: 18px;
+  background: rgba(245, 240, 230, 0.34);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.aviso strong { font-weight: 600; }
+
+.aviso code {
+  font-family: "Courier Prime", ui-monospace, monospace;
+  font-size: 0.85em;
+  background: rgba(26, 26, 23, 0.09);
+  padding: 0.1em 0.34em;
+  border-radius: 2px;
+}
+
+.aviso--bom { box-shadow: inset 4px 0 0 #2E7D5B; }
+.aviso--ruim { box-shadow: inset 4px 0 0 var(--etiqueta); }
+.aviso--espera { box-shadow: inset 4px 0 0 #B98A2E; }
+
+/* ===========================================================================
+   Balcão de atendimento (filtros)
+   =========================================================================== */
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: flex-end;
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-bottom: 1px solid var(--trilho);
+}
+
+.campo { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.campo__rotulo {
+  font-size: var(--t-label);
+  font-weight: 500;
+  color: var(--texto-2);
+}
+
+
+input, select, button {
+  font: inherit;
+  color: var(--texto);
+  background: var(--caixa);
+  border: 1px solid var(--trilho);
+  border-radius: var(--raio);
+  padding: 0.55rem 0.7rem;
+  min-height: 2.5rem;
+}
+
+input:hover, select:hover { border-color: var(--prateleira); }
+
+.botao {
+  background: var(--fachada);
+  border-color: var(--fachada);
+  color: #0A0A0A;
+  font-weight: 600;
+  cursor: pointer;
+  padding-inline: 1.3rem;
+}
+
+.botao:hover { filter: brightness(1.08); }
+
+.botao--vazio {
+  background: var(--caixa);
+  border-color: var(--trilho);
+  color: var(--texto);
+  font-weight: 500;
+}
+
+.botao:disabled { opacity: 0.42; cursor: default; filter: none; }
+
+/* ===========================================================================
+   Acervo — a grade de caixas sobre prateleiras
+   =========================================================================== */
+
+.acervo { padding: 1.75rem 1.5rem 4rem; }
+
+.aviso-lista {
+  margin: 0 0 1.25rem;
+  color: var(--texto-2);
+  font-size: var(--t-meta);
+}
+
+.aviso-lista--erro { color: #F09A9A; }
+
+.prateleira {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: 1.75rem var(--gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   A caixa
+   -------------------------------------------------------------------------- */
+
+.caixa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--caixa);
+  border: 1px solid var(--trilho);
+  border-bottom: 3px solid var(--prateleira); /* lábio da prateleira */
+  border-radius: var(--raio);
+  overflow: hidden;
+  transition: border-color 0.14s ease, transform 0.14s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .caixa:hover { transform: translateY(-3px); }
+}
+
+.caixa:hover,
+.caixa:focus-within {
+  border-color: var(--fachada);
+  border-bottom-color: var(--fachada);
+}
+
+/* botão que cobre a caixa inteira: clique e teclado de graça, com nome acessível */
+.caixa__abrir {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  min-height: 0;
+}
+
+.caixa__abrir:focus-visible { outline-offset: -3px; }
+
+/* --------------------------------------------------------------------------
+   Capa
+   -------------------------------------------------------------------------- */
+
+.capa {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background:
+    repeating-linear-gradient(
+      -45deg, #141414 0 8px, #0C0C0C 8px 16px
+    ); /* listra de "capa faltando" */
+  overflow: hidden;
+}
+
+.capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.capa__contador {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  font-family: "Courier Prime", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.86);
+  color: #E4E4E4;
+  padding: 0.18rem 0.42rem;
+  border-top-left-radius: var(--raio);
+}
+
+/* a etiqueta de nota — o elemento memorável, e o único torto */
+.etiqueta-nota {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+  width: 3.15rem;
+  height: 3.15rem;
+  border-radius: 50%;
+  background: var(--papel);
+  color: #16202C;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  line-height: 1;
+  transform: rotate(-6deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  border: 2px solid var(--etiqueta);
+}
+
+.etiqueta-nota__valor {
+  font-family: "Courier Prime", ui-monospace, monospace;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.etiqueta-nota__de {
+  font-size: 0.5rem;
+  letter-spacing: 0.02em;
+  color: #5A6070;
+  margin-top: 0.1rem;
+}
+
+/* selo de lançamento, reto e vermelho — registro oposto ao da etiqueta */
+.selo-novo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background: var(--etiqueta);
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.16rem 0.4rem;
+  border-bottom-left-radius: var(--raio);
+}
+
+/* --------------------------------------------------------------------------
+   Lombada (título e ficha)
+   -------------------------------------------------------------------------- */
+
+.lombada {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.7rem 0.75rem 0.8rem;
+  flex: 1;
+}
+
+.lombada__titulo {
+  margin: 0;
+  font-size: var(--t-titulo);
+  font-weight: 600;
+  line-height: 1.32;
+  letter-spacing: -0.008em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ficha {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.7rem;
+  font-size: var(--t-meta);
+  color: var(--texto-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Fim de prateleira
+   -------------------------------------------------------------------------- */
+
+.prateleira-vazia {
+  max-width: 52ch;
+  padding: 2.5rem 0;
+  color: var(--texto-2);
+}
+
+.prateleira-vazia strong {
+  display: block;
+  color: var(--texto);
+  font-weight: 600;
+  font-size: var(--t-titulo);
+  margin-bottom: 0.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   Rodapé de navegação entre prateleiras
+   -------------------------------------------------------------------------- */
+
+.paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.paginacao__info {
+  font-size: var(--t-meta);
+  color: var(--texto-2);
+  font-variant-numeric: tabular-nums;
+  min-width: 12ch;
+  text-align: center;
+}
+
+/* ===========================================================================
+   Ficha da caixa (modal)
+   =========================================================================== */
+
+dialog.ficha-caixa {
+  padding: 0;
+  border: 1px solid var(--prateleira);
+  border-radius: var(--raio);
+  background: var(--caixa);
+  color: var(--texto);
+  max-width: 56rem;
+  width: calc(100% - 2rem);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+dialog.ficha-caixa::backdrop {
+  background: rgba(4, 8, 14, 0.82);
+}
+
+.ficha-caixa__topo {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.125rem 1.25rem;
+  border-bottom: 1px solid var(--trilho);
+  position: sticky;
+  top: 0;
+  background: var(--caixa);
+  z-index: 1;
+}
+
+.ficha-caixa__titulo {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  max-width: 60ch;
+}
+
+.ficha-caixa__corpo { padding: 1.25rem; }
+
+.tela {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid var(--trilho);
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+
+.tela iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.dados {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 1.25rem;
+  margin: 1.25rem 0 0;
+  font-size: var(--t-meta);
+}
+
+.dados dt { color: var(--texto-2); }
+
+.dados dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.dados dd.mono {
+  font-family: "Courier Prime", ui-monospace, monospace;
+  letter-spacing: 0.03em;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  font-size: var(--t-label);
+  color: var(--texto-2);
+  border: 1px solid var(--trilho);
+  border-radius: 999px;
+  padding: 0.16rem 0.6rem;
+}
+
+@media (max-width: 30rem) {
+  .fachada, .avisos, .controles, .acervo { padding-inline: 1rem; }
+  .dados { grid-template-columns: 1fr; gap: 0.1rem; }
+  .dados dt { margin-top: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="fachada">
+  <div class="fachada__interno">
+    <div class="barra">
+      <h1 class="letreiro">
+        <!-- O arquivo está na pasta uploads, que é irmã desta.
+             Para produção, copie-o para cá como logo.jpg e troque o src. -->
+        <img src="../uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg"
+             alt="xSodoma"
+             decoding="async"
+             onerror="this.hidden=true;this.nextElementSibling.hidden=false;">
+        <span class="letreiro__texto" hidden>x<span>Sodoma</span></span>
+      </h1>
+
+      <div class="busca">
+        <div class="busca__campo">
+          <input id="q" type="search" value="all"
+                 placeholder="Pesquisar no acervo"
+                 autocomplete="off"
+                 role="combobox"
+                 aria-expanded="false"
+                 aria-controls="sugestoes"
+                 aria-autocomplete="list"
+                 aria-label="Pesquisar no acervo">
+          <button id="go" class="busca__botao" type="button" aria-label="Buscar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M16.5 16.5 21 21"></path>
+            </svg>
+          </button>
+        </div>
+        <ul id="sugestoes" class="sugestoes" role="listbox" aria-label="Sugestões de busca" hidden></ul>
+      </div>
+    </div>
+
+    <nav class="menu" aria-label="Navegação principal">
+      <button class="menu__link" type="button" data-ordem="latest" aria-current="true">
+        <svg class="menu__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+        Mais recentes
+      </button>
+      <button class="menu__link" type="button" data-ordem="top-weekly">
+        <svg class="menu__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 9l6-6 6 6"/></svg>
+        Top da semana
+      </button>
+      <button class="menu__link" type="button" data-ordem="most-popular">
+        <svg class="menu__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+        Mais vistos
+      </button>
+      <button class="menu__link" type="button" data-ordem="top-rated">
+        <svg class="menu__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.8 6.2 20.8l1.1-6.4L2.6 9.8l6.5-.9L12 3Z"/></svg>
+        Melhor avaliados
+      </button>
+      <button class="menu__link" type="button" data-ordem="longest">
+        <svg class="menu__icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Longos
+      </button>
+      <button class="menu__link" type="button" data-tag="loira">
+        <span class="menu__selo">TOP</span>
+        Loiras
+      </button>
+      <button class="menu__link" type="button" data-tag="morena">
+        Morenas
+      </button>
+      <button class="menu__link" type="button" data-tag="ruiva">
+        Ruivas
+      </button>
+      <button class="menu__link" type="button" data-tag="amador">
+        Amador
+      </button>
+      <button id="abrirCategorias" class="menu__link" type="button"
+              aria-haspopup="dialog" aria-controls="gaveta">
+        <svg class="menu__icone" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+        Categorias
+      </button>
+    </nav>
+  </div>
+</header>
+
+<section id="avisos" class="avisos" aria-live="polite">
+  <div id="aviso" class="aviso aviso--espera">
+    Testando o acesso à API…
+  </div>
+</section>
+
+<section class="controles" aria-label="Ajustes do acervo">
+  <div class="campo">
+    <label class="campo__rotulo" for="order">Ordenar por</label>
+    <select id="order">
+      <option value="latest">Mais recentes</option>
+      <option value="top-weekly">Top da semana</option>
+      <option value="top-monthly">Top do mês</option>
+      <option value="most-popular">Mais vistos</option>
+      <option value="top-rated">Melhor avaliados</option>
+      <option value="longest">Mais longos</option>
+      <option value="shortest">Mais curtos</option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label class="campo__rotulo" for="perPage">Por página</label>
+    <select id="perPage">
+      <option>12</option>
+      <option selected>24</option>
+      <option>48</option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label class="campo__rotulo" for="thumbsize">Tamanho da capa</label>
+    <select id="thumbsize">
+      <option value="small">Pequena</option>
+      <option value="medium" selected>Média</option>
+      <option value="big">Grande</option>
+    </select>
+  </div>
+</section>
+
+<main class="acervo">
+  <!-- Faixa no topo do acervo. Substitua o conteúdo interno pelo script da
+       sua rede; mantenha o rótulo "Publicidade". -->
+  <aside class="anuncio anuncio--faixa" aria-label="Publicidade" data-slot="topo">
+    <span class="anuncio__rotulo">Publicidade</span>
+    <p class="anuncio__vazio">
+      Espaço reservado para anúncio 728x90.<br>
+      Cole aqui o script da sua rede.
+    </p>
+  </aside>
+
+  <p id="status" class="aviso-lista" role="status"></p>
+  <ul id="prateleira" class="prateleira"></ul>
+
+  <nav id="paginacao" class="paginacao" aria-label="Paginação do acervo" hidden>
+    <button id="prev" class="botao botao--vazio" type="button">Anterior</button>
+    <span id="pageInfo" class="paginacao__info"></span>
+    <button id="next" class="botao botao--vazio" type="button">Próxima</button>
+  </nav>
+</main>
+
+<dialog id="gaveta" class="gaveta" aria-labelledby="gavetaTitulo">
+  <div class="gaveta__topo">
+    <h2 id="gavetaTitulo">Categorias</h2>
+    <button id="fecharCategorias" class="botao botao--vazio" type="button">Fechar</button>
+  </div>
+  <div class="gaveta__corpo">
+    <p style="margin:0 0 1.25rem;font-size:0.8125rem;color:var(--texto-2);line-height:1.5">
+      Cada categoria vira uma busca de texto na API do Eporner.
+    </p>
+    <div id="catGrupos"></div>
+  </div>
+</dialog>
+
+<dialog id="modal" class="ficha-caixa" aria-labelledby="mTitle">
+  <div class="ficha-caixa__topo">
+    <h2 id="mTitle" class="ficha-caixa__titulo">—</h2>
+    <button id="mClose" class="botao botao--vazio" type="button">Fechar</button>
+  </div>
+
+  <div class="ficha-caixa__corpo">
+    <div class="tela">
+      <iframe id="mFrame" title="Player do vídeo" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+
+    <!-- Anúncio abaixo do player: inventário que não atrapalha a escolha
+         do vídeo, e o mais bem pago da página depois do popunder. -->
+    <aside class="anuncio anuncio--retangulo anuncio--player" aria-label="Publicidade" data-slot="player">
+      <span class="anuncio__rotulo">Publicidade</span>
+      <p class="anuncio__vazio">Espaço reservado 300x250.</p>
+    </aside>
+
+    <dl class="dados">
+      <dt>Duração</dt><dd id="mDur">—</dd>
+      <dt>Views</dt><dd id="mViews">—</dd>
+      <dt>Nota</dt><dd id="mRate">—</dd>
+      <dt>Entrou no acervo</dt><dd id="mAdded">—</dd>
+      <dt>Código</dt><dd id="mId" class="mono">—</dd>
+      <dt>Original</dt><dd><a id="mLink" href="#" target="_blank" rel="noopener noreferrer">abrir no Eporner</a></dd>
+    </dl>
+
+    <ul id="mTags" class="tags"></ul>
+  </div>
+</dialog>
+
+<script src="eporner-api.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var estado = { pagina: 1, busca: 'all' };
+
+  // -------------------------------------------------------------------------
+  // Sondagem de CORS
+  // -------------------------------------------------------------------------
+
+  function aviso(tipo, html) {
+    var n = $('aviso');
+    n.className = 'aviso aviso--' + tipo;
+    n.innerHTML = html;
+  }
+
+  function sondarCors() {
+    var url = EpornerApi.buildApiUrl('/video/search/', {
+      query: 'all', per_page: 1, format: 'json', thumbsize: 'small'
+    });
+
+    aviso('espera', 'Testando o acesso à API…');
+
+    return fetch(url, { mode: 'cors', credentials: 'omit' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (dados) {
+        // Acesso direto liberado: não há nada a avisar, então a faixa sai de
+        // cena e a prateleira fala por si.
+        $('avisos').hidden = true;
+        return true;
+      })
+      .catch(function (err) {
+        aviso('ruim',
+          '<strong>O acesso direto foi bloqueado.</strong> Causa provável: CORS. ' +
+          'Detalhe: <code>' + String((err && err.message) || err) + '</code><br><br>' +
+          'Para funcionar, ponha um endpoint no seu servidor que faça a busca no lugar do ' +
+          'navegador e chame <code>EpornerApi.configure({ proxy: "/api/eporner?url=" })</code>. ' +
+          'O código do proxy está no INTEGRACAO.md. Até então, a busca vai falhar pelo mesmo motivo.');
+        return false;
+      });
+  }
+
+  // -------------------------------------------------------------------------
+  // Montagem dos cards por DOM
+  // -------------------------------------------------------------------------
+  // Título e tags vêm de fonte externa, então nunca passam por innerHTML.
+
+  function el(tag, classe, texto) {
+    var n = document.createElement(tag);
+    if (classe) n.className = classe;
+    if (texto !== undefined) n.textContent = texto;
+    return n;
+  }
+
+  function ehNovo(data) {
+    if (!data) return false;
+    var dias = (Date.now() - data.getTime()) / 86400000;
+    return dias >= 0 && dias <= 30;
+  }
+
+  function montarCaixa(v) {
+    var li = el('li');
+    var caixa = el('div', 'caixa');
+
+    // capa
+    var capa = el('div', 'capa');
+    if (v.thumb && v.thumb.src) {
+      var img = el('img');
+      img.src = v.thumb.src;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.onerror = function () { img.remove(); }; // deixa a listra aparecer
+      capa.appendChild(img);
+    }
+
+    var nota = el('div', 'etiqueta-nota');
+    nota.setAttribute('aria-hidden', 'true'); // a nota já vai na ficha abaixo
+    nota.appendChild(el('span', 'etiqueta-nota__valor', EpornerApi.formatRate(v.rate)));
+    nota.appendChild(el('span', 'etiqueta-nota__de', 'de 5'));
+    capa.appendChild(nota);
+
+    if (ehNovo(v.addedDate)) {
+      capa.appendChild(el('span', 'selo-novo', 'NOVO'));
+    }
+
+    capa.appendChild(el('span', 'capa__contador', EpornerApi.formatDuration(v.lengthSec)));
+    caixa.appendChild(capa);
+
+    // lombada
+    var lombada = el('div', 'lombada');
+    lombada.appendChild(el('h3', 'lombada__titulo', v.title || 'Sem título'));
+
+    var ficha = el('div', 'ficha');
+    ficha.appendChild(el('span', null, EpornerApi.formatViews(v.views)));
+    ficha.appendChild(el('span', null, 'Nota ' + EpornerApi.formatRate(v.rate)));
+    lombada.appendChild(ficha);
+    caixa.appendChild(lombada);
+
+    // botão que cobre a caixa
+    var abrir = el('button', 'caixa__abrir');
+    abrir.type = 'button';
+    abrir.setAttribute('aria-label', 'Abrir ' + (v.title || 'vídeo sem título'));
+    abrir.addEventListener('click', function () { abrirCaixa(v); });
+    caixa.appendChild(abrir);
+
+    li.appendChild(caixa);
+    return li;
+  }
+
+  function renderizar(videos) {
+    var lista = $('prateleira');
+    lista.replaceChildren();
+
+    if (!videos.length) {
+      var vazio = el('div', 'prateleira-vazia');
+      vazio.appendChild(el('strong', null, 'Nenhuma caixa nessa prateleira'));
+      vazio.appendChild(document.createTextNode(
+        'Não achamos nada com esses filtros. Tente outro termo de busca ou mude a ordenação.'
+      ));
+      lista.appendChild(el('li')).appendChild(vazio);
+      return;
+    }
+
+    var frag = document.createDocumentFragment();
+    videos.forEach(function (v, i) {
+      frag.appendChild(montarCaixa(v));
+
+      // Anúncio depois da 6ª caixa: fica visível sem empurrar o conteúdo
+      // principal para fora da primeira tela.
+      if (i === 5) frag.appendChild(criarAnuncioNaGrade());
+    });
+    lista.appendChild(frag);
+  }
+
+  function criarAnuncioNaGrade() {
+    var li = el('li', 'anuncio anuncio--grade anuncio--retangulo');
+    li.setAttribute('aria-label', 'Publicidade');
+    li.dataset.slot = 'grade';
+    li.appendChild(el('span', 'anuncio__rotulo', 'Publicidade'));
+    li.appendChild(el('p', 'anuncio__vazio', 'Espaço reservado para anúncio.'));
+    return li;
+  }
+
+  // -------------------------------------------------------------------------
+  // Ficha da caixa
+  // -------------------------------------------------------------------------
+
+  function abrirCaixa(v) {
+    $('mTitle').textContent = v.title || 'Sem título';
+    $('mDur').textContent = EpornerApi.formatDuration(v.lengthSec) + '  (' + v.lengthSec + 's)';
+    $('mViews').textContent = v.views.toLocaleString('pt-BR');
+    $('mRate').textContent = EpornerApi.formatRate(v.rate) + ' de 5,00';
+    $('mAdded').textContent = EpornerApi.formatAdded(v.addedDate);
+    $('mId').textContent = v.id;
+    $('mLink').href = v.url || '#';
+
+    var f = $('mFrame');
+    f.src = v.embed || '';
+
+    var tags = $('mTags');
+    tags.replaceChildren();
+    v.keywords.slice(0, 24).forEach(function (k) {
+      tags.appendChild(el('li', null, k));
+    });
+
+    $('modal').showModal();
+  }
+
+  function fecharCaixa() {
+    $('mFrame').src = ''; // sem isso o vídeo continua tocando
+    $('modal').close();
+  }
+
+  // -------------------------------------------------------------------------
+  // Busca
+  // -------------------------------------------------------------------------
+
+  var ocupado = false;
+
+  function carregar(pagina) {
+    if (ocupado) return;
+    ocupado = true;
+
+    var status = $('status');
+    status.className = 'aviso-lista';
+    status.textContent = 'Procurando nas prateleiras…';
+    $('go').disabled = true;
+
+    EpornerApi.search({
+      query: estado.busca,
+      page: pagina,
+      perPage: Number($('perPage').value),
+      thumbsize: $('thumbsize').value,
+      order: $('order').value
+    }).then(function (res) {
+      estado.pagina = res.page;
+      renderizar(res.videos);
+      coletarTags(res.videos);   // alimenta o autocompletar com tags reais
+
+      status.textContent =
+        res.totalCount.toLocaleString('pt-BR') + ' caixas no acervo, ' +
+        res.count + ' nesta prateleira.';
+
+      $('paginacao').hidden = res.totalPages <= 1;
+      $('pageInfo').textContent = 'Página ' + res.page + ' de ' + res.totalPages;
+      $('prev').disabled = !res.hasPrev;
+      $('next').disabled = !res.hasNext;
+    }).catch(function (err) {
+      status.className = 'aviso-lista aviso-lista--erro';
+      status.textContent = err.kind === 'network'
+        ? 'Não conseguimos falar com o acervo. Se o aviso lá em cima ficou vermelho, falta configurar o proxy.'
+        : 'Deu erro ao carregar [' + (err.kind || '?') + ']: ' + err.message;
+      console.error(err);
+    }).finally(function () {
+      ocupado = false;
+      $('go').disabled = false;
+    });
+  }
+
+  // -------------------------------------------------------------------------
+  // Eventos
+  // -------------------------------------------------------------------------
+
+  function buscarDoZero() {
+    estado.busca = $('q').value.trim() || 'all';
+    carregar(1);
+  }
+
+  $('go').addEventListener('click', function () { fecharSugestoes(); buscarDoZero(); });
+  // O Enter é tratado junto com as sugestões (mais abaixo), para respeitar
+  // o item destacado na lista. Não duplicar o handler aqui.
+
+  ['order', 'perPage', 'thumbsize'].forEach(function (id) {
+    $(id).addEventListener('change', buscarDoZero);
+  });
+
+  // menu de navegação: ordena ou busca por tag
+  // (o botão Categorias fica de fora: ele abre a gaveta, não busca)
+  document.querySelectorAll('.menu__link[data-ordem], .menu__link[data-tag]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.menu__link').forEach(function (b) {
+        b.removeAttribute('aria-current');
+      });
+
+      if (btn.dataset.ordem) {
+        $('order').value = btn.dataset.ordem;
+        $('q').value = 'all';
+        fecharSugestoes();
+        buscarDoZero();
+      } else if (btn.dataset.tag) {
+        $('q').value = btn.dataset.tag;
+        fecharSugestoes();
+        buscarDoZero();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  $('prev').addEventListener('click', function () { carregar(estado.pagina - 1); });
+  $('next').addEventListener('click', function () { carregar(estado.pagina + 1); });
+
+  // -------------------------------------------------------------------------
+  // Sugestões de busca
+  // -------------------------------------------------------------------------
+  // A API não tem endpoint de sugestões. As sugestões saem de duas fontes:
+  //   1) um vocabulário base de termos do domínio (funciona com o campo vazio)
+  //   2) as tags que voltam nos resultados da busca (cresce conforme se usa)
+  // A segunda é a que importa: pesquisando "loira", as tags dos próprios
+  // vídeos trazem "loira", "blonde", "cabelo claro" etc.
+
+  var VOCABULARIO = [
+    'loira', 'morena', 'ruiva', 'negra', 'asiática', 'latina',
+    'amador', 'caseiro', 'novinha', 'madura', 'milf', 'jovem',
+    'solo', 'casal', 'lésbica', 'anal', 'oral', 'hardcore',
+    'pov', 'hd', '4k', 'compilação', 'completo', 'webcam',
+    'brasileira', 'gringa', 'tatuada', 'magra', 'gostosa', 'sensual'
+  ];
+
+  var tagsColetadas = new Set();
+  var sugestaoAtiva = -1;
+  var sugestoesAtuais = [];
+
+  function normalizar(s) {
+    // Remove acentos, para "asiatica" achar "asiática".
+    // ̀-ͯ é o bloco dos acentos combinantes que o NFD separa.
+    // Escrito com escape para não depender de caracteres invisíveis no arquivo.
+    return String(s).toLowerCase().normalize('NFD')
+      .replace(/[̀-ͯ]/g, '');
+  }
+
+  function coletarTags(videos) {
+    videos.forEach(function (v) {
+      v.keywords.forEach(function (k) {
+        var t = k.trim().toLowerCase();
+        if (t.length >= 3 && t.length <= 28) tagsColetadas.add(t);
+      });
+    });
+  }
+
+  function montarSugestoes(termo) {
+    var alvo = normalizar(termo);
+
+    if (!alvo) {
+      // Campo vazio: mostra um punhado de termos populares.
+      return VOCABULARIO.slice(0, 8).map(function (t) {
+        return { termo: t, tipo: 'sugestão' };
+      });
+    }
+
+    var vistos = new Set();
+    var saida = [];
+
+    function adicionar(termo, tipo) {
+      if (vistos.has(termo)) return;
+      vistos.add(termo);
+      saida.push({ termo: termo, tipo: tipo });
+    }
+
+    // 1) tags reais dos vídeos — mais relevantes, vêm primeiro
+    tagsColetadas.forEach(function (t) {
+      if (normalizar(t).indexOf(alvo) !== -1) adicionar(t, 'tag');
+    });
+
+    // 2) vocabulário base
+    VOCABULARIO.forEach(function (t) {
+      if (normalizar(t).indexOf(alvo) !== -1) adicionar(t, 'sugestão');
+    });
+
+    // 3) o próprio termo digitado, como busca literal
+    adicionar(termo.trim(), 'buscar');
+
+    return saida.slice(0, 9);
+  }
+
+  function marcarTrecho(texto, termo) {
+    // Realça o trecho digitado dentro da sugestão, sem innerHTML.
+    var frag = document.createDocumentFragment();
+    var alvo = normalizar(termo);
+    if (!alvo) { frag.appendChild(document.createTextNode(texto)); return frag; }
+
+    var pos = normalizar(texto).indexOf(alvo);
+    if (pos === -1) { frag.appendChild(document.createTextNode(texto)); return frag; }
+
+    frag.appendChild(document.createTextNode(texto.slice(0, pos)));
+    var b = document.createElement('b');
+    b.textContent = texto.slice(pos, pos + alvo.length);
+    frag.appendChild(b);
+    frag.appendChild(document.createTextNode(texto.slice(pos + alvo.length)));
+    return frag;
+  }
+
+  var iconeLupa = '<svg class="sugestao__icone" viewBox="0 0 24 24" aria-hidden="true">' +
+                  '<circle cx="11" cy="11" r="7"></circle>' +
+                  '<path d="M16.5 16.5 21 21"></path></svg>';
+
+  function renderizarSugestoes(termo) {
+    var lista = $('sugestoes');
+    var campo = $('q');
+
+    sugestoesAtuais = montarSugestoes(termo);
+    sugestaoAtiva = -1;
+    lista.replaceChildren();
+
+    if (!sugestoesAtuais.length) { fecharSugestoes(); return; }
+
+    sugestoesAtuais.forEach(function (s, i) {
+      var li = document.createElement('li');
+      li.className = 'sugestao';
+      li.id = 'sugestao-' + i;
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', 'false');
+
+      var ic = document.createElement('span');
+      ic.innerHTML = iconeLupa; // string fixa, sem dado externo
+      li.appendChild(ic.firstChild);
+
+      var txt = document.createElement('span');
+      txt.className = 'sugestao__termo';
+      txt.appendChild(marcarTrecho(s.termo, termo));
+      li.appendChild(txt);
+
+      li.appendChild(Object.assign(document.createElement('span'), {
+        className: 'sugestao__tipo', textContent: s.tipo
+      }));
+
+      // mousedown em vez de click: o blur do campo chega antes do click
+      li.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        escolherSugestao(i);
+      });
+
+      lista.appendChild(li);
+    });
+
+    lista.hidden = false;
+    campo.setAttribute('aria-expanded', 'true');
+  }
+
+  function fecharSugestoes() {
+    var lista = $('sugestoes');
+    if (!lista) return;
+    lista.hidden = true;
+    lista.replaceChildren();
+    $('q').setAttribute('aria-expanded', 'false');
+    $('q').removeAttribute('aria-activedescendant');
+    sugestaoAtiva = -1;
+    sugestoesAtuais = [];
+  }
+
+  function destacar(indice) {
+    var itens = $('sugestoes').querySelectorAll('.sugestao');
+    itens.forEach(function (li, i) {
+      var on = i === indice;
+      li.setAttribute('aria-selected', on ? 'true' : 'false');
+      if (on) li.scrollIntoView({ block: 'nearest' });
+    });
+
+    sugestaoAtiva = indice;
+    if (indice >= 0) {
+      $('q').setAttribute('aria-activedescendant', 'sugestao-' + indice);
+    } else {
+      $('q').removeAttribute('aria-activedescendant');
+    }
+  }
+
+  function escolherSugestao(indice) {
+    var s = sugestoesAtuais[indice];
+    if (!s) return;
+    $('q').value = s.termo;
+    fecharSugestoes();
+    buscarDoZero();
+  }
+
+  // debounce: não monta sugestao a cada tecla, e não estoura a API
+  var debounceId = null;
+
+  $('q').addEventListener('input', function () {
+    clearTimeout(debounceId);
+    var termo = $('q').value;
+    debounceId = setTimeout(function () { renderizarSugestoes(termo); }, 180);
+  });
+
+  $('q').addEventListener('keydown', function (e) {
+    var n = sugestoesAtuais.length;
+
+    if (e.key === 'ArrowDown' && n) {
+      e.preventDefault();
+      destacar(sugestaoAtiva < n - 1 ? sugestaoAtiva + 1 : 0);
+    } else if (e.key === 'ArrowUp' && n) {
+      e.preventDefault();
+      destacar(sugestaoAtiva > 0 ? sugestaoAtiva - 1 : n - 1);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (sugestaoAtiva >= 0) {
+        escolherSugestao(sugestaoAtiva);
+      } else {
+        fecharSugestoes();
+        buscarDoZero();
+      }
+    } else if (e.key === 'Escape') {
+      fecharSugestoes();
+    }
+  });
+
+  $('q').addEventListener('blur', function () {
+    // pequeno atraso para o mousedown da sugestão vencer o blur
+    setTimeout(fecharSugestoes, 120);
+  });
+
+  $('mClose').addEventListener('click', fecharCaixa);
+  $('modal').addEventListener('cancel', function (e) { e.preventDefault(); fecharCaixa(); });
+  $('modal').addEventListener('click', function (e) {
+    if (e.target === $('modal')) fecharCaixa();
+  });
+
+  // -------------------------------------------------------------------------
+  // Categorias
+  // -------------------------------------------------------------------------
+  // IMPORTANTE: a API do Eporner não tem endpoint de categorias. Só existem
+  // search, id e removed. Esta lista é curada à mão e cada item vira uma
+  // busca de texto (query=...). Não é a taxonomia oficial do site.
+  //
+  // Para adicionar uma categoria, basta incluir um termo no grupo desejado.
+  // Prefira termos que existam como tag nos vídeos: a busca é literal.
+
+  var CATEGORIAS = [
+    { grupo: 'Cabelo', itens: ['loira', 'morena', 'ruiva', 'negra', 'castanha'] },
+    { grupo: 'Corpo', itens: ['magra', 'gostosa', 'grandes', 'pequenos', 'tatuada', 'alta'] },
+    { grupo: 'Origem', itens: ['brasileira', 'latina', 'asiática', 'japonesa', 'gringa'] },
+    { grupo: 'Trans', itens: ['trans', 'transsexual', 'shemale', 't-girl'] },
+    { grupo: 'Estilo', itens: ['amador', 'caseiro', 'profissional', 'pov', 'webcam', 'compilação'] },
+    { grupo: 'Popular', itens: ['novinha', 'madura', 'milf', 'jovem', 'gostosa'] },
+    { grupo: 'Ato', itens: ['solo', 'casal', 'lésbica', 'anal', 'oral', 'hardcore'] },
+    { grupo: 'Qualidade', itens: ['hd', '4k', 'completo', 'longo'] }
+  ];
+
+  function montarGaveta() {
+    var alvo = $('catGrupos');
+    if (!alvo || alvo.childElementCount) return;   // monta uma vez só
+
+    CATEGORIAS.forEach(function (g) {
+      var box = el('section', 'cat-grupo');
+
+      var h = el('h3', 'cat-grupo__titulo', g.grupo);
+      box.appendChild(h);
+
+      var ul = el('ul', 'cat-lista');
+      ul.setAttribute('aria-label', g.grupo);
+
+      g.itens.forEach(function (termo) {
+        var li = el('li');
+        var b = el('button', 'cat-item', termo);
+        b.type = 'button';
+        b.addEventListener('click', function () {
+          $('q').value = termo;
+          fraseAtual(termo);
+          $('gaveta').close();
+          fecharSugestoes();
+          buscarDoZero();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        li.appendChild(b);
+        ul.appendChild(li);
+      });
+
+      box.appendChild(ul);
+      alvo.appendChild(box);
+    });
+  }
+
+  // limpa a marcação do menu quando a busca vem de outro lugar
+  // (o termo ativo já aparece escrito no campo de busca)
+  function fraseAtual() {
+    document.querySelectorAll('.menu__link').forEach(function (b) {
+      b.removeAttribute('aria-current');
+    });
+  }
+
+  $('abrirCategorias').addEventListener('click', function () {
+    montarGaveta();
+    $('gaveta').showModal();
+  });
+
+  $('fecharCategorias').addEventListener('click', function () { $('gaveta').close(); });
+
+  $('gaveta').addEventListener('click', function (e) {
+    if (e.target === $('gaveta')) $('gaveta').close();   // clique no fundo
+  });
+
+  // -------------------------------------------------------------------------
+  // Popunder — leia antes de ligar
+  // -------------------------------------------------------------------------
+  // Popunder paga bem por impressão, mas a entrega é baixa: navegador bloqueia
+  // window.open sem gesto do usuário, e adblock bloqueia o script da rede.
+  // Na prática, espere entre 30% e 50% de entrega.
+  //
+  // E o mais importante: NÃO funciona dentro do iframe do player. O vídeo vem
+  // de outro domínio, e ali o navegador bloqueia pop-up. Só vale na grade.
+  //
+  // Por isso o código abaixo:
+  //   - só dispara em clique real (nunca no load, nunca no scroll)
+  //   - uma vez por sessão, com marca em sessionStorage
+  //   - nunca em celular (pop-up em mobile é hostil e converte mal)
+  //
+  // Deixe POPUNDER_ATIVO = false até ter a rede escolhida. Colocar um
+  // window.open de teste aqui só treina o usuário a fechar aba.
+
+  var POPUNDER_ATIVO = false;
+  var POPUNDER_URL = '';   // ex.: 'https://sua-rede.example/click?zone=123'
+
+  function podePopunder() {
+    if (!POPUNDER_ATIVO || !POPUNDER_URL) return false;
+    if (window.matchMedia('(max-width: 64rem)').matches) return false;
+    try {
+      if (sessionStorage.getItem('xsodoma_popunder')) return false;
+    } catch (e) {
+      return false;   // sessionStorage bloqueado: não insiste
+    }
+    return true;
+  }
+
+  function dispararPopunder() {
+    if (!podePopunder()) return;
+
+    // abre a nova janela atrás; se o navegador bloquear, não força nada
+    var w = window.open(POPUNDER_URL, '_blank');
+    if (!w) return;   // bloqueado: sai quieto
+
+    try { sessionStorage.setItem('xsodoma_popunder', '1'); } catch (e) {}
+
+    // devolve o foco para esta aba, que é o comportamento de popunder
+    try { window.focus(); } catch (e) {}
+  }
+
+  // Só em clique na grade — gesto do usuário é o que o navegador exige.
+  $('prateleira').addEventListener('click', dispararPopunder, { once: false });
+
+  // -------------------------------------------------------------------------
+  // Ligar a página
+  // -------------------------------------------------------------------------
+
+  sondarCors().then(function () { carregar(1); });
+})();
+</script>
+</body>
+</html>

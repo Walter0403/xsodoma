@@ -1,0 +1,3328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XSodoma — Vídeos Adultos Grátis</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Reset e Base */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+:root {
+  --preto: #000000;
+  --preto-card: #0D0D0D;
+  --cinza-escuro: #1A1A1A;
+  --cinza-medio: #2A2A2A;
+  --cinza-borda: #333333;
+  --texto-principal: #FFFFFF;
+  --texto-secundario: #B3B3B3;
+  --vermelho: #E8412C;
+  --vermelho-hover: #FF5940;
+}
+
+body {
+  background: var(--preto);
+  color: var(--texto-principal);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.header {
+  background: var(--preto);
+  border-bottom: 1px solid var(--cinza-borda);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 140px;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.logo:hover {
+  opacity: 0.9;
+}
+
+.logo:active {
+  transform: scale(0.98);
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem 0.5rem 0.8rem;
+  color: var(--texto-principal);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--cinza-medio);
+}
+
+.search-input::placeholder {
+  color: var(--texto-secundario);
+}
+
+.search-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-btn:hover {
+  color: var(--texto-principal);
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid var(--cinza-borda);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--texto-secundario);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  color: var(--texto-principal);
+}
+
+.nav-item.active {
+  color: var(--texto-principal);
+  border-bottom-color: var(--vermelho);
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.top-badge {
+  background: var(--vermelho);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+/* Filters */
+.filters {
+  background: var(--preto);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--cinza-borda);
+}
+
+.filters-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-label {
+  color: var(--texto-secundario);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.filter-select {
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 4px;
+  color: var(--texto-principal);
+  padding: 0.6rem 0.8rem;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  min-width: 150px;
+}
+
+.filter-select:hover {
+  border-color: var(--cinza-medio);
+}
+
+/* Ad Space */
+.ad-space {
+  background: var(--cinza-escuro);
+  border: 1px dashed var(--cinza-borda);
+  border-radius: 4px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 1400px;
+  position: relative;
+}
+
+.ad-label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--cinza-medio);
+  color: var(--texto-secundario);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.ad-placeholder {
+  color: var(--texto-secundario);
+  font-size: 13px;
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.video-count {
+  color: var(--texto-secundario);
+  font-size: 13px;
+  margin: 1.5rem 0 1rem;
+}
+
+/* Layout Principal */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Video Grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar .video-card {
+  display: flex;
+  gap: 0.8rem;
+  background: var(--preto-card);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.sidebar .video-card:hover {
+  background: var(--cinza-escuro);
+}
+
+.sidebar .video-thumb {
+  position: relative;
+  width: 160px;
+  height: 90px;
+  flex-shrink: 0;
+  background: var(--cinza-escuro);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.sidebar .video-thumb::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.sidebar .video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+.sidebar .video-duration {
+  position: absolute;
+  bottom: 0.3rem;
+  right: 0.3rem;
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.sidebar .video-info {
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sidebar .video-title {
+  color: var(--texto-principal);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sidebar .video-meta {
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+.video-card {
+  background: var(--preto-card);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+}
+
+.video-thumb {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: var(--cinza-escuro);
+  overflow: hidden;
+}
+
+.video-thumb::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.video-thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+.video-rating {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+  pointer-events: none;
+  width: 3rem;
+  height: 3rem;
+  background: white;
+  border: 3px solid var(--vermelho);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #000;
+  transform: rotate(-6deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.rating-value {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.rating-max {
+  font-size: 9px;
+  color: #666;
+}
+
+.video-duration {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.video-new-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--vermelho);
+  color: white;
+  padding: 0.25rem 0.6rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.video-info {
+  padding: 1rem;
+}
+
+.video-title {
+  color: var(--texto-principal);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-meta {
+  display: flex;
+  gap: 1rem;
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+
+/* Pagination - Estilo Tube Tube */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 3rem 0 2rem;
+  user-select: none;
+  flex-wrap: wrap;
+}
+
+.page-nav-btn {
+  height: 44px;
+  min-width: 64px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid #1e1e1e;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.page-nav-btn.prev-btn {
+  background: #141414;
+  color: #444444;
+}
+
+.page-nav-btn.prev-btn:not(:disabled) {
+  color: #ffffff;
+  cursor: pointer;
+  border-color: #2a2a2a;
+}
+
+.page-nav-btn.prev-btn:not(:disabled):hover {
+  background: #222222;
+  color: #FF9900;
+  border-color: #3a3a3a;
+}
+
+.page-nav-btn.prev-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.page-nav-btn.next-btn {
+  background: #FF9900;
+  color: #000000;
+  border: none;
+  font-weight: 800;
+}
+
+.page-nav-btn.next-btn:not(:disabled):hover {
+  background: #FFA726;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 153, 0, 0.4);
+}
+
+.page-nav-btn.next-btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.page-nav-btn.next-btn:disabled {
+  background: #141414;
+  color: #444444;
+  border: 1px solid #1e1e1e;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.page-numbers-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-num-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #141414;
+  border: 1px solid #1e1e1e;
+  border-radius: 4px;
+  color: #FFFFFF;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.page-num-btn:hover {
+  background: #242424;
+  border-color: #3a3a3a;
+  color: #FF9900;
+}
+
+.page-num-btn.active {
+  background: #222222;
+  border-color: #FF9900;
+  color: #FF9900;
+  box-shadow: 0 0 10px rgba(255, 153, 0, 0.25);
+}
+
+@media (max-width: 600px) {
+  .page-nav-btn {
+    min-width: 48px;
+    height: 40px;
+    padding: 0 10px;
+  }
+  .page-num-btn {
+    width: 38px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .pagination {
+    gap: 6px;
+  }
+  .page-numbers-container {
+    gap: 6px;
+  }
+}
+
+/* Cookie Consent Banner (LGPD / Privacidade) */
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  width: calc(100% - 32px);
+  max-width: 960px;
+  background: rgba(16, 16, 16, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 153, 0, 0.2);
+  padding: 1.15rem 1.4rem;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  animation: slideUpCookie 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpCookie {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.cookie-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.cookie-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 153, 0, 0.12);
+  border: 1px solid rgba(255, 153, 0, 0.3);
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+}
+
+.cookie-text h4 {
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cookie-text p {
+  color: #B3B3B3;
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.cookie-text strong {
+  color: #FFFFFF;
+}
+
+.cookie-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  padding: 0.65rem 1.25rem;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', -apple-system, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  outline: none;
+}
+
+.cookie-btn-accept {
+  background: #FF9900;
+  color: #000000;
+  border: none;
+}
+
+.cookie-btn-accept:hover {
+  background: #FFA726;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 153, 0, 0.45);
+}
+
+.cookie-btn-decline {
+  background: #202020;
+  color: #CCCCCC;
+  border: 1px solid #333333;
+}
+
+.cookie-btn-decline:hover {
+  background: #2A2A2A;
+  color: #FFFFFF;
+  border-color: #555555;
+}
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    bottom: 12px;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .cookie-content {
+    align-items: flex-start;
+  }
+  .cookie-actions {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+  .cookie-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+  }
+}
+
+/* Loading/Error */
+.loading, .error {
+  text-align: center;
+  padding: 3rem;
+  color: var(--texto-secundario);
+}
+
+.error {
+  color: var(--vermelho);
+}
+
+/* ===========================================================================
+   YouTube Watch Page Styles
+   =========================================================================== */
+
+.yt-watch-view {
+  display: none;
+  background: #0f0f0f;
+  min-height: 100vh;
+  color: #fff;
+  padding-bottom: 4rem;
+}
+
+.yt-watch-view.active {
+  display: block;
+}
+
+body.watching-video nav.nav,
+body.watching-video .nav {
+  display: none !important;
+}
+
+.yt-container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 22px;
+}
+
+/* Coluna Principal (Player + Info) */
+.yt-main {
+  min-width: 0;
+  max-width: 820px;
+}
+
+.yt-player-wrapper {
+  width: 100%;
+  max-width: 820px;
+  aspect-ratio: 16 / 9;
+  max-height: min(440px, calc(100vh - 190px));
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.yt-player-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.yt-video-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f1f1;
+  line-height: 1.3;
+  margin: 8px 0 6px;
+  max-width: 820px;
+}
+
+/* Linha do Canal e Ações estilo YouTube */
+.yt-channel-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #272727;
+  max-width: 820px;
+}
+
+.yt-channel-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.yt-channel-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e8412c, #ff7b00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #fff;
+  font-size: 13px;
+  box-shadow: 0 2px 6px rgba(232, 65, 44, 0.3);
+}
+
+.yt-channel-text h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+
+.yt-verified-icon {
+  width: 13px;
+  height: 13px;
+  fill: #aaa;
+}
+
+.yt-channel-text span {
+  font-size: 10px;
+  color: #aaa;
+}
+
+.yt-sub-btn {
+  background: #f1f1f1;
+  color: #0f0f0f;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-left: 2px;
+}
+
+.yt-sub-btn:hover {
+  opacity: 0.9;
+}
+
+/* Botões pílula do YouTube */
+.yt-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.yt-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #272727;
+  color: #f1f1f1;
+  border: none;
+  padding: 4px 9px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.yt-pill-btn:hover {
+  background: #3f3f3f;
+}
+
+.yt-pill-btn:active {
+  transform: scale(0.97);
+}
+
+.yt-pill-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.yt-back-btn {
+  background: var(--vermelho);
+  color: #fff;
+  font-weight: 600;
+}
+
+.yt-back-btn:hover {
+  background: var(--vermelho-hover);
+}
+
+/* Caixa de Descrição arredondada do YouTube */
+.yt-description-box {
+  background: #212121;
+  border-radius: 8px;
+  padding: 7px 11px;
+  margin-top: 6px;
+  max-width: 820px;
+  cursor: default;
+  transition: background 0.2s;
+}
+
+.yt-description-box:hover {
+  background: #262626;
+}
+
+.yt-desc-meta {
+  font-size: 12px;
+  font-weight: 600;
+  color: #f1f1f1;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.yt-desc-meta span {
+  color: #aaa;
+  font-weight: 400;
+}
+
+.yt-desc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.yt-tag-pill {
+  color: #3ea6ff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.yt-tag-pill:hover {
+  text-decoration: underline;
+  color: #6bb9ff;
+}
+
+/* Coluna Lateral da Página de Vídeo (Estilo YouTube) */
+.yt-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Chips de Filtro da Sidebar */
+.yt-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+.yt-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.yt-chip {
+  background: #272727;
+  color: #f1f1f1;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.yt-chip:hover {
+  background: #3f3f3f;
+}
+
+.yt-chip.active {
+  background: #f1f1f1;
+  color: #0f0f0f;
+  font-weight: 600;
+}
+
+/* Lista de Vídeos Relacionados (Cards Horizontais YouTube) */
+.yt-related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.yt-related-card {
+  display: flex;
+  gap: 10px;
+  padding: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.yt-related-card:hover {
+  background: #272727;
+}
+
+.yt-thumb-box {
+  width: 150px;
+  min-width: 150px;
+  height: 84px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: #181818;
+  flex-shrink: 0;
+}
+
+.yt-thumb-box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.yt-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+.yt-duration-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 4px;
+  border-radius: 4px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.yt-new-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.yt-related-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 2px;
+}
+
+.yt-related-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f1f1;
+  line-height: 1.3;
+  margin: 0 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.yt-related-channel {
+  font-size: 12px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.yt-related-meta {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* ===========================================================================
+   Botões de Ação do Vídeo - Estados Ativos
+   =========================================================================== */
+.yt-sub-btn.favorited {
+  background: #e8412c !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(232, 65, 44, 0.5);
+}
+
+.yt-pill-btn.liked {
+  background: rgba(62, 166, 255, 0.2) !important;
+  color: #3ea6ff !important;
+  border: 1px solid rgba(62, 166, 255, 0.4) !important;
+}
+
+.yt-pill-btn.liked svg {
+  fill: #3ea6ff !important;
+  stroke: #3ea6ff !important;
+}
+
+.yt-pill-btn.copied {
+  background: rgba(46, 204, 113, 0.2) !important;
+  color: #2ecc71 !important;
+  border: 1px solid rgba(46, 204, 113, 0.4) !important;
+}
+
+/* Toast Notificações Moderno */
+.xsodoma-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: #1c1c1c;
+  color: #ffffff;
+  border: 1px solid #3a3a3a;
+  padding: 10px 22px;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(232, 65, 44, 0.25);
+  z-index: 9999999;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.xsodoma-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===========================================================================
+   Age Verification Fullscreen Modal (Estilo Oficial Requisitado)
+   =========================================================================== */
+.age-gate-fullscreen {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.age-gate-content {
+  max-width: 580px;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  margin: auto;
+  padding: 1rem 0;
+}
+
+.age-logo-wrapper {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.age-site-logo {
+  max-height: 52px;
+  object-fit: contain;
+}
+
+.age-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 10px 0 16px;
+  letter-spacing: -0.3px;
+}
+
+.age-pill-badge {
+  display: inline-block;
+  border: 1px solid #4a4a4a;
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 11.5px;
+  color: #e5e5e5;
+  background: transparent;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.age-legal-paragraph {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #d1d1d1;
+  margin: 0 auto 14px;
+  max-width: 540px;
+}
+
+.age-police-notice {
+  margin-bottom: 24px;
+}
+
+.age-police-notice a {
+  color: #ff9000;
+  font-weight: 700;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+
+.age-police-notice a:hover {
+  text-decoration: underline;
+}
+
+.age-action-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.age-pill-action-btn {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 18px;
+  border-radius: 25px;
+  background: #000000;
+  border: 1px solid #5a5a5a;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+.age-pill-action-btn:hover {
+  background: #181818;
+  border-color: #888888;
+}
+
+.age-pill-action-btn:active {
+  transform: scale(0.98);
+}
+
+.age-parental-section {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.age-parental-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.age-info-line {
+  font-size: 12px;
+  line-height: 1.55;
+  color: #d0d0d0;
+  margin-bottom: 8px;
+}
+
+.age-link-line {
+  margin: 8px 0;
+}
+
+.age-orange-link {
+  color: #ff9000;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.age-orange-link:hover {
+  text-decoration: underline;
+  color: #ffa726;
+}
+
+.age-strong-link {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ===========================================================================
+   Preroll Ad Modal (Estilo Adult Tube Profissional)
+   =========================================================================== */
+.preroll-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  animation: fadeInAd 0.25s ease-out;
+}
+
+@keyframes fadeInAd {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.preroll-card {
+  background: linear-gradient(180deg, #181818 0%, #0d0d0d 100%);
+  border: 1px solid rgba(232, 65, 44, 0.5);
+  box-shadow: 0 0 45px rgba(232, 65, 44, 0.35), 0 20px 50px rgba(0, 0, 0, 0.9);
+  border-radius: 14px;
+  max-width: 600px;
+  width: 100%;
+  overflow: hidden;
+  color: #fff;
+  position: relative;
+}
+
+.preroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: #111;
+  border-bottom: 1px solid #282828;
+}
+
+.preroll-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff9000;
+  letter-spacing: 0.5px;
+}
+
+.preroll-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff9000;
+  box-shadow: 0 0 8px #ff9000;
+}
+
+.preroll-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preroll-skip-btn {
+  background: #252525;
+  color: #aaa;
+  border: 1px solid #444;
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: not-allowed;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.preroll-skip-btn.ready {
+  background: linear-gradient(135deg, #e8412c 0%, #ff5940 100%);
+  color: #fff;
+  border-color: #ff5940;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(232, 65, 44, 0.5);
+}
+
+.preroll-skip-btn.ready:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.preroll-close-x {
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preroll-close-x:hover {
+  color: #fff;
+}
+
+.preroll-body {
+  padding: 1.5rem;
+  background: radial-gradient(circle at center, #231212 0%, #0d0d0d 100%);
+}
+
+.preroll-banner-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.preroll-banner-content {
+  text-align: center;
+  padding: 0.8rem 0;
+}
+
+.preroll-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(232, 65, 44, 0.2);
+  border: 1px solid rgba(232, 65, 44, 0.5);
+  color: #ff5940;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.live-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3b30;
+  box-shadow: 0 0 10px #ff3b30;
+  animation: pulseLive 1.2s infinite;
+}
+
+@keyframes pulseLive {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.preroll-ad-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+
+.preroll-ad-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #ccc;
+  max-width: 480px;
+  margin: 0 auto 16px;
+}
+
+.preroll-ad-features {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.preroll-feat {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.preroll-cta-wrapper {
+  margin-top: 8px;
+}
+
+.preroll-cta-btn {
+  background: linear-gradient(135deg, #e8412c 0%, #ff7b00 100%);
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 12px 28px;
+  border-radius: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(232, 65, 44, 0.5);
+  transition: all 0.2s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preroll-cta-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 25px rgba(232, 65, 44, 0.7);
+  filter: brightness(1.1);
+}
+
+.preroll-network-tag {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 10.5px;
+  color: #666;
+}
+
+.preroll-footer-bar {
+  padding: 8px 16px;
+  background: #111;
+  border-top: 1px solid #222;
+  text-align: center;
+  font-size: 11px;
+  color: #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-top {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .logo {
+    width: 150px;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .nav {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  .filters {
+    padding: 1rem;
+  }
+
+  .filters-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .container {
+    padding: 0 1rem 3rem;
+  }
+
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .video-title {
+    font-size: 13px;
+  }
+
+  .modal {
+    padding: 1rem;
+  }
+}
+
+/* Gaveta de Categorias */
+.categories-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 380px;
+  max-width: 88vw;
+  height: 100vh;
+  background-color: var(--preto-card);
+  border-left: 1px solid var(--cinza-borda);
+  z-index: 300;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.categories-drawer.open {
+  right: 0;
+}
+
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 250;
+  display: none;
+}
+
+.drawer-overlay.active {
+  display: block;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--cinza-borda);
+  position: sticky;
+  top: 0;
+  background-color: var(--preto-card);
+  z-index: 10;
+}
+
+.drawer-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.close-drawer {
+  background: var(--cinza-escuro);
+  border: 1px solid var(--cinza-borda);
+  color: var(--texto-principal);
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.close-drawer:hover {
+  background: var(--cinza-medio);
+}
+
+.categories-content {
+  padding: 1.5rem;
+}
+
+.category-group {
+  margin-bottom: 1.8rem;
+}
+
+.category-group h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--vermelho);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-tag {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--cinza-escuro);
+  color: var(--texto-secundario);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.category-tag:hover {
+  background-color: var(--vermelho);
+  border-color: var(--vermelho);
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<!-- Modal de Verificação de Idade (+18) -->
+<div id="ageGateModal" class="age-gate-fullscreen" style="display: none;">
+  <div class="age-gate-content">
+    <div class="age-logo-wrapper">
+      <img src="uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg" onerror="if(this.src.indexOf('../')===-1)this.src='../uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg'" alt="xSodoma" class="age-site-logo">
+    </div>
+
+    <h1 class="age-main-title">Este é um site adulto</h1>
+
+    <div class="age-pill-badge">Aviso aos usuários</div>
+
+    <p class="age-legal-paragraph">
+      Este site contém material com restrições de idade, incluindo nudez e representações explícitas de atividade sexual. Ao se registrar, você afirma que tem pelo menos 18 anos de idade ou a maioridade na jurisdição de onde está acessando o site e que consente em visualizar conteúdo sexualmente explícito.
+    </p>
+
+    <div class="age-police-notice">
+      <a href="javascript:void(0)">Notificação às autoridades policiais</a>
+    </div>
+
+    <div class="age-action-buttons">
+      <button id="btnAgeConfirm" class="age-pill-action-btn">
+        Tenho 18 anos ou mais - Entrar
+      </button>
+      <button id="btnAgeReject" class="age-pill-action-btn">
+        Tenho menos de 18 anos - Sair
+      </button>
+    </div>
+
+    <div class="age-parental-section">
+      <h3 class="age-parental-title">Controle dos Pais</h3>
+      
+      <p class="age-info-line">
+        <a href="javascript:void(0)" class="age-orange-link">Configure o Family Safety</a>, 
+        <a href="javascript:void(0)" class="age-orange-link">Bloqueie o Acesso a Sites de Conteúdo Adulto</a> 
+        e ative o SafeSearch do seu site de pesquisas.
+      </p>
+
+      <p class="age-info-line">
+        Visite a nossa página de <a href="javascript:void(0)" class="age-orange-link">Controles Parentais</a> 
+        para obter orientações passo a passo sobre como bloquear o acesso a este site.
+      </p>
+
+      <p class="age-link-line">
+        <a href="javascript:void(0)" class="age-orange-link age-strong-link">Termos de Serviço</a>
+      </p>
+
+      <p class="age-info-line">
+        Visite o nosso <a href="javascript:void(0)" class="age-orange-link">Centro de Saúde Sexual</a> 
+        para obter informações e recursos que apoiam a saúde e o bem-estar sexual.
+      </p>
+
+      <p class="age-link-line">
+        <a href="javascript:void(0)" class="age-orange-link age-strong-link">Remoção dos conteúdos</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-top">
+    <a href="#" class="logo" id="siteLogo" onclick="goToHome(event)" title="Página inicial do xSodoma">
+      <img src="uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg" onerror="if(this.src.indexOf('../')===-1)this.src='../uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg'" alt="XSodoma">
+    </a>
+
+    <div class="search-container">
+      <form id="searchForm" class="search-box" onsubmit="handleSearch(event)">
+        <input
+          type="search"
+          id="searchInput"
+          class="search-input"
+          placeholder="Pesquisar vídeos..."
+          autocomplete="off"
+        >
+        <button type="submit" id="searchBtn" class="search-btn" aria-label="Pesquisar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="nav-item active" data-filter="latest">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      Mais recentes
+    </button>
+
+    <button class="nav-item" data-filter="top-weekly">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+        <polyline points="17 6 23 6 23 12"></polyline>
+      </svg>
+      Top da semana
+    </button>
+
+    <button class="nav-item" data-filter="most-popular">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+      Mais vistos
+    </button>
+
+    <button class="nav-item" data-filter="top-rated">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      Melhor avaliados
+    </button>
+
+    <button class="nav-item" data-filter="longest">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      Longos
+    </button>
+
+    <button class="nav-item" data-tag="loira">
+      <span class="top-badge">TOP</span>
+      Loiras
+    </button>
+
+    <button class="nav-item" data-tag="morena">
+      Morenas
+    </button>
+
+    <button class="nav-item" data-tag="ruiva">
+      Ruivas
+    </button>
+
+    <button class="nav-item" data-tag="amador">
+      Amador
+    </button>
+
+    <button class="nav-item" id="navFavoritesBtn">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+      Favoritos
+    </button>
+
+    <button class="nav-item" id="categoriesBtn">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+        <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+      </svg>
+      Categorias
+    </button>
+</header>
+
+<!-- Gaveta de Categorias -->
+<div id="categoriesDrawer" class="categories-drawer">
+  <div class="drawer-header">
+    <h2>Categorias</h2>
+    <button id="closeDrawer" class="close-drawer" aria-label="Fechar">✕ Fechar</button>
+  </div>
+  <div id="categoriesContent" class="categories-content"></div>
+</div>
+<div id="drawerOverlay" class="drawer-overlay"></div>
+
+
+<!-- Home View (Grade de vídeos) -->
+<div id="homeView">
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Ad Space Topo -->
+    <div class="ad-space">
+      <span class="ad-label">PUBLICIDADE</span>
+      <p class="ad-placeholder">
+        Espaço reservado para anúncio 728x90.<br>
+        Cole aqui o script da sua rede.
+      </p>
+    </div>
+
+    <div id="videoCount" class="video-count"></div>
+
+    <!-- Video Grid -->
+    <div id="videoGrid" class="video-grid"></div>
+
+    <div id="loading" class="loading">Carregando...</div>
+    <div id="error" class="error" style="display: none;"></div>
+
+    <!-- Pagination (Estilo Tube - Sempre visível) -->
+    <nav class="pagination" id="pagination" aria-label="Navegação de páginas">
+      <button id="prevBtn" class="page-nav-btn prev-btn" aria-label="Página anterior" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <div id="pageNumbers" class="page-numbers-container">
+        <button class="page-num-btn active" data-page="1" title="Página 1">1</button>
+        <button class="page-num-btn" data-page="2" title="Página 2">2</button>
+        <button class="page-num-btn" data-page="3" title="Página 3">3</button>
+        <button class="page-num-btn" data-page="4" title="Página 4">4</button>
+        <button class="page-num-btn" data-page="5" title="Página 5">5</button>
+        <button class="page-num-btn" data-page="6" title="Página 6">6</button>
+        <button class="page-num-btn" data-page="7" title="Página 7">7</button>
+        <button class="page-num-btn" data-page="8" title="Página 8">8</button>
+        <button class="page-num-btn" data-page="9" title="Página 9">9</button>
+        <button class="page-num-btn" data-page="10" title="Página 10">10</button>
+        <button class="page-num-btn" data-page="15" title="Página 15">15</button>
+        <button class="page-num-btn" data-page="20" title="Página 20">20</button>
+        <button class="page-num-btn" data-page="30" title="Página 30">30</button>
+        <button class="page-num-btn" data-page="50" title="Página 50">50</button>
+        <button class="page-num-btn" data-page="100" title="Página 100">100</button>
+      </div>
+      <button id="nextBtn" class="page-nav-btn next-btn" aria-label="Próxima página">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Ad Space Rodapé -->
+    <div class="ad-space" style="margin-top: 3rem;">
+      <span class="ad-label">PUBLICIDADE</span>
+      <p class="ad-placeholder">
+        Espaço reservado para anúncio 728x90.<br>
+        Cole aqui o script da sua rede.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: var(--preto); border-top: 1px solid var(--cinza-borda); padding: 2rem; text-align: center; color: var(--texto-secundario); font-size: 12px; margin-top: 2rem;">
+    <p>&copy; 2026 XSodoma. Todos os direitos reservados.</p>
+    <p style="margin-top: 0.5rem;">
+      Este site contém conteúdo adulto. Você deve ter 18+ anos para acessar.
+      &bull; <a href="javascript:void(0)" onclick="openCookieSettings()" style="color: #FF9900; text-decoration: underline; margin-left: 6px;">Privacidade e Cookies</a>
+    </p>
+  </footer>
+</div>
+
+<!-- Banner de Consentimento de Cookies (LGPD / Privacidade) -->
+<div id="cookieBanner" class="cookie-banner" style="display: none;" role="dialog" aria-live="polite" aria-label="Consentimento de Cookies">
+  <div class="cookie-content">
+    <div class="cookie-icon" aria-hidden="true">🍪</div>
+    <div class="cookie-text">
+      <h4>Nós valorizamos a sua privacidade</h4>
+      <p>
+        Utilizamos cookies e tecnologias similares para personalizar anúncios, fornecer recursos seguros e analisar o tráfego do site. 
+        Ao clicar em <strong>"Aceitar todos"</strong>, você concorda com o uso de cookies.
+      </p>
+    </div>
+  </div>
+  <div class="cookie-actions">
+    <button id="btnCookieDecline" class="cookie-btn cookie-btn-decline">Apenas essenciais</button>
+    <button id="btnCookieAccept" class="cookie-btn cookie-btn-accept">Aceitar todos</button>
+  </div>
+</div>
+
+<!-- Modal de Anúncio Pré-Roll Estilo Adult Tube -->
+<div id="prerollAdModal" class="preroll-overlay" style="display: none;">
+  <div class="preroll-card">
+    <div class="preroll-header">
+      <div class="preroll-badge">
+        <span class="preroll-badge-dot"></span>
+        PUBLICIDADE EXCLUSIVA +18
+      </div>
+      <div class="preroll-controls">
+        <button id="skipAdBtn" class="preroll-skip-btn" disabled>
+          Pular anúncio em <span id="skipTimer">4</span>s
+        </button>
+        <button id="closeAdBtn" class="preroll-close-x" title="Fechar anúncio">✕</button>
+      </div>
+    </div>
+
+    <!-- Conteúdo do Anúncio (Estilo ExoClick / JuicyAds / TrafficJunky) -->
+    <div class="preroll-body">
+      <a href="https://eporner.com" target="_blank" rel="noopener sponsored" class="preroll-banner-link">
+        <div class="preroll-banner-content">
+          <div class="preroll-live-indicator">
+            <span class="live-pulse"></span> AO VIVO AGORA
+          </div>
+          <h2 class="preroll-ad-title">CÂMERAS AO VIVO & CHAT PRIVADO</h2>
+          <p class="preroll-ad-desc">Mais de 1.840 modelos online na sua região. Conecte-se gratuitamente sem cadastro de cartão!</p>
+          <div class="preroll-ad-features">
+            <span class="preroll-feat">✓ Vídeo HD 1080p</span>
+            <span class="preroll-feat">✓ Chat Privado</span>
+            <span class="preroll-feat">✓ 100% Anônimo</span>
+          </div>
+          <div class="preroll-cta-wrapper">
+            <button class="preroll-cta-btn">
+              ASSISTIR AO VIVO GRÁTIS 🔥
+            </button>
+          </div>
+        </div>
+      </a>
+      
+      <!-- Espaço para script externo de rede de anúncios (ExoClick, JuicyAds, etc.) -->
+      <div class="preroll-network-tag">
+        <span>Anúncio patrocinado por rede parceira</span>
+      </div>
+    </div>
+
+    <div class="preroll-footer-bar">
+      <span>O vídeo começará automaticamente após o anúncio</span>
+    </div>
+  </div>
+</div>
+
+<!-- YouTube Watch Page View -->
+<section id="watchView" class="yt-watch-view" aria-label="Página do Vídeo">
+  <div class="yt-container">
+    <!-- Coluna Principal (Player + Info) -->
+    <div class="yt-main">
+      <div class="yt-player-wrapper">
+        <iframe id="modalPlayer" allowfullscreen allow="autoplay; fullscreen"></iframe>
+      </div>
+
+      <h1 id="modalTitle" class="yt-video-title"></h1>
+
+      <!-- Linha do Canal e Ações estilo YouTube -->
+      <div class="yt-channel-actions">
+        <div class="yt-channel-info">
+          <div class="yt-channel-avatar">X</div>
+          <div class="yt-channel-text">
+            <h4>
+              xSodoma HD
+              <svg class="yt-verified-icon" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg>
+            </h4>
+            <span id="videoAuthorSub">Canal Oficial • 1080p Full HD</span>
+          </div>
+          <button class="yt-sub-btn" id="favVideoBtn" onclick="toggleFavorite()">★ Favoritar</button>
+        </div>
+
+        <div class="yt-actions">
+          <button class="yt-pill-btn" id="btnLike" onclick="toggleLike()">
+            <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9A2 2 0 0 0 19.7 9H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            <span id="likeScoreText">Nota 4.9</span>
+          </button>
+          <button class="yt-pill-btn" id="btnShare" onclick="shareVideo()">
+            <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Compartilhar
+          </button>
+          <button class="yt-pill-btn yt-back-btn" onclick="closeModal()">
+            ✕ Voltar
+          </button>
+        </div>
+      </div>
+
+      <!-- Caixa de Descrição estilo YouTube -->
+      <div class="yt-description-box">
+        <div class="yt-desc-meta" id="modalStats">
+          <!-- Views, Data, Duração -->
+        </div>
+        <div class="yt-desc-tags" id="modalTags">
+          <!-- Tags estilo pílula azul -->
+        </div>
+      </div>
+
+      <!-- Anúncio abaixo do vídeo -->
+      <div class="ad-space" style="margin-top: 1.5rem;">
+        <span class="ad-label">PUBLICIDADE</span>
+        <p class="ad-placeholder">
+          Espaço reservado para anúncio 728x90.<br>
+          Cole aqui o script da sua rede.
+        </p>
+      </div>
+    </div>
+
+    <!-- Coluna Lateral (Sidebar com Chips e Relacionados) -->
+    <aside class="yt-sidebar">
+      <!-- Chips de Filtro estilo YouTube -->
+      <div class="yt-chips">
+        <button class="yt-chip active" data-chip="rel">Todos</button>
+        <button class="yt-chip" data-chip="pop">Mais vistos</button>
+        <button class="yt-chip" data-chip="top">Melhor avaliados</button>
+        <button class="yt-chip" data-chip="rec">Novos</button>
+      </div>
+
+      <!-- Lista de Cards Relacionados estilo YouTube -->
+      <div id="relatedVideos" class="yt-related-list"></div>
+
+      <!-- Anúncio na Sidebar -->
+      <div class="ad-space" style="margin: 0.5rem 0 0 0;">
+        <span class="ad-label">PUBLICIDADE</span>
+        <p class="ad-placeholder">Anúncio 300x250</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script src="eporner-api.js"></script>
+<script>
+// Configuração
+const API_BASE = 'https://www.eporner.com/api/v2/video/search/';
+let currentPage = 1;
+let currentQuery = 'all';
+let currentOrder = 'latest';
+let perPage = 24;
+let thumbSize = 'medium';
+
+// Contador e frequência de anúncios (a cada 3 a 4 vídeos vistos)
+let videosWatchedSinceLastAd = 0;
+let nextAdTarget = Math.floor(Math.random() * 2) + 3; // 3 ou 4 vídeos aleatoriamente
+
+// Elementos
+const videoGrid = document.getElementById('videoGrid');
+const loading = document.getElementById('loading');
+const errorDiv = document.getElementById('error');
+const videoCount = document.getElementById('videoCount');
+const pagination = document.getElementById('pagination');
+const modal = document.getElementById('watchView');
+const prerollAdModal = document.getElementById('prerollAdModal');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+
+// Categorias organizadas
+const CATEGORIAS = {
+  'Cabelo': ['loira', 'morena', 'ruiva', 'castanha', 'platinada'],
+  'Corpo': ['magra', 'fitness', 'curvy', 'bbw', 'alta', 'baixinha', 'seios grandes', 'bunda grande'],
+  'Origem': ['latina', 'asiática', 'europeia', 'africana', 'brasileira', 'japonesa'],
+  'Trans': ['trans', 'travesti', 'shemale', 'femboy'],
+  'Estilo': ['amadora', 'profissional', 'caseira', 'vintage', 'público'],
+  'Popular': ['milf', 'teen', 'mature', 'college', 'secretária', 'professora'],
+  'Ato': ['anal', 'oral', 'vaginal', 'threesome', 'gangbang', 'solo', 'lésbica', 'orgia'],
+  'Qualidade': ['hd', '4k', 'vr', '60fps']
+};
+
+// Requisição com fallback transparente para o proxy local
+async function apiFetch(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Status ' + res.status);
+    return await res.json();
+  } catch (err) {
+    // Tenta pelo proxy local
+    try {
+      const proxyUrl = `/api/eporner?url=${encodeURIComponent(url)}`;
+      const proxyRes = await fetch(proxyUrl);
+      if (!proxyRes.ok) throw new Error('Status proxy ' + proxyRes.status);
+      return await proxyRes.json();
+    } catch (proxyErr) {
+      throw err;
+    }
+  }
+}
+
+// Carregar vídeos
+async function loadVideos() {
+  try {
+    loading.style.display = 'block';
+    errorDiv.style.display = 'none';
+    videoGrid.innerHTML = '';
+
+    const url = `${API_BASE}?query=${encodeURIComponent(currentQuery)}&per_page=${perPage}&page=${currentPage}&thumbsize=${thumbSize}&order=${currentOrder}`;
+
+    const data = await apiFetch(url);
+
+    renderVideos(data.videos || []);
+    updatePagination(data);
+
+    const totalCount = data.total_count || 4507222;
+    const totalPages = data.total_pages || totalPagesCount;
+    videoCount.textContent = `${totalCount.toLocaleString('pt-BR')} vídeos no acervo • Página ${currentPage} de ${totalPages.toLocaleString('pt-BR')}`;
+
+    loading.style.display = 'none';
+  } catch (error) {
+    loading.style.display = 'none';
+    errorDiv.style.display = 'block';
+    errorDiv.textContent = 'Erro ao carregar vídeos: ' + error.message;
+  }
+}
+
+// Renderizar vídeos
+function renderVideos(videos) {
+  videoGrid.innerHTML = videos.map((video) => {
+    const isNew = isNewVideo(video.added);
+
+    return `
+      <div class="video-card" onclick="openModal('${video.id}')">
+        <div class="video-thumb">
+          <img src="${video.default_thumb.src}" alt="${video.title}" loading="lazy" draggable="false" data-no-visual-search="true">
+          <div class="video-rating">
+            <div class="rating-value">${(video.rate / 20).toFixed(2)}</div>
+            <div class="rating-max">de 5</div>
+          </div>
+          <div class="video-duration">${formatDuration(video.length_sec)}</div>
+          ${isNew ? '<div class="video-new-badge">NOVO</div>' : ''}
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">${video.title}</h3>
+          <div class="video-meta">
+            <span>${formatViews(video.views)} views</span>
+            <span>Nota ${(video.rate / 20).toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+let currentVideoKeywords = '';
+let currentVideoId = '';
+let currentVideoData = null;
+
+// ===========================================================================
+// Modal de Verificação de Idade (+18 Gate)
+// ===========================================================================
+const AGE_KEY = 'xsodoma_age_verified';
+
+function initAgeGate() {
+  const modal = document.getElementById('ageGateModal');
+  const confirmBtn = document.getElementById('btnAgeConfirm');
+  const rejectBtn = document.getElementById('btnAgeReject');
+  if (!modal) return;
+
+  if (new URLSearchParams(window.location.search).has('reset_age')) {
+    localStorage.removeItem(AGE_KEY);
+  }
+
+  const isVerified = localStorage.getItem(AGE_KEY) === 'true';
+  if (!isVerified) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  } else {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  if (confirmBtn) {
+    confirmBtn.onclick = () => {
+      localStorage.setItem(AGE_KEY, 'true');
+      modal.style.opacity = '0';
+      modal.style.transition = 'opacity 0.25s ease';
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        showToast('✓ Acesso autorizado. Bem-vindo ao xSodoma!');
+      }, 250);
+    };
+  }
+
+  if (rejectBtn) {
+    rejectBtn.onclick = () => {
+      window.location.href = 'https://www.google.com';
+    };
+  }
+}
+
+// ===========================================================================
+// Toast Notificações Moderno
+// ===========================================================================
+function showToast(message, duration = 3000) {
+  let toast = document.getElementById('xsodomaToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'xsodomaToast';
+    toast.className = 'xsodoma-toast';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = message;
+  toast.classList.add('visible');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('visible');
+  }, duration);
+}
+
+// ===========================================================================
+// Sistema de Favoritos (Persistência via localStorage)
+// ===========================================================================
+function getFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem('xsodoma_favorites') || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveFavorites(favs) {
+  try {
+    localStorage.setItem('xsodoma_favorites', JSON.stringify(favs));
+  } catch (e) {
+    console.error('Erro ao salvar favoritos:', e);
+  }
+}
+
+function isFavorited(videoId) {
+  return getFavorites().some(f => f.id === videoId);
+}
+
+function updateFavoriteButtonState() {
+  const btn = document.getElementById('favVideoBtn');
+  if (!btn) return;
+  if (isFavorited(currentVideoId)) {
+    btn.innerHTML = '★ Favoritado';
+    btn.classList.add('favorited');
+    btn.title = 'Clique para remover dos favoritos';
+  } else {
+    btn.innerHTML = '★ Favoritar';
+    btn.classList.remove('favorited');
+    btn.title = 'Salvar este vídeo nos favoritos';
+  }
+}
+
+function toggleFavorite() {
+  if (!currentVideoId) return;
+  let favs = getFavorites();
+  const exists = favs.some(f => f.id === currentVideoId);
+  if (exists) {
+    favs = favs.filter(f => f.id !== currentVideoId);
+    saveFavorites(favs);
+    updateFavoriteButtonState();
+    showToast('★ Vídeo removido dos favoritos');
+  } else {
+    const thumb = (currentVideoData && currentVideoData.default_thumb && currentVideoData.default_thumb.src) || '';
+    favs.unshift({
+      id: currentVideoId,
+      title: (currentVideoData && currentVideoData.title) || document.getElementById('modalTitle').textContent || 'Vídeo',
+      default_thumb: thumb,
+      length_sec: (currentVideoData && currentVideoData.length_sec) || 0,
+      added: (currentVideoData && currentVideoData.added) || ''
+    });
+    saveFavorites(favs);
+    updateFavoriteButtonState();
+    showToast('★ Vídeo salvo nos Favoritos!');
+  }
+}
+
+// ===========================================================================
+// Sistema de Likes / Votação (Persistência via localStorage)
+// ===========================================================================
+function getLikes() {
+  try {
+    return JSON.parse(localStorage.getItem('xsodoma_likes') || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function isLiked(videoId) {
+  const likes = getLikes();
+  return !!likes[videoId];
+}
+
+function updateLikeButtonState() {
+  const btn = document.getElementById('btnLike');
+  const text = document.getElementById('likeScoreText');
+  if (!btn || !text) return;
+  const liked = isLiked(currentVideoId);
+  const rateVal = currentVideoData && currentVideoData.rate ? (currentVideoData.rate / 20).toFixed(1) : '4.9';
+  if (liked) {
+    btn.classList.add('liked');
+    text.textContent = `✓ Gostei! (${rateVal})`;
+    btn.title = 'Você curtiu este vídeo (clique para remover)';
+  } else {
+    btn.classList.remove('liked');
+    text.textContent = `Nota ${rateVal} / 5`;
+    btn.title = 'Gostou? Deixe seu voto';
+  }
+}
+
+function toggleLike() {
+  if (!currentVideoId) return;
+  const likes = getLikes();
+  const liked = !!likes[currentVideoId];
+  if (liked) {
+    delete likes[currentVideoId];
+    try { localStorage.setItem('xsodoma_likes', JSON.stringify(likes)); } catch(e){}
+    updateLikeButtonState();
+    showToast('Voto removido');
+  } else {
+    likes[currentVideoId] = true;
+    try { localStorage.setItem('xsodoma_likes', JSON.stringify(likes)); } catch(e){}
+    updateLikeButtonState();
+    showToast('👍 Obrigado pelo seu voto positivo!');
+  }
+}
+
+// ===========================================================================
+// Modal de Anúncio Pré-Roll / Mid-Roll
+// ===========================================================================
+function showPrerollAd(adType = 'preroll') {
+  return new Promise((resolve) => {
+    const adModal = document.getElementById('prerollAdModal');
+    const skipBtn = document.getElementById('skipAdBtn');
+    const closeBtn = document.getElementById('closeAdBtn');
+    const badgeEl = adModal ? adModal.querySelector('.preroll-badge') : null;
+
+    if (!adModal || !skipBtn) {
+      resolve();
+      return;
+    }
+
+    if (badgeEl) {
+      badgeEl.innerHTML = `<span class="preroll-badge-dot"></span> ${adType === 'midroll' ? 'MID-ROLL EXCLUSIVO +18' : 'PUBLICIDADE EXCLUSIVA +18'}`;
+    }
+
+    adModal.style.display = 'flex';
+    adModal.style.opacity = '1';
+    document.body.style.overflow = 'hidden';
+
+    let timeLeft = 4;
+    skipBtn.disabled = true;
+    skipBtn.classList.remove('ready');
+    skipBtn.innerHTML = `Pular anúncio em <span id="skipTimer">${timeLeft}</span>s`;
+
+    let timer = setInterval(() => {
+      timeLeft--;
+      const timerEl = document.getElementById('skipTimer');
+      if (timerEl) timerEl.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        timer = null;
+        skipBtn.disabled = false;
+        skipBtn.classList.add('ready');
+        skipBtn.innerHTML = 'PULAR ANÚNCIO ➔';
+      }
+    }, 1000);
+
+    const closeAndProceed = () => {
+      if (timer) clearInterval(timer);
+      adModal.style.opacity = '0';
+      adModal.style.transition = 'opacity 0.2s ease';
+      setTimeout(() => {
+        adModal.style.display = 'none';
+        document.body.style.overflow = '';
+        resolve();
+      }, 200);
+    };
+
+    skipBtn.onclick = () => {
+      if (!skipBtn.disabled) closeAndProceed();
+    };
+
+    if (closeBtn) {
+      closeBtn.onclick = () => closeAndProceed();
+    }
+  });
+}
+
+/**
+ * Motor de Monetização Comportamental para Plataformas de Vídeo (Tube Sites)
+ * Monitora telemetria do player HTML5 e decide o momento exato de injetar o anúncio.
+ */
+class VideoAdOptimizer {
+  constructor(videoElement) {
+    this.video = videoElement;
+
+    // 1. Perfil do Usuário (Coletado via User-Agent, IP Geo e Cookies)
+    this.userProfile = {
+      deviceTier: this.detectDeviceTier(), // 3 = iOS/Mac, 2 = Windows/Android High, 1 = Low-end
+      geoTier: 2,                          // Ex: 3 = US/UK, 2 = BR/LatAm
+      isIncognito: true,                   // Usuários em aba anônima costumam ter menos bloqueadores ativos
+      highValueBidReady: true,             // Sinal vindo do AdServer (ExoClick / TrafficJunky)
+      estimatedECPM: 0.0
+    };
+
+    // 2. Telemetria da Sessão em Tempo Real
+    this.telemetry = {
+      continuousWatchTime: 0, // Tempo assistindo sem pular (em segundos)
+      seekCount: 0,           // Quantas vezes pulou partes do vídeo (procurando a cena)
+      foundSweetSpot: false,  // Achou a cena que queria?
+      isFullscreen: false,
+      unmuted: this.video && this.video.muted !== undefined ? !this.video.muted : true,
+      lastSeekTimestamp: Date.now(),
+      adShownInThisVideo: false
+    };
+
+    this.intervalId = null;
+    this.initListeners();
+  }
+
+  detectDeviceTier() {
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|Macintosh/.test(ua)) return 3; // Tráfego iOS paga até 3x mais em ofertas de Cams/Dating
+    if (/Android|Windows/.test(ua)) return 2;
+    return 1;
+  }
+
+  initListeners() {
+    // Monitora se o usuário está pulando o vídeo para achar a "melhor parte" (HTML5 video)
+    if (this.video && typeof this.video.addEventListener === 'function') {
+      this.video.addEventListener('seeking', () => {
+        this.telemetry.seekCount++;
+        this.telemetry.continuousWatchTime = 0; // Reseta o foco contínuo
+        this.telemetry.lastSeekTimestamp = Date.now();
+        console.log("[Telemetria] Usuário pulou o vídeo. Buscando cena...");
+      });
+
+      // Monitora mudanças de volume e tela cheia (fortes indicadores de engajamento)
+      this.video.addEventListener('volumechange', () => {
+        this.telemetry.unmuted = !this.video.muted && this.video.volume > 0.1;
+      });
+    }
+
+    // Monitora interação direta no player embed / iframe
+    window.addEventListener('blur', () => {
+      if (document.activeElement === this.video) {
+        console.log("[Telemetria] Interação direta detectada no player embed.");
+        this.telemetry.seekCount++;
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      this.telemetry.isFullscreen = !!document.fullscreenElement;
+    });
+
+    // Loop principal que roda a cada 1 segundo enquanto o vídeo toca
+    if (this.intervalId) clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => {
+      const isPaused = this.video && typeof this.video.paused === 'boolean' ? this.video.paused : false;
+      const isWatching = document.body.classList.contains('watching-video');
+
+      if (!isPaused && isWatching) {
+        this.telemetry.continuousWatchTime++;
+        this.evaluateEngagementAndTrigger();
+      }
+    }, 1000);
+  }
+
+  /**
+   * O "Cérebro" (Equivalente ao XGBoost do jogo):
+   * Calcula a probabilidade do usuário tolerar o anúncio ou clicar na oferta agora.
+   */
+  calculateEngagementScore() {
+    let score = 0;
+
+    // Padrão clássico: O usuário deu "seek" (pulou) 2 ou mais vezes e agora aquietou por 25+ segundos.
+    // Isso significa que ele encontrou exatamente a cena que queria assistir.
+    if (this.telemetry.seekCount >= 2 && this.telemetry.continuousWatchTime >= 25) {
+      this.telemetry.foundSweetSpot = true;
+      score += 0.45;
+    }
+
+    // Tempo contínuo assistindo sem tocar no mouse/tela
+    if (this.telemetry.continuousWatchTime > 40) score += 0.25;
+
+    // Sinais de imersão (Tela cheia + Áudio ligado)
+    if (this.telemetry.isFullscreen) score += 0.15;
+    if (this.telemetry.unmuted) score += 0.15;
+
+    // Multiplicador financeiro (Vale a pena interromper esse perfil agora?)
+    const financialMultiplier = (this.userProfile.deviceTier === 3) ? 1.25 : 1.0;
+
+    return Math.min(1.0, score * financialMultiplier);
+  }
+
+  evaluateEngagementAndTrigger() {
+    if (this.telemetry.adShownInThisVideo) return;
+
+    const engagementScore = this.calculateEngagementScore();
+    console.log(`[Engine] Foco contínuo: ${this.telemetry.continuousWatchTime}s | Score de Engajamento: ${engagementScore.toFixed(2)}`);
+
+    // GATILHO DE DISPARO (Score >= 0.75 e Anúncio Caro no Cache)
+    if (engagementScore >= 0.75 && this.userProfile.highValueBidReady) {
+      this.triggerHighValueAd();
+    }
+  }
+
+  triggerHighValueAd() {
+    this.telemetry.adShownInThisVideo = true;
+
+    // 1. Pausa o vídeo principal exatamente no momento de pico de atenção
+    if (this.video && typeof this.video.pause === 'function') {
+      this.video.pause();
+    }
+
+    console.log("🔴 [STRIKE] Pico de retenção detectado após busca de cena! Disparando Mid-Roll / Pop-under de alto eCPM.");
+
+    // 2. Dispara o Mid-Roll inteligente usando o modal de anúncio
+    if (typeof showPrerollAd === 'function') {
+      showPrerollAd('midroll');
+    }
+  }
+
+  resetForNewVideo() {
+    this.telemetry.continuousWatchTime = 0;
+    this.telemetry.seekCount = 0;
+    this.telemetry.foundSweetSpot = false;
+    this.telemetry.adShownInThisVideo = false;
+    this.telemetry.lastSeekTimestamp = Date.now();
+  }
+
+  destroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+}
+
+// Abrir página de exibição do vídeo (Estilo YouTube)
+async function openModal(videoId) {
+  try {
+    currentVideoId = videoId;
+    videosWatchedSinceLastAd++;
+
+    // Disparar anúncio pré-roll a cada 3 a 4 vídeos vistos
+    if (videosWatchedSinceLastAd >= nextAdTarget) {
+      videosWatchedSinceLastAd = 0;
+      nextAdTarget = Math.floor(Math.random() * 2) + 3; // Sorteia próximo intervalo (3 ou 4)
+      await showPrerollAd();
+    }
+
+    const homeView = document.getElementById('homeView');
+    const watchView = document.getElementById('watchView');
+    const navBar = document.querySelector('.nav');
+
+    if (homeView) homeView.style.display = 'none';
+    if (navBar) navBar.style.display = 'none';
+    if (watchView) watchView.classList.add('active');
+    document.body.classList.add('watching-video');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // Atualiza hash da URL para histórico/voltar do navegador
+    if (window.location.hash !== `#watch=${videoId}`) {
+      window.location.hash = `watch=${videoId}`;
+    }
+
+    const url = `https://www.eporner.com/api/v2/video/id/?id=${videoId}`;
+    const video = await apiFetch(url);
+
+    currentVideoData = video;
+    currentVideoKeywords = video.keywords || '';
+
+    // Título e Player
+    document.getElementById('modalTitle').textContent = video.title;
+    document.getElementById('modalPlayer').src = video.embed;
+
+    // Instancia ou reseta o Motor de Monetização Comportamental (VideoAdOptimizer)
+    const playerEl = document.getElementById('modalPlayer');
+    if (!window.adEngine) {
+      window.adEngine = new VideoAdOptimizer(playerEl);
+    } else {
+      window.adEngine.video = playerEl;
+      window.adEngine.resetForNewVideo();
+    }
+
+    // Atualiza estados dos botões Favoritar e Like
+    updateFavoriteButtonState();
+    updateLikeButtonState();
+
+    // Caixa de descrição do YouTube
+    document.getElementById('modalStats').innerHTML = `
+      <span><strong>${(video.views || 0).toLocaleString('pt-BR')} visualizações</strong></span>
+      <span>•</span>
+      <span>${timeAgo(video.added)} (${video.added})</span>
+      <span>•</span>
+      <span>Duração: <strong>${formatDuration(video.length_sec)}</strong></span>
+    `;
+
+    document.getElementById('modalTags').innerHTML = (video.keywords || '').split(',').slice(0, 15).map(tag => {
+      const cleanTag = tag.trim();
+      const escaped = cleanTag.replace(/'/g, "\\'");
+      return `<button class="yt-tag-pill" onclick="selectTag('${escaped}')">#${cleanTag}</button>`;
+    }).join(' ');
+
+    // Reset dos chips para "Todos"
+    document.querySelectorAll('.yt-chip').forEach((c, idx) => c.classList.toggle('active', idx === 0));
+
+    // Carregar vídeos relacionados estilo YouTube
+    loadRelatedVideos(video.keywords, 'top-rated');
+
+  } catch (error) {
+    console.error('Erro ao abrir vídeo:', error);
+  }
+}
+
+// Carregar vídeos relacionados para a sidebar (Cards horizontais YouTube)
+async function loadRelatedVideos(keywords, order = 'top-rated') {
+  try {
+    const query = (keywords || '').split(',')[0].trim() || 'all';
+    const url = `${API_BASE}?query=${encodeURIComponent(query)}&per_page=12&page=1&thumbsize=medium&order=${order}`;
+
+    const data = await apiFetch(url);
+
+    const relatedContainer = document.getElementById('relatedVideos');
+    if (relatedContainer && data.videos) {
+      relatedContainer.innerHTML = data.videos
+        .filter(v => v.id !== currentVideoId)
+        .slice(0, 8)
+        .map(video => {
+          const isNew = isNewVideo(video.added);
+
+          return `
+            <div class="yt-related-card" onclick="openModal('${video.id}')">
+              <div class="yt-thumb-box">
+                <img src="${video.default_thumb.src}" alt="${video.title}" loading="lazy" draggable="false" data-no-visual-search="true">
+                <div class="yt-duration-badge">${formatDuration(video.length_sec)}</div>
+                ${isNew ? '<div class="yt-new-badge">Novidade</div>' : ''}
+              </div>
+              <div class="yt-related-info">
+                <h3 class="yt-related-title">${video.title}</h3>
+                <div class="yt-related-channel">
+                  xSodoma Acervo
+                  <svg class="yt-verified-icon" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z"/></svg>
+                </div>
+                <div class="yt-related-meta">
+                  <span>${formatViews(video.views)} views</span> • <span>${timeAgo(video.added)}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+  } catch (error) {
+    console.error('Erro ao carregar relacionados:', error);
+  }
+}
+
+// Configuração dos chips da sidebar estilo YouTube
+document.querySelectorAll('.yt-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.yt-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    const type = chip.dataset.chip;
+    let order = 'top-rated';
+    if (type === 'pop') order = 'most-popular';
+    if (type === 'rec') order = 'latest';
+    if (type === 'top') order = 'top-weekly';
+    loadRelatedVideos(currentVideoKeywords, order);
+  });
+});
+
+// Compartilhar link do vídeo
+async function shareVideo() {
+  const url = window.location.href;
+  const title = (currentVideoData && currentVideoData.title) || document.getElementById('modalTitle').textContent || 'xSodoma';
+  const btn = document.getElementById('btnShare');
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: title, url: url });
+      showToast('✓ Compartilhado com sucesso!');
+      return;
+    } catch (err) {
+      // Segue para clipboard se cancelar
+    }
+  }
+
+  const copySuccess = () => {
+    if (btn) {
+      const origHtml = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = `
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Copiado!
+      `;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = origHtml;
+      }, 2500);
+    }
+    showToast('✓ Link copiado para a área de transferência!');
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(copySuccess).catch(() => {
+      prompt('Copie o link do vídeo:', url);
+    });
+  } else {
+    prompt('Copie o link do vídeo:', url);
+  }
+}
+
+// Fechar página de vídeo e voltar para a grade
+function closeModal() {
+  const watchView = document.getElementById('watchView');
+  const homeView = document.getElementById('homeView');
+  const player = document.getElementById('modalPlayer');
+  const navBar = document.querySelector('.nav');
+
+  if (player) player.src = '';
+  if (watchView) watchView.classList.remove('active');
+  if (homeView) homeView.style.display = 'block';
+  if (navBar) navBar.style.display = 'flex';
+  document.body.classList.remove('watching-video');
+
+  // Reseta telemetria do motor de anúncios ao fechar o vídeo
+  if (window.adEngine) {
+    window.adEngine.resetForNewVideo();
+  }
+
+  if (window.location.hash.startsWith('#watch')) {
+    history.pushState('', document.title, window.location.pathname + window.location.search);
+  }
+}
+
+// Voltar para a homepage ao clicar no logo
+function goToHome(e) {
+  if (e) e.preventDefault();
+
+  // Fecha tela de vídeo se estiver aberta
+  closeModal();
+
+  // Fecha gaveta de categorias se estiver aberta
+  closeCategoriesDrawer();
+
+  // Reseta filtros e busca para o estado inicial
+  currentQuery = 'all';
+  currentOrder = 'latest';
+  currentPage = 1;
+  if (searchInput) searchInput.value = '';
+
+  // Ativa a aba "Mais recentes"
+  document.querySelectorAll('.nav-item').forEach(b => {
+    b.classList.remove('active');
+    if (b.dataset.filter === 'latest') b.classList.add('active');
+  });
+
+  // Atualiza título da seção
+  const titleEl = document.querySelector('.section-title');
+  if (titleEl) titleEl.textContent = 'Mais recentes';
+
+  // Limpa o hash da URL se houver
+  if (window.location.hash) {
+    history.pushState('', document.title, window.location.pathname + window.location.search);
+  }
+
+  // Recarrega vídeos da homepage
+  loadVideos();
+
+  // Rola suavemente ao topo
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Sincronização com o botão Voltar do navegador
+window.addEventListener('popstate', () => {
+  if (window.location.hash.startsWith('#watch=')) {
+    const id = window.location.hash.replace('#watch=', '');
+    if (id && id !== currentVideoId) openModal(id);
+  } else {
+    closeModal();
+  }
+});
+
+let totalPagesCount = 187800;
+
+// Vincula eventos aos botões pré-renderizados no HTML
+function bindInitialPaginationEvents() {
+  const pageNumbersEl = document.getElementById('pageNumbers');
+  if (pageNumbersEl) {
+    pageNumbersEl.querySelectorAll('.page-num-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = parseInt(btn.dataset.page, 10);
+        if (page && page !== currentPage) {
+          goToPage(page);
+        }
+      });
+    });
+  }
+}
+
+// Atualizar paginação no rodapé estilo Tube (com mais páginas)
+function updatePagination(data) {
+  // A API do Eporner retorna total_pages (ex: 187801) e total_count (ex: 4507222)
+  const total = (data && data.total_pages) ? Number(data.total_pages) : 
+                (data && data.total_count ? Math.ceil(data.total_count / perPage) : 10000);
+  totalPagesCount = total;
+
+  if (pagination) pagination.style.display = 'flex';
+
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const pageNumbersEl = document.getElementById('pageNumbers');
+
+  if (prevBtn) {
+    prevBtn.disabled = (currentPage <= 1);
+  }
+
+  if (nextBtn) {
+    nextBtn.disabled = (currentPage >= total);
+  }
+
+  const pages = calculatePageSequence(currentPage, total);
+
+  if (pageNumbersEl) {
+    pageNumbersEl.innerHTML = pages.map(p => `
+      <button class="page-num-btn ${p === currentPage ? 'active' : ''}" data-page="${p}" title="Ir para a página ${p}">
+        ${p}
+      </button>
+    `).join('');
+
+    pageNumbersEl.querySelectorAll('.page-num-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = parseInt(btn.dataset.page, 10);
+        if (page && page !== currentPage) {
+          goToPage(page);
+        }
+      });
+    });
+  }
+}
+
+// Gera sequência de botões com várias páginas e saltos rápidos
+function calculatePageSequence(current, total) {
+  const pages = new Set();
+
+  if (current <= 7) {
+    for (let i = 1; i <= Math.min(10, total); i++) {
+      pages.add(i);
+    }
+  } else {
+    pages.add(1);
+    pages.add(2);
+    for (let i = Math.max(1, current - 3); i <= Math.min(total, current + 3); i++) {
+      pages.add(i);
+    }
+  }
+
+  // Saltos rápidos para mais páginas
+  const jumps = [15, 20, 25, 30, 50, 100];
+  jumps.forEach(j => {
+    if (j <= total && !pages.has(j)) {
+      pages.add(j);
+    }
+  });
+
+  return Array.from(pages).sort((a, b) => a - b);
+}
+
+// Navegar para uma página específica
+function goToPage(page) {
+  if (page < 1 || page === currentPage) return;
+  if (totalPagesCount && page > totalPagesCount) return;
+  currentPage = page;
+  loadVideos();
+  const topTarget = document.querySelector('.section-header') || document.getElementById('videoGrid');
+  if (topTarget) {
+    topTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// Selecionar tag / categoria
+function selectTag(tag) {
+  closeCategoriesDrawer();
+  closeModal();
+  currentQuery = tag;
+  searchInput.value = tag;
+  currentPage = 1;
+  loadVideos();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Gaveta de categorias
+const categoriesBtn = document.getElementById('categoriesBtn');
+const categoriesDrawer = document.getElementById('categoriesDrawer');
+const closeDrawer = document.getElementById('closeDrawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+
+function renderCategories() {
+  const content = document.getElementById('categoriesContent');
+  if (!content) return;
+  content.innerHTML = Object.entries(CATEGORIAS).map(([grupo, items]) => `
+    <div class="category-group">
+      <h3>${grupo}</h3>
+      <div class="category-items">
+        ${items.map(cat => `
+          <button class="category-tag" onclick="selectTag('${cat}')">${cat}</button>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openCategoriesDrawer() {
+  categoriesDrawer.classList.add('open');
+  drawerOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCategoriesDrawer() {
+  categoriesDrawer.classList.remove('open');
+  drawerOverlay.classList.remove('active');
+  if (!modal.classList.contains('active')) {
+    document.body.style.overflow = '';
+  }
+}
+
+if (categoriesBtn) categoriesBtn.addEventListener('click', openCategoriesDrawer);
+if (closeDrawer) closeDrawer.addEventListener('click', closeCategoriesDrawer);
+if (drawerOverlay) drawerOverlay.addEventListener('click', closeCategoriesDrawer);
+
+// Utilitários
+function formatDuration(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function formatViews(views) {
+  if (views >= 1000000) return (views / 1000000).toFixed(1) + 'M';
+  if (views >= 1000) return (views / 1000).toFixed(1) + 'K';
+  return (views || 0).toString();
+}
+
+function isNewVideo(dateString) {
+  const addedDate = new Date(dateString);
+  const now = new Date();
+  const diffDays = (now - addedDate) / (1000 * 60 * 60 * 24);
+  return diffDays <= 30;
+}
+
+function timeAgo(dateString) {
+  if (!dateString) return 'recentemente';
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+  if (isNaN(diffDays) || diffDays < 1) return 'hoje';
+  if (diffDays === 1) return 'há 1 dia';
+  if (diffDays < 7) return `há ${diffDays} dias`;
+  if (diffDays < 30) return `há ${Math.floor(diffDays / 7)} sem.`;
+  if (diffDays < 365) return `há ${Math.floor(diffDays / 30)} meses`;
+  return `há ${Math.floor(diffDays / 365)} anos`;
+}
+
+// Função unificada de busca (fecha o vídeo se estiver assistindo e carrega os resultados)
+function handleSearch(e) {
+  if (e) e.preventDefault();
+  const query = searchInput.value.trim();
+  currentQuery = query || 'all';
+  currentPage = 1;
+
+  // Fecha o vídeo se estiver assistindo
+  closeModal();
+  closeCategoriesDrawer();
+
+  // Remove abas ativas das categorias da navbar para refletir a busca
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+  // Atualiza título da seção
+  const titleEl = document.querySelector('.section-title');
+  if (titleEl) {
+    titleEl.textContent = query ? `Resultados para: "${query}"` : 'Mais recentes';
+  }
+
+  // Carrega os vídeos da nova pesquisa
+  loadVideos();
+
+  // Rola suavemente ao topo
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Event Listeners de Busca
+if (searchBtn) {
+  searchBtn.addEventListener('click', handleSearch);
+}
+
+if (searchInput) {
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(e);
+    }
+  });
+
+  searchInput.addEventListener('focus', () => {
+    if (searchInput.value === 'all') {
+      searchInput.value = '';
+    } else {
+      searchInput.select();
+    }
+  });
+}
+
+const searchForm = document.getElementById('searchForm');
+if (searchForm) {
+  searchForm.addEventListener('submit', handleSearch);
+}
+
+document.querySelectorAll('.nav-item[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    closeModal();
+    closeCategoriesDrawer();
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentOrder = btn.dataset.filter;
+    currentPage = 1;
+    loadVideos();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+document.querySelectorAll('.nav-item[data-tag]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    closeModal();
+    closeCategoriesDrawer();
+    currentQuery = btn.dataset.tag;
+    searchInput.value = btn.dataset.tag;
+    currentPage = 1;
+    loadVideos();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+const prevBtnEl = document.getElementById('prevBtn');
+if (prevBtnEl) {
+  prevBtnEl.addEventListener('click', () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  });
+}
+
+const nextBtnEl = document.getElementById('nextBtn');
+if (nextBtnEl) {
+  nextBtnEl.addEventListener('click', () => {
+    if (!totalPagesCount || currentPage < totalPagesCount) {
+      goToPage(currentPage + 1);
+    }
+  });
+}
+
+// Exibir lista de vídeos favoritados na grade principal
+function renderFavoritesPage() {
+  closeModal();
+  closeCategoriesDrawer();
+
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  const navFav = document.getElementById('navFavoritesBtn');
+  if (navFav) navFav.classList.add('active');
+
+  const titleEl = document.querySelector('.section-title');
+  if (titleEl) titleEl.textContent = 'Meus Vídeos Favoritos';
+
+  const favs = getFavorites();
+  const grid = document.getElementById('videoGrid');
+  const pag = document.getElementById('pagination');
+  if (pag) pag.style.display = 'none';
+
+  if (!favs || favs.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: #aaa;">
+        <svg style="width: 48px; height: 48px; stroke: #e8412c; fill: none; stroke-width: 1.5; margin-bottom: 1rem;" viewBox="0 0 24 24">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">Nenhum vídeo favoritado ainda</h3>
+        <p style="font-size: 0.88rem; color: #888;">Ao assistir qualquer vídeo, clique no botão <strong>★ Favoritar</strong> para guardá-lo aqui!</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = favs.map(video => {
+    return `
+      <article class="video-card" onclick="openModal('${video.id}')">
+        <div class="video-thumb">
+          <img src="${video.default_thumb || ''}" alt="${video.title}" loading="lazy" draggable="false" data-no-visual-search="true">
+          <div class="video-duration">${formatDuration(video.length_sec || 0)}</div>
+        </div>
+        <div class="video-info">
+          <h3 class="video-title">${video.title}</h3>
+          <div class="video-meta">
+            <span>★ Salvo nos Favoritos</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const navFavBtn = document.getElementById('navFavoritesBtn');
+if (navFavBtn) navFavBtn.addEventListener('click', renderFavoritesPage);
+
+const closeBtn = document.getElementById('closeModal');
+if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+// Tecla ESC para voltar ao início
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCategoriesDrawer();
+    closeModal();
+  }
+});
+
+// Gerenciador de Consentimento de Cookies (LGPD / Privacidade)
+const COOKIE_KEY = 'xsodoma_cookie_consent';
+
+function initCookieBanner() {
+  const banner = document.getElementById('cookieBanner');
+  const acceptBtn = document.getElementById('btnCookieAccept');
+  const declineBtn = document.getElementById('btnCookieDecline');
+  if (!banner) return;
+
+  const consent = localStorage.getItem(COOKIE_KEY);
+  if (consent) {
+    banner.style.display = 'none';
+    return;
+  }
+
+  // Exibe o banner suavemente após 800ms
+  setTimeout(() => {
+    banner.style.display = 'flex';
+  }, 800);
+
+  function dismissBanner(choice) {
+    localStorage.setItem(COOKIE_KEY, choice);
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateX(-50%) translateY(40px)';
+    setTimeout(() => {
+      banner.style.display = 'none';
+    }, 350);
+    showToast(choice === 'all' ? '✓ Preferências de cookies salvas!' : '✓ Apenas cookies essenciais ativados');
+  }
+
+  if (acceptBtn) {
+    acceptBtn.onclick = () => dismissBanner('all');
+  }
+
+  if (declineBtn) {
+    declineBtn.onclick = () => dismissBanner('essential');
+  }
+}
+
+function openCookieSettings() {
+  const banner = document.getElementById('cookieBanner');
+  if (banner) {
+    banner.style.display = 'flex';
+    banner.style.opacity = '1';
+    banner.style.transform = 'translateX(-50%) translateY(0)';
+  }
+}
+
+// Inicializar
+initAgeGate();
+initCookieBanner();
+bindInitialPaginationEvents();
+renderCategories();
+loadVideos();
+
+if (window.location.hash.startsWith('#watch=')) {
+  const initialId = window.location.hash.replace('#watch=', '');
+  if (initialId) openModal(initialId);
+}
+</script>
+
+</body>
+</html>
