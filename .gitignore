@@ -1,0 +1,11 @@
+# Arquivos de backup e testes locais
+*.antigo.html
+demo_referencia.html
+_teste_escrita.txt
+referencia_claude/
+dist/
+*.zip
+
+# Ignorar arquivos duplicados e capturas de tela em uploads/, mantendo apenas a logo
+uploads/*
+!uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg
