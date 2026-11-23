@@ -22,15 +22,15 @@ const LOCALE_SEO = {
     geoRegion: "BR",
     geoPlace: "São Paulo, Brasil",
     prefix: "/pt-br",
-    title: "XSodoma — Porno Grátis em HD 4K, Mulheres Gostosas e Brasileiras",
+    title: "X — Vídeos de Sexo, Pornô Grátis & Filmes Adultos HD 4K | XSodoma",
     description:
-      "Assista ao melhor do porno grátis, brasileiras amadoras, mulheres gostosas e sexo em Full HD e 4K no XSodoma. O maior acervo adulto online atualizado a cada hora, a melhor alternativa ao xvideos.",
+      "Assista ao melhor portal X: vídeos de sexo amador, pornô grátis em Full HD e 4K, brasileiras gostosas, novinhas, flagras caseiros e lançamentos diários sem cadastro no X XSodoma.",
     keywords:
-      "porno, xvideos, porno gratis, mulheres, brasileiras, sexo gratis, videos adultos gratis, xvideos brasil, porno hd 4k, brasileiras amadoras, sexo amador, loiras, morenas, novinhas, coroas, pornografia gratis, tube adulto 4k",
-    videoSuffix: "Assistir Vídeo HD Grátis | XSodoma Brasil",
-    catPrefix: "Vídeos de",
-    catSuffix: "Grátis em HD 4K — XSodoma Brasil",
-    watchVerb: "Assista gratuitamente em HD:",
+      "x, porno, sexo, pornô, porno gratis, videos de sexo, sexo amador, xvideos, pornhub, porno brasil, brasileiras, novinhas, coroas, sexo caseiro, amadoras gostosas, tube adulto 4k, pornografia gratis, sambaporno, xhamster",
+    videoSuffix: "Vídeo de Sexo HD Grátis | X XSodoma Brasil",
+    catPrefix: "Vídeos de Sexo e Pornô",
+    catSuffix: "Grátis em HD 4K — X XSodoma Brasil",
+    watchVerb: "Assista gratuitamente em HD no X:",
   },
   "pt-pt": {
     htmlLang: "pt-PT",
@@ -427,6 +427,11 @@ export async function onRequest(context) {
   }
 
   let rewriter = new HTMLRewriter()
+    .on("head", {
+      element(el) {
+        el.append('<meta name="google-site-verification" content="google932ad46edbcde79b">\n', { html: true });
+      },
+    })
     .on("html", {
       element(el) {
         el.setAttribute("lang", seo.htmlLang);

@@ -121,10 +121,11 @@ function queryLocalCatalog(targetUrlStr) {
     } else {
       // Default: "latest"
       // Se tiver uma semente de rotação na Home (para variar os vídeos e o usuário nunca ver os mesmos)
-      if (seed) {
+      const effectiveSeed = seed || (rawQuery === "all" && page === 1 ? String(Math.floor(Date.now() / 600000)) : "");
+      if (effectiveSeed) {
         const pool = sorted.slice(0, 150);
         const rest = sorted.slice(150);
-        sorted = seededShuffle(pool, seed).concat(rest);
+        sorted = seededShuffle(pool, effectiveSeed).concat(rest);
       }
     }
 
@@ -234,11 +235,14 @@ export async function onRequest(context) {
   // 2. Resposta pelo Catálogo Local com Ordenação Recente e Rotação Dinâmica
   const localResult = queryLocalCatalog(target);
   if (localResult && (Array.isArray(localResult.videos) || localResult.id)) {
+    const isDynamic = target.includes("seed=") || target.includes("rotate=") || target.includes("_t=");
     return new Response(JSON.stringify(localResult), {
       status: 200,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=60, s-maxage=180",
+        "Cache-Control": isDynamic
+          ? "private, no-cache, no-store, max-age=0, must-revalidate"
+          : "public, max-age=60, s-maxage=180",
         "Access-Control-Allow-Origin": "*",
         "X-Data-Source": "Edge-Catalog-Dynamic",
       },
