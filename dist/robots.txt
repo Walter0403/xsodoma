@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /pt-br/
+Allow: /pt-pt/
+Allow: /en/
+Allow: /en-us/
+Allow: /en-ca/
+Allow: /es-es/
+Allow: /categoria/
+Allow: /tag/
+Allow: /blog/
+Allow: /video/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*?q=*
+Disallow: /*{search_term_string}*
+
+Sitemap: https://x-sodoma.com/sitemap_index.xml
+Sitemap: https://x-sodoma.com/sitemap.xml
+Sitemap: https://x-sodoma.com/sitemap-videos.xml

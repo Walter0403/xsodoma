@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/robots.txt",
+    "/sitemap.xml",
+    "/sitemap-videos.xml",
+    "/sitemap-main.xml",
+    "/sitemap-google.xml",
+    "/sitemaps.xml",
+    "/sitemap_index.xml",
+    "/sitemap.xsl",
+    "/favicon.png",
+    "/eporner-api.js",
+    "/2257.html",
+    "/admin",
+    "/admin/*",
+    "/admin.html",
+    "/dmca.html",
+    "/google932ad46edbcde79b.html",
+    "/f554d567961fe5a5d23a38f6839dcd59.html",
+    "/uploads/*"
+  ]
+}
