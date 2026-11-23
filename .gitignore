@@ -1,11 +1,29 @@
+# Variáveis de ambiente, chaves de API e segredos (NUNCA versionar)
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.key
+*.pem
+*.cert
+*.p12
+secrets.json
+credentials.json
+.wrangler/
+
+# Dependências e builds
+node_modules/
+dist/
+*.log
+
 # Arquivos de backup e testes locais
 *.antigo.html
 demo_referencia.html
 _teste_escrita.txt
 referencia_claude/
-dist/
 *.zip
 
-# Ignorar arquivos duplicados e capturas de tela em uploads/, mantendo apenas a logo
+# Ignorar arquivos duplicados e capturas de tela em uploads/, mantendo apenas a logo oficial
 uploads/*
 !uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg

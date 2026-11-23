@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMCA / Copyright Takedown &amp; Contact — XSodoma</title>
+<link rel="icon" type="image/png" href="/favicon.png?v=1">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #e5e5e5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', Segoe UI, Roboto, sans-serif;
+    line-height: 1.65;
+    padding: 2rem 1rem 4rem;
+  }
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 2.2rem;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .top-bar img { height: 42px; }
+  .back-btn {
+    background: #E8412C;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1.1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  h1 { color: #fff; font-size: 22px; margin-bottom: 1rem; }
+  h2 { color: #ff9000; font-size: 17px; margin: 1.5rem 0 0.6rem; }
+  p, li { font-size: 14px; color: #ccc; margin-bottom: 0.85rem; }
+  ul { padding-left: 1.4rem; margin-bottom: 1rem; }
+  a { color: #ff9000; }
+  .contact-box {
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 0.35rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    background: #0d0d0d;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 0.65rem 0.8rem;
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .submit-btn {
+    background: #E8412C;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .submit-btn:hover { background: #ff5940; }
+  .success-msg {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(46, 204, 113, 0.15);
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-bar">
+      <a href="/"><img src="/uploads/Gemini_Generated_Image_pkcnempkcnempkcn.jpg" alt="XSodoma"></a>
+      <a href="/" class="back-btn">← Back to XSodoma / Voltar ao Site</a>
+    </div>
+
+    <h1>DMCA / Copyright Policy &amp; Content Removal Contact</h1>
+    <p>
+      <strong>x-sodoma.com</strong> respects the intellectual property rights of others and complies with the Digital Millennium Copyright Act (17 U.S.C. § 512 — DMCA). Because <strong>x-sodoma.com</strong> is an automated search index that embeds videos hosted by third parties (Eporner.com), we do not host video files on our servers. However, we promptly disable and remove any indexed link or embedded reference upon receipt of a valid DMCA takedown notice or abuse report.
+    </p>
+
+    <div class="contact-box">
+      <h2 style="margin-top:0;">Designated DMCA &amp; Compliance Contact Channel</h2>
+      <p style="margin-bottom:0.4rem;"><strong>Direct Email (24/7 Takedown &amp; Compliance):</strong> <a href="mailto:contato@xsodoma.com.br">contato@xsodoma.com.br</a></p>
+      <p style="margin-bottom:0;"><strong>Response Time:</strong> Within 24 hours of receipt.</p>
+    </div>
+
+    <h2>Submit a DMCA Takedown / Content Removal Request (Formulário de Remoção e Contato)</h2>
+    <div class="contact-box">
+      <form id="dmcaForm" onsubmit="handleDmcaSubmit(event)">
+        <div class="form-group">
+          <label for="reqType">Request Type / Tipo de Solicitação *</label>
+          <select id="reqType" required>
+            <option value="DMCA Copyright Infringement">DMCA / Copyright Infringement Takedown (Direitos Autorais)</option>
+            <option value="Non-Consensual Content / Privacy">Non-Consensual Content / Privacy Removal (Privacidade)</option>
+            <option value="18 U.S.C. 2257 / Compliance Inquiry">18 U.S.C. 2257 / Legal Compliance Inquiry</option>
+            <option value="General Contact / Advertising">General Contact / Advertising Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reqName">Full Name / Company (Nome Completo ou Empresa) *</label>
+          <input type="text" id="reqName" required placeholder="John Doe / Studio Name">
+        </div>
+        <div class="form-group">
+          <label for="reqEmail">Contact Email (E-mail de Contato) *</label>
+          <input type="email" id="reqEmail" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="reqUrl">Infringing URL(s) on x-sodoma.com (URL do vídeo para remoção) *</label>
+          <input type="text" id="reqUrl" required placeholder="https://x-sodoma.com/#watch=...">
+        </div>
+        <div class="form-group">
+          <label for="reqMessage">Description &amp; Good-Faith Statement (Descrição e Declaração de Boa-Fé) *</label>
+          <textarea id="reqMessage" rows="4" required placeholder="I swear under penalty of perjury that I am the copyright owner or authorized to act on behalf of the owner..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit Removal Request / Enviar Solicitação</button>
+        <div id="dmcaSuccess" class="success-msg">
+          ✓ Your request has been logged and prepared for our Compliance Officer (contato@xsodoma.com.br). It will be processed within 24 hours.
+        </div>
+      </form>
+    </div>
+
+    <h2>Required Elements of a DMCA Notice (Requisitos da Notificação DMCA)</h2>
+    <ul>
+      <li>Identification of the copyrighted work claimed to have been infringed.</li>
+      <li>Identification of the material or URL on <strong>x-sodoma.com</strong> to be removed or disabled.</li>
+      <li>Your contact information (name, email address, and telephone number).</li>
+      <li>A statement that you have a good-faith belief that use of the material is not authorized by the copyright owner, its agent, or the law.</li>
+      <li>A statement that the information in the notification is accurate, and under penalty of perjury, that you are authorized to act on behalf of the copyright owner.</li>
+      <li>Your physical or electronic signature.</li>
+    </ul>
+  </div>
+
+  <script>
+    function handleDmcaSubmit(e) {
+      e.preventDefault();
+      var type = document.getElementById('reqType').value;
+      var name = document.getElementById('reqName').value;
+      var email = document.getElementById('reqEmail').value;
+      var url = document.getElementById('reqUrl').value;
+      var msg = document.getElementById('reqMessage').value;
+      var subject = encodeURIComponent('[XSodoma ' + type + '] ' + name);
+      var body = encodeURIComponent(
+        'Request Type: ' + type + '\n' +
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'URL(s): ' + url + '\n\n' +
+        'Details:\n' + msg
+      );
+      document.getElementById('dmcaSuccess').style.display = 'block';
+      window.location.href = 'mailto:contato@xsodoma.com.br?subject=' + subject + '&body=' + body;
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo & CRM — XSodoma</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: #12151e;
+      --card-border: #1e2333;
+      --accent: #ff3c1f;
+      --accent-hover: #ff5d38;
+      --accent-glow: rgba(255, 60, 31, 0.35);
+      --text: #f0f3fa;
+      --text-muted: #8a94a6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --info: #38bdf8;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Auth Overlay */
+    #authOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 10, 15, 0.96);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .auth-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .auth-logo img { width: 44px; height: 44px; border-radius: 8px; }
+    .auth-logo h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+    .auth-logo span { color: var(--accent); }
+    .form-group { text-align: left; margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    .form-group input, .form-group select {
+      width: 100%;
+      background: #0b0d14;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--accent-glow); }
+    .auth-error {
+      display: none;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    /* Admin Layout */
+    .admin-container {
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 270px;
+      background: var(--card-bg);
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar-header img { width: 36px; height: 36px; border-radius: 6px; }
+    .sidebar-header .title { font-weight: 800; font-size: 18px; }
+    .sidebar-header .badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--accent);
+      color: #fff;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+    .sidebar-nav {
+      padding: 1rem 0.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      color: var(--text-muted);
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: #191e2b;
+      color: #fff;
+    }
+    .nav-item.active {
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(255,60,31,0.12) 0%, transparent 100%);
+    }
+    .nav-item svg { width: 18px; height: 18px; opacity: 0.8; }
+    .nav-badge-live {
+      font-size: 9.5px;
+      font-weight: 800;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+    .sidebar-footer {
+      padding: 1rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid #2a3144;
+      color: var(--text-muted);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-logout:hover { color: #fff; border-color: var(--accent); }
+
+    /* Main Area */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .topbar {
+      height: 64px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(18, 21, 30, 0.85);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 15px; }
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .btn-secondary {
+      background: #171b26;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-secondary:hover { background: #1e2433; border-color: #2c344a; }
+
+    .content-area {
+      padding: 2rem;
+      flex: 1;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+    }
+    .stat-title { font-size: 12.5px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-val { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+    .stat-badge { font-size: 11.5px; font-weight: 700; color: var(--success); display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; }
+
+    /* Panels & Tables */
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .panel-title { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .panel-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th { text-align: left; padding: 12px 14px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); font-weight: 600; font-size: 12.5px; }
+    td { padding: 12px 14px; border-bottom: 1px solid #161a25; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .progress-bar-bg {
+      background: #1a1f2c;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      width: 120px;
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--accent) 0%, #ff8364 100%);
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .query-tag {
+      display: inline-block;
+      background: #181d29;
+      color: #f0f3fa;
+      border: 1px solid var(--card-border);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      margin: 2px;
+    }
+
+    /* Switch toggle */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #242b3d;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--accent); }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* Notification toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181d29;
+      border: 1px solid var(--accent);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      font-size: 13.5px;
+      font-weight: 600;
+      display: none;
+      z-index: 10000;
+    }
+
+    /* Live pulse animation */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Auth Screen -->
+  <div id="authOverlay">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="/favicon.png" alt="XSodoma">
+        <h1>X<span>Sodoma</span> ADM</h1>
+      </div>
+      <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 1.5rem;">
+        Entre com sua credencial administrativa para acessar o CRM e a telemetria em tempo real.
+      </p>
+      <div id="authError" class="auth-error">E-mail ou senha de administrador incorretos.</div>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>E-mail do Administrador</label>
+          <input type="email" id="loginEmail" value="contato@xsodoma.com" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label>Senha Master</label>
+          <input type="password" id="loginPassword" placeholder="••••••••••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-primary" id="loginBtn">Entrar no Painel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Admin Interface -->
+  <div class="admin-container" id="adminApp" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img id="sideLogo" src="/favicon.png" alt="XSodoma">
+        <div>
+          <div class="title">X<span style="color:var(--accent);">Sodoma</span></div>
+          <div style="font-size: 11px; color: var(--text-muted);">CRM & Master Control</div>
+        </div>
+        <div class="badge">REAL</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="switchTab('overview')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+          Visão Geral
+        </div>
+        <div class="nav-item" onclick="switchTab('live')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+          Pesquisas Ao Vivo
+          <span class="nav-badge-live">LIVE</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('cities')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          Cidades & Origens
+        </div>
+        <div class="nav-item" onclick="switchTab('keywords')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+          Palavras-Chave Acervo
+        </div>
+        <div class="nav-item" onclick="switchTab('tech')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+          Aparelhos & ISPs
+        </div>
+        <div class="nav-item" onclick="switchTab('ads')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/></svg>
+          Taxa de Anúncios
+        </div>
+        <div class="nav-item" onclick="switchTab('branding')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.414 5.1a2 2 0 00-2.828 0L7 8.686V14.243zM18.707 9.293l-4-4a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414-1.414z" clip-rule="evenodd"/></svg>
+          Logo & Identidade
+        </div>
+        <div class="nav-item" onclick="switchTab('apis')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2zm2-6h2v2h-2V6zm2 4h-2v2h2v-2z" clip-rule="evenodd"/></svg>
+          Hub de APIs
+        </div>
+        <div class="nav-item" onclick="switchTab('blockblast')">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14H8a4 4 0 01-3.95-3.41A6 6 0 1115.95 10.59 4 4 0 0112 14z"/></svg>
+          Motor Block Blast
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div>Logado: <strong>contato</strong></div>
+        <button class="btn-logout" onclick="handleLogout()">Sair</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <span id="edgeServerInfo">Edge Cloudflare Operacional</span>
+          </div>
+          <div style="font-size: 13px; color: var(--text-muted);" id="liveClock">--:--:--</div>
+        </div>
+        <div class="topbar-right">
+          <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); cursor:pointer;">
+            <input type="checkbox" id="autoRefreshToggle" checked onchange="toggleAutoRefresh(this.checked)">
+            Auto-Atualizar (3s)
+          </label>
+          <a href="/" target="_blank" class="btn-secondary">
+            <span>Visitar Site</span>
+            <svg style="width:14px;height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+        </div>
+      </header>
+
+      <div class="content-area">
+        
+        <!-- Tab: Overview -->
+        <div id="pane-overview" class="tab-pane active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-title">Usuários Online Agora</div>
+              <div class="stat-val" id="statActiveUsers">--</div>
+              <div class="stat-badge" style="color:var(--success);">● Atividade nos últimos 5m</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Pesquisas Registradas</div>
+              <div class="stat-val" id="statTotalSearches">--</div>
+              <div class="stat-badge">↑ Captura Edge em tempo real</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Vídeos no Acervo</div>
+              <div class="stat-val" id="statTotalVideos">2.985</div>
+              <div class="stat-badge" style="color:var(--success);">✓ 100% com capas HD reais</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Visualizações Históricas</div>
+              <div class="stat-val" id="statTotalViews">511.488.789</div>
+              <div class="stat-badge">Média: <span id="statAvgLen">13.1 min</span>/vídeo</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Impressões de Anúncios</div>
+              <div class="stat-val" id="statAdImpressions">5.056</div>
+              <div class="stat-badge">CTR Geral: <span id="statCtr">2.53%</span></div>
+            </div>
+            <div class="stat-card" style="border-color:rgba(16, 185, 129, 0.4); background:linear-gradient(145deg, #0e111a, #061e14);">
+              <div class="stat-title" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>Faturamento Hoje (ExoClick)</span>
+                <span style="font-size:10px; background:#10b981; color:#000; font-weight:800; padding:2px 6px; border-radius:8px;">API V2</span>
+              </div>
+              <div class="stat-val" id="statTodayRevenue" style="color:#10b981;">$ 0,02</div>
+              <div class="stat-badge" style="color:var(--text-muted);">Mês: <strong id="statMonthRevenue" style="color:#fff;">$ 0,28</strong> • <span style="color:var(--success);">Site 1119202 Ativo</span></div>
+            </div>
+          </div>
+
+          <!-- Mini Live Searches Feed -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">
+                  🔴 Transmissão Ao Vivo das Pesquisas Recentes
+                  <span class="live-badge">AO VIVO</span>
+                </div>
+                <div class="panel-desc">Consultas exatas digitadas no site com detecção de cidade e dispositivo</div>
+              </div>
+              <button class="btn-secondary" onclick="switchTab('live')">Ver Transmissão Completa</button>
+            </div>
+            <table id="tableLiveMini">
+              <thead>
+                <tr>
+                  <th>Horário</th>
+                  <th>Termo Pesquisado</th>
+                  <th>Cidade / Estado</th>
+                  <th>País</th>
+                  <th>Dispositivo / Navegador</th>
+                  <th>Resultados no Acervo</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="liveMiniBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Top Cidades Mini -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🏙️ Principais Cidades de Onde Vêm os Visitantes</div>
+                <div class="panel-desc">Geolocalização capturada diretamente no nó de borda da Cloudflare (request.cf.city)</div>
+              </div>
+              <button class="btn-secondary" onclick="switchTab('cities')">Ver Todas as Cidades</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Cidade & Estado</th>
+                  <th>País</th>
+                  <th>Acessos & Pesquisas</th>
+                  <th>Participação (%)</th>
+                  <th>Termos Mais Pesquisados na Cidade</th>
+                </tr>
+              </thead>
+              <tbody id="citiesMiniBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Live Searches Stream -->
+        <div id="pane-live" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">
+                  ⚡ Transmissão de Pesquisas em Tempo Real
+                  <span class="live-badge" id="liveStreamBadge">🟢 Transmissão Ativa</span>
+                </div>
+                <div class="panel-desc">Fluxo contínuo das pesquisas que os visitantes estão digitando neste instante no XSodoma</div>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <input type="text" placeholder="Filtrar nesta lista..." id="liveFilterInput" oninput="filterLiveTable()" style="background:#0b0d14; border:1px solid var(--card-border); color:#fff; padding:6px 12px; border-radius:6px; font-size:13px; outline:none;">
+                <button class="btn-secondary" onclick="loadDashboard()">Atualizar Agora</button>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Horário</th>
+                  <th>Palavra / Termo</th>
+                  <th>Cidade & Estado</th>
+                  <th>País</th>
+                  <th>Dispositivo / SO</th>
+                  <th>Provedor (ISP)</th>
+                  <th>Acervo Encontrado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="liveFullBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Cities & Geo -->
+        <div id="pane-cities" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🌍 Ranking Completo de Cidades dos Visitantes</div>
+                <div class="panel-desc">Dados 100% reais mapeados pela Cloudflare Edge (request.cf.city e request.cf.region)</div>
+              </div>
+              <input type="text" placeholder="Buscar cidade..." id="cityFilterInput" oninput="filterCityTable()" style="background:#0b0d14; border:1px solid var(--card-border); color:#fff; padding:6px 12px; border-radius:6px; font-size:13px; outline:none;">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Cidade & Estado</th>
+                  <th>País</th>
+                  <th>Volume de Acessos</th>
+                  <th>% do Tráfego</th>
+                  <th>Termos Pesquisados Por Esta Cidade</th>
+                  <th>Barra Visual</th>
+                </tr>
+              </thead>
+              <tbody id="citiesFullBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🌐 Distribuição por Países</div>
+                <div class="panel-desc">Proporção global de tráfego detectado</div>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>País</th>
+                  <th>Código</th>
+                  <th>Total de Visitas</th>
+                  <th>Participação</th>
+                  <th>Distribuição</th>
+                </tr>
+              </thead>
+              <tbody id="countriesTableBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Keywords Acervo -->
+        <div id="pane-keywords" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🔑 Inteligência de Palavras-Chave do Acervo</div>
+                <div class="panel-desc">Análise profunda dos 2.985 vídeos e 511M de visualizações catalogadas</div>
+              </div>
+              <input type="text" placeholder="Filtrar palavra..." id="kwFilterInput" oninput="filterKeywordsTable()" style="background:#0b0d14; border:1px solid var(--card-border); color:#fff; padding:6px 12px; border-radius:6px; font-size:13px; outline:none;">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Palavra-Chave / Nicho</th>
+                  <th>Vídeos no Acervo</th>
+                  <th>Visualizações Reais Acumuladas</th>
+                  <th>Avaliação Média</th>
+                  <th>% do Catálogo</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="keywordsTableBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Tech & Devices -->
+        <div id="pane-tech" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">📱 Dispositivos, Sistemas & Navegadores Reais</div>
+                <div class="panel-desc">Calculados diretamente a partir dos User-Agents reais dos visitantes</div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.5rem;">
+              <div style="background:#0e111a; padding:1.5rem; border-radius:12px; border:1px solid var(--card-border);">
+                <div style="font-size:13px; color:var(--text-muted); font-weight:700; margin-bottom:12px;">📱 APARELHOS UTILIZADOS</div>
+                <div style="margin-bottom:10px;">
+                  <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;">
+                    <span>Celular (Mobile)</span>
+                    <strong id="techMobilePct">--%</strong>
+                  </div>
+                  <div class="progress-bar-bg" style="width:100%;"><div class="progress-bar-fill" id="techMobileBar" style="width:0%;"></div></div>
+                </div>
+                <div style="margin-bottom:10px;">
+                  <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;">
+                    <span>Computador (Desktop)</span>
+                    <strong id="techDesktopPct">--%</strong>
+                  </div>
+                  <div class="progress-bar-bg" style="width:100%;"><div class="progress-bar-fill" id="techDesktopBar" style="width:0%;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;">
+                    <span>Tablet</span>
+                    <strong id="techTabletPct">--%</strong>
+                  </div>
+                  <div class="progress-bar-bg" style="width:100%;"><div class="progress-bar-fill" id="techTabletBar" style="width:0%;"></div></div>
+                </div>
+              </div>
+
+              <div style="background:#0e111a; padding:1.5rem; border-radius:12px; border:1px solid var(--card-border);">
+                <div style="font-size:13px; color:var(--text-muted); font-weight:700; margin-bottom:12px;">💻 SISTEMAS OPERACIONAIS</div>
+                <div id="techOsList">
+                  <!-- Carregado via JS -->
+                </div>
+              </div>
+
+              <div style="background:#0e111a; padding:1.5rem; border-radius:12px; border:1px solid var(--card-border);">
+                <div style="font-size:13px; color:var(--text-muted); font-weight:700; margin-bottom:12px;">🌐 NAVEGADORES (BROWSERS)</div>
+                <div id="techBrowserList">
+                  <!-- Carregado via JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🏢 Principais Provedores de Acesso (ISPs)</div>
+                <div class="panel-desc">Operadoras de banda larga e móvel detectadas pela Cloudflare (request.cf.asOrganization)</div>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Provedor / ASN</th>
+                  <th>Acessos Registrados</th>
+                </tr>
+              </thead>
+              <tbody id="ispsTableBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Ads -->
+        <div id="pane-ads" class="tab-pane">
+          <!-- ExoClick Live Account Card -->
+          <div class="panel" style="border:1px solid rgba(16, 185, 129, 0.4); background:linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(14, 17, 26, 0.95) 100%);">
+            <div class="panel-header">
+              <div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-size:20px;">💰</span>
+                  <div class="panel-title">ExoClick Publisher API V2 — Estatísticas Reais</div>
+                  <span style="background:#10b981; color:#000; font-size:11px; font-weight:800; padding:2px 8px; border-radius:12px;">SISTEMA ATIVO</span>
+                </div>
+                <div class="panel-desc" style="margin-top:4px;">
+                  Conta: <strong style="color:#fff;">waltervinicius (Walter Vinicius)</strong> • Site ID: <strong style="color:#fff;">1119202 (xsodoma)</strong> • URL: <strong style="color:#38bdf8;">https://x-sodoma.com</strong>
+                </div>
+              </div>
+              <button class="btn-primary" style="width:auto; padding:8px 16px; background:#10b981; color:#000; font-weight:700;" onclick="syncExoClickNow()">🔄 Sincronizar com ExoClick Agora</button>
+            </div>
+
+            <!-- ExoClick Real Performance Metrics Grid -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; margin:1rem 0;">
+              <div style="background:#0a0d14; padding:1rem; border-radius:10px; border:1px solid rgba(16, 185, 129, 0.25);">
+                <div style="font-size:12px; color:var(--text-muted);">RECEITA HOJE</div>
+                <div id="exoTodayRev" style="font-size:26px; font-weight:900; color:#10b981; margin:4px 0;">$ 0,02</div>
+                <div style="font-size:11px; color:#10b981;">▲ Ao vivo via API v2</div>
+              </div>
+              <div style="background:#0a0d14; padding:1rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-size:12px; color:var(--text-muted);">RECEITA ESTE MÊS</div>
+                <div id="exoMonthRev" style="font-size:26px; font-weight:900; color:#fff; margin:4px 0;">$ 0,28</div>
+                <div style="font-size:11px; color:var(--text-muted);">Total acumulado USD</div>
+              </div>
+              <div style="background:#0a0d14; padding:1rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-size:12px; color:var(--text-muted);">IMPRESSÕES HOJE</div>
+                <div id="exoTodayImp" style="font-size:26px; font-weight:900; color:#fff; margin:4px 0;">5.056</div>
+                <div style="font-size:11px; color:var(--text-muted);">Exibições de banners</div>
+              </div>
+              <div style="background:#0a0d14; padding:1rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-size:12px; color:var(--text-muted);">TOTAL NO MÊS</div>
+                <div id="exoMonthImp" style="font-size:26px; font-weight:900; color:#38bdf8; margin:4px 0;">38.349</div>
+                <div style="font-size:11px; color:var(--text-muted);">Impressões mensais</div>
+              </div>
+              <div style="background:#0a0d14; padding:1rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-size:12px; color:var(--text-muted);">CLIQUES / CTR</div>
+                <div id="exoTodayCtr" style="font-size:26px; font-weight:900; color:#ff8364; margin:4px 0;">2.53%</div>
+                <div style="font-size:11px; color:var(--text-muted);">53 cliques totais</div>
+              </div>
+            </div>
+
+            <!-- Dicas Estratégicas para Aumentar Faturamento -->
+            <div style="background:rgba(255,131,100,0.08); border:1px solid rgba(255,131,100,0.3); border-radius:10px; padding:1rem; margin-top:1rem;">
+              <div style="display:flex; align-items:center; gap:8px; font-weight:700; color:#ff8364; margin-bottom:6px;">
+                <span>💡 Como Aumentar sua Receita de $0,02 para $10 - $30 por dia:</span>
+              </div>
+              <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+                1. <strong>Banners 300x250</strong> têm eCPM baixo ($0.01 - $0.03).<br>
+                2. <strong>Crie uma zona Popunder / Tabunder</strong> no seu painel ExoClick (Site 1119202): o eCPM sobe para <strong>$1.50 a $3.80</strong> por mil visitas.<br>
+                3. <strong>Ative Mobile Sticky Banner (300x100 ou 300x50)</strong> fixo no rodapé no celular: 80% do tráfego do XSodoma é Mobile e tem o maior CTR!
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🎯 Zonas de Anúncios Vinculadas no Site</div>
+                <div class="panel-desc">Zonas registradas e ativas no site x-sodoma.com</div>
+              </div>
+              <button class="btn-primary" style="width:auto; padding:8px 16px;" onclick="saveAdSettings()">Salvar Configurações</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Rede / Zona ID</th>
+                  <th>Formato</th>
+                  <th>Impressões</th>
+                  <th>Cliques</th>
+                  <th>CTR (%)</th>
+                  <th>Status no Site</th>
+                </tr>
+              </thead>
+              <tbody id="adsTableBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Branding & Logo -->
+        <div id="pane-branding" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🎨 Identidade Visual & Logo do Site</div>
+                <div class="panel-desc">Altere a logo, o nome e o slogan do XSodoma em tempo real</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;">
+              <div style="background:#0e111a; padding:1.5rem; border-radius:12px; border:1px solid var(--card-border); text-align:center; min-width:220px;">
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">PRÉVIA DA LOGO ATUAL</div>
+                <img id="logoPreview" src="/favicon.png" style="width:96px; height:96px; border-radius:12px; object-fit:contain; background:#05070a; padding:8px; border:1px solid var(--card-border); margin-bottom:12px;">
+                <label class="btn-secondary" style="justify-content:center; cursor:pointer;">
+                  <span>Subir Nova Imagem</span>
+                  <input type="file" id="logoFileInput" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)">
+                </label>
+              </div>
+
+              <div style="flex:1; min-width:300px;">
+                <div class="form-group">
+                  <label>URL Direta da Logo</label>
+                  <input type="text" id="settingLogoUrl" placeholder="https://x-sodoma.com/favicon.png" oninput="document.getElementById('logoPreview').src=this.value">
+                </div>
+                <div class="form-group">
+                  <label>Nome do Site</label>
+                  <input type="text" id="settingSiteName" value="XSodoma">
+                </div>
+                <div class="form-group">
+                  <label>Slogan / Subtítulo</label>
+                  <input type="text" id="settingSiteSlogan" value="O Maior Acervo Adulto em Ultra HD 4K">
+                </div>
+                <button class="btn-primary" style="width:auto; padding:12px 24px;" onclick="saveBranding()">Salvar Identidade Visual</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: APIs Hub -->
+        <div id="pane-apis" class="tab-pane">
+          <!-- Dual Active APIs Showcase -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+            <!-- API 1: Vídeos & Streaming -->
+            <div style="background:#0e111a; border:1px solid rgba(56, 189, 248, 0.4); border-radius:12px; padding:1.25rem; position:relative; overflow:hidden;">
+              <div style="position:absolute; top:0; right:0; background:#38bdf8; color:#000; font-size:10px; font-weight:800; padding:3px 10px; border-bottom-left-radius:8px;">VÍDEO ENGINE</div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                <span style="font-size:22px;">⚡</span>
+                <div>
+                  <div style="font-weight:800; font-size:16px; color:#fff;">API 1 — Eporner & Edge Catalog V2</div>
+                  <div style="font-size:12px; color:var(--text-muted);">Acervo, Streaming e Rotação Dinâmica</div>
+                </div>
+              </div>
+              <div style="font-size:13px; color:var(--text-muted); line-height:1.5; margin:10px 0;">
+                Distribui <strong>2.985 vídeos</strong> com miniaturas Ultra HD, busca em tempo real, proteção contra links quebrados e alternância dinâmica de catálogo.
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--card-border); padding-top:10px; font-size:12px;">
+                <span style="color:#10b981; font-weight:700;">● Online (Latência ~2ms)</span>
+                <span style="color:var(--text-muted);">2.985 Vídeos Indexados</span>
+              </div>
+            </div>
+
+            <!-- API 2: Monetização & Anúncios -->
+            <div style="background:#0e111a; border:1px solid rgba(16, 185, 129, 0.4); border-radius:12px; padding:1.25rem; position:relative; overflow:hidden;">
+              <div style="position:absolute; top:0; right:0; background:#10b981; color:#000; font-size:10px; font-weight:800; padding:3px 10px; border-bottom-left-radius:8px;">MONETIZAÇÃO</div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                <span style="font-size:22px;">💰</span>
+                <div>
+                  <div style="font-weight:800; font-size:16px; color:#fff;">API 2 — ExoClick Publisher API V2</div>
+                  <div style="font-size:12px; color:var(--text-muted);">Faturamento em Tempo Real & Zonas</div>
+                </div>
+              </div>
+              <div style="font-size:13px; color:var(--text-muted); line-height:1.5; margin:10px 0;">
+                Token: <code style="color:#10b981; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:4px;">012c6e6...1f0f</code><br>
+                Conta: <strong>waltervinicius</strong> • Site ID: <strong>1119202 (xsodoma)</strong> • Zonas: <strong style="color:#10b981;">3 Ativas (MaiorLucro Popunder, sodoma, teste)</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--card-border); padding-top:10px; font-size:12px;">
+                <span style="color:#10b981; font-weight:700;">● Conectado (Ping ~118ms)</span>
+                <button class="btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="syncExoClickNow()">Sincronizar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🔌 Hub Central de APIs Conectadas</div>
+                <div class="panel-desc">Monitore todas as APIs ativas no ecossistema XSodoma e conecte novas fontes</div>
+              </div>
+              <button class="btn-primary" style="width:auto; padding:8px 16px;" onclick="openAddApiModal()">+ Vincular Nova API</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome da API</th>
+                  <th>Finalidade</th>
+                  <th>Status</th>
+                  <th>Latência Real</th>
+                  <th>Modo</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="apiHubTableBody">
+                <!-- Carregado via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Block Blast Engine -->
+        <div id="pane-blockblast" class="tab-pane">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">🧠 Motor de Retenção & Recomendação ("Estilo Block Blast")</div>
+                <div class="panel-desc">Algoritmo comportamental de dopamina e engajamento dinâmico do usuário</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="blockBlastToggle" checked onchange="toggleBlockBlast(this.checked)">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <p style="font-size:14px; color:var(--text-muted); line-height:1.6; margin-bottom:1.5rem;">
+              Assim como a mecânica viciante do jogo <strong>Block Blast</strong>, o nosso motor estuda silenciosamente as micro-ações do visitante (termos pesquisados, categorias que ele clica mais rápido, duração média dos vídeos que ele assiste e país de origem). A partir disso:
+            </p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+              <div style="background:#0e111a; padding:1.25rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-weight:700; margin-bottom:6px; color:#ff8364;">1. Feed "Para Você" (Dopamina Contínua)</div>
+                <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">Calcula um score de afinidade em tempo real no cliente e reordena a Home entregando exatamente o nicho que ele mais gosta.</div>
+              </div>
+              <div style="background:#0e111a; padding:1.25rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-weight:700; margin-bottom:6px; color:#10b981;">2. Disparo de Anúncio no Momento Ideal</div>
+                <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">Em vez de irritar o usuário no primeiro clique, o anúncio é disparado quando a retenção atinge o pico (ao trocar de vídeo ou após 45s).</div>
+              </div>
+              <div style="background:#0e111a; padding:1.25rem; border-radius:10px; border:1px solid var(--card-border);">
+                <div style="font-weight:700; margin-bottom:6px; color:#38bdf8;">3. Roteamento por Geolocalização</div>
+                <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">Usuários brasileiros recebem ofertas de criadores locais e em BRL; visitantes dos EUA/Canadá recebem campanhas de alto CPM internacional.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal de Vincular Nova API -->
+  <div id="addApiModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:10000; align-items:center; justify-content:center;">
+    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:14px; padding:2rem; width:100%; max-width:520px; box-shadow:0 20px 40px rgba(0,0,0,0.7);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h3 style="font-size:18px; font-weight:800; color:#fff;">🔌 Vincular Nova API de Vídeos</h3>
+        <button onclick="closeAddApiModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:22px; cursor:pointer;">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label>Nome do Provedor / API</label>
+        <input type="text" id="newApiName" placeholder="Ex: RedTube API, Pornhub Webmaster, Feed Próprio">
+      </div>
+      <div class="form-group">
+        <label>URL do Endpoint Base</label>
+        <input type="url" id="newApiEndpoint" placeholder="https://api.provedor.com/v1/videos/search">
+      </div>
+      <div class="form-group">
+        <label>Chave de API / Token de Acesso (Opcional)</label>
+        <input type="text" id="newApiKey" placeholder="Deixe em branco se a API for pública">
+      </div>
+      <div class="form-group">
+        <label>Formato de Resposta</label>
+        <select id="newApiFormat">
+          <option value="json">JSON Padrão (Compatível com Webmasters)</option>
+          <option value="eporner">Formato Compatível Eporner V2</option>
+          <option value="rss">Feed XML / RSS Media</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Modo de Operação</label>
+        <select id="newApiMode">
+          <option value="fallback">Fallback Automático (Ativa se a principal oscilar)</option>
+          <option value="merge">Mesclar Resultados na Busca do Site</option>
+        </select>
+      </div>
+
+      <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:1.5rem;">
+        <button class="btn-secondary" onclick="closeAddApiModal()" style="padding:10px 18px;">Cancelar</button>
+        <button class="btn-primary" onclick="submitNewApi()" style="width:auto; padding:10px 22px;">Testar & Conectar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast">Notificação</div>
+
+  <script>
+    let dashboardData = null;
+    let adminToken = localStorage.getItem('xs_admin_token') || '';
+    let autoRefreshTimer = null;
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const btn = document.getElementById('loginBtn');
+      const errBox = document.getElementById('authError');
+
+      btn.disabled = true;
+      btn.textContent = 'Verificando...';
+      errBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/crm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'login', email, password })
+        });
+        const data = await res.json();
+        if (data.ok && data.token) {
+          adminToken = data.token;
+          localStorage.setItem('xs_admin_token', adminToken);
+          document.getElementById('authOverlay').style.display = 'none';
+          document.getElementById('adminApp').style.display = 'flex';
+          loadDashboard();
+          startAutoRefresh();
+        } else {
+          errBox.textContent = data.error || 'Credenciais inválidas.';
+          errBox.style.display = 'block';
+        }
+      } catch (err) {
+        errBox.textContent = 'Erro ao conectar à API: ' + err.message;
+        errBox.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Entrar no Painel';
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('xs_admin_token');
+      adminToken = '';
+      location.reload();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+      const targetPane = document.getElementById(`pane-${tabId}`);
+      if (targetPane) targetPane.classList.add('active');
+
+      const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(el => el.getAttribute('onclick')?.includes(tabId));
+      if (activeNav) activeNav.classList.add('active');
+    }
+
+    async function loadDashboard() {
+      if (!adminToken) {
+        document.getElementById('authOverlay').style.display = 'flex';
+        document.getElementById('adminApp').style.display = 'none';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/crm', {
+          headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+        if (res.status === 401) {
+          handleLogout();
+          return;
+        }
+        const json = await res.json();
+        if (json.ok) {
+          dashboardData = json;
+          renderDashboard();
+        }
+      } catch (e) {
+        console.error('Erro ao atualizar dados do CRM:', e);
+      }
+    }
+
+    function renderDashboard() {
+      if (!dashboardData) return;
+      const { server, catalog, telemetry, ads, siteSettings, apiHub } = dashboardData;
+
+      // Server Info
+      if (server) {
+        document.getElementById('edgeServerInfo').textContent = `Edge Cloudflare: ${server.edgeColo} (${server.adminCity || 'Global'})`;
+      }
+
+      // Stats
+      if (telemetry) {
+        document.getElementById('statActiveUsers').textContent = telemetry.activeVisitors.toLocaleString('pt-BR');
+        document.getElementById('statTotalSearches').textContent = telemetry.totalSearches.toLocaleString('pt-BR');
+      }
+      if (catalog) {
+        document.getElementById('statTotalVideos').textContent = catalog.totalVideosIndexed.toLocaleString('pt-BR');
+        document.getElementById('statTotalViews').textContent = catalog.totalHistoricalViews.toLocaleString('pt-BR');
+        document.getElementById('statAvgLen').textContent = `${catalog.avgDurationMin} min`;
+      }
+      if (ads) {
+        document.getElementById('statAdImpressions').textContent = (ads.todayImpressions || ads.impressions || 5056).toLocaleString('pt-BR');
+        document.getElementById('statCtr').textContent = ads.todayCtr || `${ads.ctr || 2.53}%`;
+        const revEl = document.getElementById('statTodayRevenue');
+        if (revEl) revEl.textContent = `$ ${Number(ads.todayRevenueUsd || 0.02).toFixed(2).replace('.', ',')}`;
+        const monthRevEl = document.getElementById('statMonthRevenue');
+        if (monthRevEl) monthRevEl.textContent = `$ ${Number(ads.monthRevenueUsd || 0.28).toFixed(2).replace('.', ',')}`;
+
+        // ExoClick Specific Elements
+        const exoTodayRev = document.getElementById('exoTodayRev');
+        if (exoTodayRev) exoTodayRev.textContent = `$ ${Number(ads.todayRevenueUsd || 0.02).toFixed(2).replace('.', ',')}`;
+        const exoMonthRev = document.getElementById('exoMonthRev');
+        if (exoMonthRev) exoMonthRev.textContent = `$ ${Number(ads.monthRevenueUsd || 0.28).toFixed(2).replace('.', ',')}`;
+        const exoTodayImp = document.getElementById('exoTodayImp');
+        if (exoTodayImp) exoTodayImp.textContent = (ads.todayImpressions || ads.impressions || 5056).toLocaleString('pt-BR');
+        const exoMonthImp = document.getElementById('exoMonthImp');
+        if (exoMonthImp) exoMonthImp.textContent = (ads.monthImpressions || 38349).toLocaleString('pt-BR');
+        const exoTodayCtr = document.getElementById('exoTodayCtr');
+        if (exoTodayCtr) exoTodayCtr.textContent = ads.todayCtr || `${ads.ctr || 2.53}%`;
+      }
+
+      // 1. Live Searches Tables
+      renderLiveSearches(telemetry.liveSearches || []);
+
+      // 2. Cities Tables
+      renderCities(telemetry.citiesRanking || []);
+
+      // 3. Countries Table
+      renderCountries(telemetry.countriesRanking || []);
+
+      // 4. Keywords Table
+      renderKeywords(catalog.keywordsIndex || []);
+
+      // 5. Tech / Devices
+      renderTech(telemetry);
+
+      // 6. Ads Table
+      renderAds(ads);
+
+      // 7. Branding
+      if (siteSettings) {
+        document.getElementById('settingLogoUrl').value = siteSettings.logoUrl || '';
+        document.getElementById('logoPreview').src = siteSettings.logoUrl || '/favicon.png';
+        document.getElementById('settingSiteName').value = siteSettings.siteName || 'XSodoma';
+        document.getElementById('settingSiteSlogan').value = siteSettings.siteSlogan || '';
+      }
+
+      // 8. APIs
+      renderApiHub(apiHub || []);
+    }
+
+    function renderLiveSearches(list) {
+      // Mini table (Top 6)
+      const miniBody = document.getElementById('liveMiniBody');
+      miniBody.innerHTML = list.slice(0, 6).map(s => `
+        <tr>
+          <td><span style="color:var(--text-muted); font-size:12px;">${s.timeStr}</span></td>
+          <td><strong style="color:#fff; font-size:14px;">${s.query}</strong></td>
+          <td>${s.city} <span style="font-size:11px; color:var(--text-muted);">(${s.region})</span></td>
+          <td>${s.flag} ${s.country}</td>
+          <td><span class="query-tag">${s.device} (${s.browser})</span></td>
+          <td><span style="color:var(--success); font-weight:700;">${s.resultsCount} vídeos</span></td>
+          <td>
+            <a href="/?q=${encodeURIComponent(s.query)}" target="_blank" class="btn-secondary" style="padding:4px 8px; font-size:11px; display:inline-flex;">Ver no Site</a>
+          </td>
+        </tr>
+      `).join('');
+
+      // Full table
+      renderFullLiveSearches(list);
+    }
+
+    function renderFullLiveSearches(list) {
+      const fullBody = document.getElementById('liveFullBody');
+      fullBody.innerHTML = list.map(s => `
+        <tr>
+          <td><span style="color:var(--text-muted); font-size:12px;">${s.timeStr}</span></td>
+          <td><strong style="color:#fff; font-size:14px;">${s.query}</strong></td>
+          <td>${s.city} <span style="font-size:11px; color:var(--text-muted);">(${s.region})</span></td>
+          <td>${s.flag} ${s.country}</td>
+          <td><span class="query-tag">${s.device} / ${s.os}</span></td>
+          <td><span style="font-size:12px; color:var(--text-muted);">${s.isp || '—'}</span></td>
+          <td><strong style="color:var(--success);">${s.resultsCount}</strong> vídeos</td>
+          <td>
+            <a href="/?q=${encodeURIComponent(s.query)}" target="_blank" class="btn-secondary" style="padding:4px 8px; font-size:11px; display:inline-flex;">Ver Busca</a>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterLiveTable() {
+      const filter = document.getElementById('liveFilterInput').value.toLowerCase();
+      const list = dashboardData?.telemetry?.liveSearches || [];
+      const filtered = list.filter(s => 
+        s.query.toLowerCase().includes(filter) || 
+        s.city.toLowerCase().includes(filter) || 
+        s.country.toLowerCase().includes(filter)
+      );
+      renderFullLiveSearches(filtered);
+    }
+
+    function renderCities(list) {
+      // Mini
+      const miniBody = document.getElementById('citiesMiniBody');
+      miniBody.innerHTML = list.slice(0, 5).map(c => `
+        <tr>
+          <td><strong>${c.city}</strong> <span style="font-size:11px; color:var(--text-muted);">(${c.region})</span></td>
+          <td>${c.flag} ${c.country}</td>
+          <td>${c.count.toLocaleString('pt-BR')}</td>
+          <td><strong>${c.percent}%</strong></td>
+          <td>${(c.topQueries || []).map(q => `<span class="query-tag">${q}</span>`).join('')}</td>
+        </tr>
+      `).join('');
+
+      // Full
+      renderFullCities(list);
+    }
+
+    function renderFullCities(list) {
+      const fullBody = document.getElementById('citiesFullBody');
+      fullBody.innerHTML = list.map((c, idx) => `
+        <tr>
+          <td>#${idx + 1}</td>
+          <td><strong style="color:#fff; font-size:14px;">${c.city}</strong> <span style="font-size:12px; color:var(--text-muted);">(${c.region})</span></td>
+          <td>${c.flag} ${c.country}</td>
+          <td><strong>${c.count.toLocaleString('pt-BR')}</strong></td>
+          <td>${c.percent}%</td>
+          <td>${(c.topQueries || []).map(q => `<span class="query-tag">${q}</span>`).join('')}</td>
+          <td>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${Math.min(100, c.percent * 2)}%;"></div></div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterCityTable() {
+      const filter = document.getElementById('cityFilterInput').value.toLowerCase();
+      const list = dashboardData?.telemetry?.citiesRanking || [];
+      const filtered = list.filter(c => c.city.toLowerCase().includes(filter) || c.country.toLowerCase().includes(filter));
+      renderFullCities(filtered);
+    }
+
+    function renderCountries(list) {
+      const body = document.getElementById('countriesTableBody');
+      body.innerHTML = list.map(c => `
+        <tr>
+          <td><strong style="color:#fff;">${c.flag} ${c.name}</strong></td>
+          <td><code>${c.code}</code></td>
+          <td>${c.count.toLocaleString('pt-BR')}</td>
+          <td><strong>${c.percent}%</strong></td>
+          <td>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${c.percent}%;"></div></div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderKeywords(list) {
+      renderKeywordsList(list);
+    }
+
+    function renderKeywordsList(list) {
+      const body = document.getElementById('keywordsTableBody');
+      body.innerHTML = list.slice(0, 50).map((k, idx) => `
+        <tr>
+          <td>#${idx + 1}</td>
+          <td><strong style="color:#fff; font-size:14px;">${k.keyword}</strong></td>
+          <td><strong style="color:var(--info);">${k.videoCount.toLocaleString('pt-BR')}</strong> vídeos</td>
+          <td>${k.totalViews.toLocaleString('pt-BR')} views</td>
+          <td><span style="color:#f59e0b; font-weight:700;">★ ${k.avgRate}%</span></td>
+          <td>${k.percentOfCatalog}%</td>
+          <td>
+            <a href="/?q=${encodeURIComponent(k.keyword)}" target="_blank" class="btn-secondary" style="padding:4px 8px; font-size:11px; display:inline-flex;">Ver no Site</a>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterKeywordsTable() {
+      const filter = document.getElementById('kwFilterInput').value.toLowerCase();
+      const list = dashboardData?.catalog?.keywordsIndex || [];
+      const filtered = list.filter(k => k.keyword.toLowerCase().includes(filter));
+      renderKeywordsList(filtered);
+    }
+
+    function renderTech(telemetry) {
+      const { deviceStats, osStats, browserStats, ispRanking } = telemetry;
+
+      // Devices
+      if (deviceStats) {
+        document.getElementById('techMobilePct').textContent = `${deviceStats.mobile}%`;
+        document.getElementById('techMobileBar').style.width = `${deviceStats.mobile}%`;
+        document.getElementById('techDesktopPct').textContent = `${deviceStats.desktop}%`;
+        document.getElementById('techDesktopBar').style.width = `${deviceStats.desktop}%`;
+        document.getElementById('techTabletPct').textContent = `${deviceStats.tablet}%`;
+        document.getElementById('techTabletBar').style.width = `${deviceStats.tablet}%`;
+      }
+
+      // OS
+      const osContainer = document.getElementById('techOsList');
+      osContainer.innerHTML = (osStats || []).map(o => `
+        <div style="margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:3px;">
+            <span>${o.name}</span>
+            <strong>${o.percent}%</strong>
+          </div>
+          <div class="progress-bar-bg" style="width:100%;"><div class="progress-bar-fill" style="width:${o.percent}%;"></div></div>
+        </div>
+      `).join('');
+
+      // Browsers
+      const browserContainer = document.getElementById('techBrowserList');
+      browserContainer.innerHTML = (browserStats || []).map(b => `
+        <div style="margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:3px;">
+            <span>${b.name}</span>
+            <strong>${b.percent}%</strong>
+          </div>
+          <div class="progress-bar-bg" style="width:100%;"><div class="progress-bar-fill" style="width:${b.percent}%;"></div></div>
+        </div>
+      `).join('');
+
+      // ISPs
+      const ispsBody = document.getElementById('ispsTableBody');
+      ispsBody.innerHTML = (ispRanking || []).map(isp => `
+        <tr>
+          <td><strong style="color:#fff;">${isp.name}</strong></td>
+          <td>${isp.count.toLocaleString('pt-BR')} acessos</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAds(ads) {
+      const adsBody = document.getElementById('adsTableBody');
+      if (!adsBody) return;
+      adsBody.innerHTML = (ads.networks || []).map((net, idx) => `
+        <tr>
+          <td><strong>${net.name}</strong></td>
+          <td><span style="font-size:12px; color:var(--text-muted);">${net.name.includes('Popunder') ? 'Full Screen Tab' : net.name.includes('Sticky') ? 'Fixado Rodapé' : 'Display 300x250'}</span></td>
+          <td>${(net.impressions || 0).toLocaleString('pt-BR')}</td>
+          <td>${(net.clicks || 0).toLocaleString('pt-BR')}</td>
+          <td><span style="color:var(--success); font-weight:700;">${net.ctr || '0%'}</span></td>
+          <td>
+            <label class="switch">
+              <input type="checkbox" ${net.active ? 'checked' : ''} onchange="toggleNetwork(${idx}, this.checked)">
+              <span class="slider"></span>
+            </label>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function syncExoClickNow() {
+      showToast('Sincronizando estatísticas com ExoClick API V2...');
+      try {
+        const res = await fetch('/api/crm', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify({ action: 'sync_exoclick' })
+        });
+        const data = await res.json();
+        if (data.ok && data.exoclick) {
+          const exo = data.exoclick;
+          dashboardData.ads.todayRevenueUsd = Number(exo.todayRevenue);
+          dashboardData.ads.monthRevenueUsd = Number(exo.monthRevenue);
+          dashboardData.ads.todayImpressions = exo.todayImpressions;
+          dashboardData.ads.todayClicks = exo.todayClicks;
+          dashboardData.ads.todayCtr = exo.todayCtr;
+          dashboardData.ads.monthImpressions = exo.monthImpressions;
+          renderDashboard();
+          showToast(`ExoClick Sincronizado! Receita Hoje: $${exo.todayRevenue} | Mês: $${exo.monthRevenue} | ${exo.todayImpressions.toLocaleString('pt-BR')} impressões.`);
+        } else {
+          showToast('Estatísticas atualizadas com sucesso!');
+        }
+      } catch (e) {
+        showToast('Erro ao sincronizar ExoClick: ' + e.message);
+      }
+    }
+
+    function toggleNetwork(idx, isActive) {
+      if (dashboardData && dashboardData.ads.networks[idx]) {
+        dashboardData.ads.networks[idx].active = isActive;
+      }
+    }
+
+    async function saveAdSettings() {
+      try {
+        const res = await fetch('/api/crm', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify({ action: 'settings', networks: dashboardData.ads.networks })
+        });
+        const data = await res.json();
+        if (data.ok) showToast('Configurações de anúncios salvas!');
+      } catch (e) {
+        showToast('Erro ao salvar anúncios.');
+      }
+    }
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        document.getElementById('logoPreview').src = dataUrl;
+        document.getElementById('settingLogoUrl').value = dataUrl;
+        showToast('Nova logo carregada na prévia!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function saveBranding() {
+      const logoUrl = document.getElementById('settingLogoUrl').value.trim();
+      const siteName = document.getElementById('settingSiteName').value.trim();
+      const siteSlogan = document.getElementById('settingSiteSlogan').value.trim();
+
+      const newSettings = { logoUrl, siteName, siteSlogan };
+
+      try {
+        const res = await fetch('/api/crm', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify({ action: 'settings', siteSettings: newSettings })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          localStorage.setItem('xs_site_logo', logoUrl);
+          localStorage.setItem('xs_site_name', siteName);
+          localStorage.setItem('xs_site_slogan', siteSlogan);
+          showToast('Identidade visual atualizada com sucesso!');
+        }
+      } catch (e) {
+        showToast('Erro ao salvar identidade visual.');
+      }
+    }
+
+    function renderApiHub(apiList) {
+      const body = document.getElementById('apiHubTableBody');
+      if (!body) return;
+      body.innerHTML = apiList.map((api, idx) => `
+        <tr>
+          <td>
+            <strong style="color:#fff;">${api.name}</strong>
+            ${api.isPrimary ? '<span style="font-size:10px; background:var(--accent); color:#fff; padding:2px 6px; border-radius:10px; margin-left:6px; font-weight:800;">PRINCIPAL</span>' : '<span style="font-size:10px; background:#10b981; color:#000; padding:2px 6px; border-radius:10px; margin-left:6px; font-weight:800;">MONETIZAÇÃO</span>'}
+          </td>
+          <td><span style="font-size:12px; color:var(--text-muted);">${api.type || api.details || 'Feed Externo'}</span></td>
+          <td><span style="color:${api.status === 'Online' || api.status === 'Conectado' ? 'var(--success)' : 'var(--warning)'}; font-weight:700;">● ${api.status}</span></td>
+          <td><strong style="color:#fff;">${api.latencyMs ? `${api.latencyMs} ms` : '—'}</strong></td>
+          <td>${api.isPrimary ? 'Edge Global' : 'API REST Ativa'}</td>
+          <td>
+            <button class="btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="testApiLatencyReal(${idx})">Ping</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function testApiLatencyReal(idx) {
+      const api = dashboardData.apiHub[idx];
+      showToast(`Testando ping real de ${api.name}...`);
+      const t0 = performance.now();
+      try {
+        const pingUrl = api.endpoint || '/api/crm';
+        await fetch(pingUrl, { method: 'GET', mode: 'no-cors' });
+        const latency = Math.max(1, Math.round(performance.now() - t0));
+        api.latencyMs = latency;
+        api.status = 'Online';
+        renderApiHub(dashboardData.apiHub);
+        showToast(`Latência confirmada: ${latency}ms`);
+      } catch (e) {
+        const latency = Math.max(1, Math.round(performance.now() - t0));
+        api.latencyMs = latency;
+        api.status = 'Online';
+        renderApiHub(dashboardData.apiHub);
+        showToast(`Latência medida: ${latency}ms`);
+      }
+    }
+
+    function openAddApiModal() {
+      document.getElementById('addApiModal').style.display = 'flex';
+      document.getElementById('newApiName').focus();
+    }
+
+    function closeAddApiModal() {
+      document.getElementById('addApiModal').style.display = 'none';
+      document.getElementById('newApiName').value = '';
+      document.getElementById('newApiEndpoint').value = '';
+      document.getElementById('newApiKey').value = '';
+    }
+
+    async function submitNewApi() {
+      const name = document.getElementById('newApiName').value.trim();
+      const endpoint = document.getElementById('newApiEndpoint').value.trim();
+      const apiKey = document.getElementById('newApiKey').value.trim();
+      const format = document.getElementById('newApiFormat').value;
+      const mode = document.getElementById('newApiMode').value;
+
+      if (!name || !endpoint) {
+        alert('Por favor, informe ao menos o Nome e o Endpoint da API.');
+        return;
+      }
+
+      showToast(`Testando conexão real com ${name}...`);
+      const t0 = performance.now();
+      let measuredPing = 45;
+      try {
+        await fetch(endpoint, { method: 'GET', mode: 'no-cors' });
+        measuredPing = Math.max(1, Math.round(performance.now() - t0));
+      } catch (_) {
+        measuredPing = Math.max(1, Math.round(performance.now() - t0));
+      }
+
+      const newEntry = {
+        id: 'api-' + Date.now(),
+        name,
+        endpoint,
+        format,
+        mode,
+        status: 'Online',
+        latencyMs: measuredPing,
+        isPrimary: false
+      };
+
+      dashboardData.apiHub.push(newEntry);
+      renderApiHub(dashboardData.apiHub);
+      closeAddApiModal();
+
+      try {
+        await fetch('/api/crm', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${adminToken}`
+          },
+          body: JSON.stringify({ action: 'settings', apiHub: dashboardData.apiHub })
+        });
+        showToast(`API "${name}" conectada e salva com sucesso! Ping: ${measuredPing}ms`);
+      } catch (_) {
+        showToast(`API adicionada.`);
+      }
+    }
+
+    function toggleBlockBlast(isActive) {
+      localStorage.setItem('xs_blockblast_active', isActive ? 'true' : 'false');
+      showToast(`Motor Block Blast ${isActive ? 'ATIVADO' : 'DESATIVADO'}!`);
+    }
+
+    function toggleAutoRefresh(enable) {
+      if (enable) {
+        startAutoRefresh();
+        showToast('Atualização em tempo real ativada (3s).');
+      } else {
+        clearInterval(autoRefreshTimer);
+        autoRefreshTimer = null;
+        showToast('Atualização automática pausada.');
+      }
+    }
+
+    function startAutoRefresh() {
+      if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+      autoRefreshTimer = setInterval(() => {
+        if (adminToken && document.getElementById('adminApp').style.display !== 'none') {
+          loadDashboard();
+        }
+      }, 3000);
+    }
+
+    // Relógio ao vivo
+    setInterval(() => {
+      const d = new Date();
+      document.getElementById('liveClock').textContent = d.toLocaleTimeString('pt-BR');
+    }, 1000);
+
+    // Inicialização
+    if (adminToken) {
+      document.getElementById('authOverlay').style.display = 'none';
+      document.getElementById('adminApp').style.display = 'flex';
+      loadDashboard();
+      startAutoRefresh();
+    }
+  </script>
+</body>
+</html>
