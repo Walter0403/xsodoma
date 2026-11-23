@@ -7,14 +7,40 @@ Allow: /en-us/
 Allow: /en-ca/
 Allow: /es-es/
 Allow: /categoria/
+Allow: /category/
 Allow: /tag/
-Allow: /blog/
+Allow: /busca/
+Allow: /search/
 Allow: /video/
+Allow: /blog/
 Disallow: /admin
 Disallow: /admin/
 Disallow: /api/
 Disallow: /*?q=*
 Disallow: /*{search_term_string}*
+
+User-agent: Googlebot
+Allow: /
+Allow: /tag/
+Allow: /categoria/
+Allow: /video/
+
+User-agent: Googlebot-Video
+Allow: /
+Allow: /video/
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /api/thumb*
+Allow: /*.jpg
+Allow: /*.webp
+Allow: /*.png
+
+User-agent: Bingbot
+Allow: /
+Allow: /tag/
+Allow: /categoria/
+Allow: /video/
 
 Sitemap: https://x-sodoma.com/sitemap_index.xml
 Sitemap: https://x-sodoma.com/sitemap.xml
