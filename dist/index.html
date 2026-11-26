@@ -3586,20 +3586,17 @@ function resolveApiSearchQuery(raw) {
   return mapped.join(' ');
 }
 
-// Semente de Sessão Dinâmica para Rotação Contínua de Vídeos no Feed
+// Semente Horária Dinâmica para Rotação Contínua a cada 60 minutos
+function getHourlySeed() {
+  // Retorna a chave da hora atual (muda a cada 60 minutos cravados)
+  return String(Math.floor(Date.now() / (1000 * 60 * 60)));
+}
+
 function getOrInitSessionSeed() {
-  let s = sessionStorage.getItem('xs_session_seed');
-  if (!s) {
-    // Semente única por sessão baseada no tempo para que cada visita receba novos vídeos
-    s = String(Math.floor(Date.now() / (1000 * 60 * 20)) + Math.floor(Math.random() * 10000));
-    sessionStorage.setItem('xs_session_seed', s);
-  }
-  return s;
+  return getHourlySeed();
 }
 
 function refreshVideosFeed() {
-  const newSeed = String(Math.floor(Math.random() * 90000) + 10000);
-  sessionStorage.setItem('xs_session_seed', newSeed);
   currentPage = 1;
   const btn = document.getElementById('btnRefreshFeed');
   if (btn) {
@@ -3612,12 +3609,15 @@ function refreshVideosFeed() {
   }
 }
 
-// Auto-atualização periódica a cada 15 minutos se o usuário deixar a página aberta
+// Auto-atualização periódica a cada 60 minutos (virada de hora)
+let lastLoadedHour = Math.floor(Date.now() / (1000 * 60 * 60));
 setInterval(() => {
-  if (document.visibilityState === 'visible' && currentPage === 1 && (!currentQuery || currentQuery === 'all')) {
+  const currentHour = Math.floor(Date.now() / (1000 * 60 * 60));
+  if (currentHour !== lastLoadedHour && document.visibilityState === 'visible' && currentPage === 1 && (!currentQuery || currentQuery === 'all')) {
+    lastLoadedHour = currentHour;
     refreshVideosFeed();
   }
-}, 15 * 60 * 1000);
+}, 60 * 1000);
 
 const BACKUP_VIDEOS = [
   {
@@ -4009,8 +4009,8 @@ async function loadVideos() {
     }
 
     const apiQuery = resolveApiSearchQuery(currentQuery);
-    const sessionSeed = getOrInitSessionSeed();
-    const url = `${API_BASE}?query=${encodeURIComponent(apiQuery)}&per_page=${perPage}&page=${currentPage}&thumbsize=${thumbSize}&order=${currentOrder}&seed=${sessionSeed}&_t=${Date.now()}`;
+    const hourlySeed = getHourlySeed();
+    const url = `${API_BASE}?query=${encodeURIComponent(apiQuery)}&per_page=${perPage}&page=${currentPage}&thumbsize=${thumbSize}&order=${currentOrder}&seed=${hourlySeed}&_h=${hourlySeed}`;
 
     let data = null;
     try {
@@ -4022,13 +4022,21 @@ async function loadVideos() {
     let videosList = (data && Array.isArray(data.videos) && data.videos.length) ? data.videos : null;
 
     if (!videosList) {
-      if (currentQuery && currentQuery !== 'all') {
-        const qLower = currentQuery.toLowerCase();
-        videosList = BACKUP_VIDEOS.filter(v => (v.title && v.title.toLowerCase().includes(qLower)) || (v.keywords && v.keywords.toLowerCase().includes(qLower)));
-        if (!videosList.length) videosList = BACKUP_VIDEOS;
-      } else {
-        videosList = BACKUP_VIDEOS;
+      const hSeed = getHourlySeed();
+      let pool = (currentQuery && currentQuery !== 'all')
+        ? BACKUP_VIDEOS.filter(v => (v.title && v.title.toLowerCase().includes(currentQuery.toLowerCase())) || (v.keywords && v.keywords.toLowerCase().includes(currentQuery.toLowerCase())))
+        : BACKUP_VIDEOS;
+      if (!pool.length) pool = BACKUP_VIDEOS;
+
+      // Rotação determinística horária a cada 60 min no fallback
+      const shuffled = [...pool];
+      let s = (parseInt(hSeed, 10) || 1) % 233280;
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        s = (s * 9301 + 49297) % 233280;
+        const j = Math.floor((s / 233280) * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
+      videosList = shuffled;
     }
 
     renderVideos(videosList);

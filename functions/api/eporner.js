@@ -112,28 +112,26 @@ function queryLocalCatalog(targetUrlStr) {
       }
     }
 
-    // Ordenação e Rotação Dinâmica
+    // Ordenação e Rotação Dinâmica a cada 60 minutos (3.600.000 ms)
     let sorted = [...filtered];
+    const currentHourSlot = Math.floor(Date.now() / (1000 * 60 * 60)); // Muda determinísticamente a cada 60 minutos
 
     if (order === "top-rated" || order === "most-popular") {
       sorted.sort((a, b) => (b.views || 0) - (a.views || 0));
-      if (seed) {
-        // Rotaciona os mais vistos com base na semente para a vitrine nunca ser estática
-        const pool = sorted.slice(0, 80);
-        const rest = sorted.slice(80);
-        sorted = seededShuffle(pool, seed).concat(rest);
-      }
+      const effectiveSeed = seed || String(currentHourSlot);
+      const pool = sorted.slice(0, 200);
+      const rest = sorted.slice(200);
+      sorted = seededShuffle(pool, effectiveSeed).concat(rest);
     } else if (order === "top-weekly") {
       // Top da semana: filtra vídeos mais vistos da safra recente
       sorted.sort((a, b) => {
         const dateScore = (b.added || "").localeCompare(a.added || "");
         return (b.views || 0) * 1.5 + (dateScore > 0 ? 5000 : 0) - (a.views || 0);
       });
-      if (seed) {
-        const pool = sorted.slice(0, 100);
-        const rest = sorted.slice(100);
-        sorted = seededShuffle(pool, seed).concat(rest);
-      }
+      const effectiveSeed = seed || String(currentHourSlot);
+      const pool = sorted.slice(0, 200);
+      const rest = sorted.slice(200);
+      sorted = seededShuffle(pool, effectiveSeed).concat(rest);
     } else if (order === "longest") {
       sorted.sort((a, b) => (b.length_sec || 0) - (a.length_sec || 0));
     } else if (order === "shortest") {
@@ -143,11 +141,16 @@ function queryLocalCatalog(targetUrlStr) {
       sorted = seededShuffle(sorted, dynamicSeed);
     } else {
       // Default: "latest"
-      // Se tiver uma semente de rotação na Home (para variar os vídeos e o usuário nunca ver os mesmos)
-      const effectiveSeed = seed || (rawQuery === "all" && page === 1 ? String(Math.floor(Date.now() / 600000)) : "");
+      // Rotação determinística da vitrine a cada 60 minutos cravados
+      // Garante que a cada hora um lote de 24 vídeos completamente diferente e recente fica no topo
+      const effectiveSeed = (rawQuery === "all" || !rawQuery) && page === 1
+        ? String(currentHourSlot)
+        : (seed || String(currentHourSlot));
+
       if (effectiveSeed) {
-        const pool = sorted.slice(0, 150);
-        const rest = sorted.slice(150);
+        // Pool dos 300 vídeos mais recentes (2024-2026) rotacionados pela semente da hora
+        const pool = sorted.slice(0, 300);
+        const rest = sorted.slice(300);
         sorted = seededShuffle(pool, effectiveSeed).concat(rest);
       }
     }
