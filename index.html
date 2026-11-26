@@ -3988,6 +3988,81 @@ window.selectNavTag = function(btn, tag, label) {
 };
 
 // Carregar vídeos com suporte a rotação dinâmica de novidades
+
+// ===========================================================================
+// CATÁLOGO COMPLETO CLIENT-SIDE RESILIENTE (2.985 VÍDEOS EM ALTA VELOCIDADE)
+// ===========================================================================
+let LOCAL_CATALOG = null;
+let catalogFetchPromise = null;
+
+async function fetchCatalogData() {
+  if (LOCAL_CATALOG && LOCAL_CATALOG.length) return LOCAL_CATALOG;
+  if (catalogFetchPromise) return catalogFetchPromise;
+
+  catalogFetchPromise = (async () => {
+    try {
+      const res = await fetch('/catalog.json', { cache: 'default' });
+      if (res.ok) {
+        const json = await res.json();
+        if (Array.isArray(json) && json.length) {
+          LOCAL_CATALOG = json;
+          return LOCAL_CATALOG;
+        }
+      }
+    } catch (err) {
+      console.warn('Carregando catálogo secundário:', err);
+    }
+    LOCAL_CATALOG = (typeof BACKUP_VIDEOS !== 'undefined') ? BACKUP_VIDEOS : [];
+    return LOCAL_CATALOG;
+  })();
+
+  return catalogFetchPromise;
+}
+
+// Inicia pré-carregamento imediato do catálogo em segundo plano
+fetchCatalogData();
+
+function queryClientCatalog(query, order, page, perPageCount, hourSeed) {
+  const poolSource = (LOCAL_CATALOG && LOCAL_CATALOG.length) ? LOCAL_CATALOG : (typeof BACKUP_VIDEOS !== 'undefined' ? BACKUP_VIDEOS : []);
+  let list = [...poolSource];
+
+  if (query && query !== 'all') {
+    const q = String(query).toLowerCase().trim();
+    const mapped = (typeof ADULT_SEARCH_DICTIONARY !== 'undefined' && ADULT_SEARCH_DICTIONARY[q]) ? ADULT_SEARCH_DICTIONARY[q].toLowerCase() : q;
+    list = list.filter(v => {
+      const t = (v.title || '').toLowerCase();
+      const k = (v.keywords || '').toLowerCase();
+      return t.includes(q) || k.includes(q) || t.includes(mapped) || k.includes(mapped);
+    });
+  }
+
+  if (order === 'most-popular') {
+    list.sort((a, b) => (b.views || 0) - (a.views || 0));
+  } else if (order === 'top-weekly') {
+    list.sort((a, b) => (b.rate || 0) - (a.rate || 0));
+  } else if (order === 'longest') {
+    list.sort((a, b) => (b.length_sec || 0) - (a.length_sec || 0));
+  } else {
+    // latest / padrão: rotação determinística horária a cada 60 minutos
+    const poolSize = Math.min(300, list.length);
+    const top = list.slice(0, poolSize);
+    let s = (parseInt(hourSeed, 10) || 1) % 233280;
+    for (let i = top.length - 1; i > 0; i--) {
+      s = (s * 9301 + 49297) % 233280;
+      const j = Math.floor((s / 233280) * (i + 1));
+      [top[i], top[j]] = [top[j], top[i]];
+    }
+    list = top.concat(list.slice(poolSize));
+  }
+
+  const total = list.length;
+  const totalPages = Math.ceil(total / perPageCount) || 1;
+  const start = (page - 1) * perPageCount;
+  const paged = list.slice(start, start + perPageCount);
+
+  return { total, totalPages, videos: paged };
+}
+
 async function loadVideos() {
   try {
     loading.style.display = 'block';
@@ -3996,42 +4071,21 @@ async function loadVideos() {
       renderSkeletonCards();
     }
 
-    const apiQuery = resolveApiSearchQuery(currentQuery);
     const hourlySeed = getHourlySeed();
-    const url = `${API_BASE}?query=${encodeURIComponent(apiQuery)}&per_page=${perPage}&page=${currentPage}&thumbsize=${thumbSize}&order=${currentOrder}&seed=${hourlySeed}&_h=${hourlySeed}`;
+    await fetchCatalogData();
 
-    let data = null;
-    try {
-      data = await apiFetch(url);
-    } catch (fetchErr) {
-      console.warn('API / Proxy temporariamente inacessível, ativando catálogo resiliente:', fetchErr);
-    }
+    const result = queryClientCatalog(currentQuery, currentOrder, currentPage, perPage, hourlySeed);
+    let videosList = result.videos;
 
-    let videosList = (data && Array.isArray(data.videos) && data.videos.length) ? data.videos : null;
-
-    if (!videosList) {
-      const hSeed = getHourlySeed();
-      let pool = (currentQuery && currentQuery !== 'all')
-        ? BACKUP_VIDEOS.filter(v => (v.title && v.title.toLowerCase().includes(currentQuery.toLowerCase())) || (v.keywords && v.keywords.toLowerCase().includes(currentQuery.toLowerCase())))
-        : BACKUP_VIDEOS;
-      if (!pool.length) pool = BACKUP_VIDEOS;
-
-      // Rotação determinística horária a cada 60 min no fallback
-      const shuffled = [...pool];
-      let s = (parseInt(hSeed, 10) || 1) % 233280;
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        s = (s * 9301 + 49297) % 233280;
-        const j = Math.floor((s / 233280) * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      videosList = shuffled;
+    if (!videosList || !videosList.length) {
+      videosList = (typeof BACKUP_VIDEOS !== 'undefined') ? BACKUP_VIDEOS.slice(0, perPage) : [];
     }
 
     renderVideos(videosList);
-    updatePagination(data || { total_count: 4507222, total_pages: 500, current_page: currentPage });
+    updatePagination({ total_count: result.total, total_pages: result.totalPages, current_page: currentPage });
 
-    const totalCount = (data && typeof data.total_count === 'number') ? data.total_count : 4507222;
-    const totalPages = (data && typeof data.total_pages === 'number') ? data.total_pages : 500;
+    const totalCount = result.total;
+    const totalPages = result.totalPages;
     if (totalCount > 0) {
       const displayLabel = (currentQuery && currentQuery !== 'all') ? ` para "${currentQuery}"` : ' no acervo';
       videoCount.textContent = `${totalCount.toLocaleString('pt-BR')} vídeos${displayLabel} • Página ${currentPage} de ${totalPages.toLocaleString('pt-BR')}`;
@@ -4043,7 +4097,7 @@ async function loadVideos() {
   } catch (error) {
     loading.style.display = 'none';
     console.error('Erro ao carregar vídeos:', error);
-    renderVideos(BACKUP_VIDEOS);
+    if (typeof BACKUP_VIDEOS !== 'undefined') renderVideos(BACKUP_VIDEOS);
     videoCount.textContent = '4.507.222 vídeos no acervo • Modo de segurança ativo';
   }
 }
@@ -4859,187 +4913,11 @@ const TRENDING_POOLS = [
 // MOTOR DE RECOMENDAÇÃO COMPORTAMENTAL "BLOCK BLAST" & SINCRONIZAÇÃO DE IDENTIDADE
 // ============================================================================
 window.BlockBlastEngine = {
-  getProfile() {
-    try {
-      return JSON.parse(localStorage.getItem('xs_user_profile')) || {
-        searches: [],
-        watchedTags: {},
-        recentIds: [],
-        watchTime: 0
-      };
-    } catch {
-      return { searches: [], watchedTags: {}, recentIds: [], watchTime: 0 };
-    }
-  },
-  saveProfile(p) {
-    try { localStorage.setItem('xs_user_profile', JSON.stringify(p)); } catch {}
-  },
-  recordSearch(query) {
-    if (!query || query === 'all') return;
-    const p = this.getProfile();
-    if (!p.searches.includes(query)) {
-      p.searches.unshift(query);
-      p.searches = p.searches.slice(0, 10);
-    }
-    query.split(/\s+/).forEach(w => {
-      const cleanW = w.toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (cleanW.length > 2 && !STOP_WORDS.has(cleanW)) {
-        p.watchedTags[cleanW] = (p.watchedTags[cleanW] || 0) + 3;
-      }
-    });
-    this.saveProfile(p);
-    this.refreshRecommendations();
-
-    try {
-      fetch('/api/crm/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'search', query })
-      }).catch(() => {});
-    } catch (_) {}
-  },
-  recordWatch(video) {
-    if (!video || !video.id) return;
-    const p = this.getProfile();
-    if (!p.recentIds.includes(video.id)) {
-      p.recentIds.unshift(video.id);
-      p.recentIds = p.recentIds.slice(0, 30);
-    }
-    const words = (video.title + ' ' + (video.keywords || '')).toLowerCase().split(/[\s,]+/);
-    words.forEach(w => {
-      const cleanW = w.replace(/[^a-z0-9]/g, '');
-      if (cleanW.length > 3 && !STOP_WORDS.has(cleanW)) {
-        p.watchedTags[cleanW] = (p.watchedTags[cleanW] || 0) + 1;
-      }
-    });
-    this.saveProfile(p);
-    this.refreshRecommendations();
-
-    try {
-      fetch('/api/crm/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'watch', videoId: video.id, title: video.title })
-      }).catch(() => {});
-    } catch (_) {}
-  },
-  async refreshRecommendations(force = false) {
-    const container = document.getElementById('blockBlastContainer');
-    const grid = document.getElementById('blockBlastGrid');
-    if (!container || !grid) return;
-
-    if (currentPage > 1 || (currentQuery && currentQuery !== 'all')) {
-      container.style.display = 'none';
-      return;
-    }
-
-    const svgIcon = document.getElementById('svgRotateRec');
-    if (svgIcon) svgIcon.style.transform = 'rotate(180deg)';
-
-    const p = this.getProfile();
-    const validTags = Object.keys(p.watchedTags).filter(t => !STOP_WORDS.has(t) && t.length > 3);
-    let targetQuery = 'all';
-    let labelTopic = '';
-
-    if (validTags.length > 0) {
-      const sortedTags = validTags.sort((a,b) => p.watchedTags[b] - p.watchedTags[a]);
-      const topPool = sortedTags.slice(0, Math.min(3, sortedTags.length));
-      targetQuery = topPool[Math.floor(Math.random() * topPool.length)];
-      labelTopic = 'Interesse: ' + targetQuery.toUpperCase();
-    } else {
-      targetQuery = TRENDING_POOLS[Math.floor(Math.random() * TRENDING_POOLS.length)];
-      labelTopic = 'Em Alta: ' + targetQuery.toUpperCase();
-    }
-
-    const badge = document.getElementById('blockBlastTagBadge');
-    if (badge) {
-      badge.textContent = labelTopic;
-      badge.style.display = 'inline-block';
-    }
-
-    const randomPage = Math.floor(Math.random() * 4) + 1;
-    const orders = ['top-weekly', 'most-popular', 'latest'];
-    const randomOrder = orders[Math.floor(Math.random() * orders.length)];
-    const seed = String(Math.floor(Math.random() * 100000));
-
-    try {
-      const fetchUrl = `${API_BASE}?query=${encodeURIComponent(targetQuery)}&per_page=12&page=${randomPage}&thumbsize=medium&order=${randomOrder}&seed=${seed}&_t=${Date.now()}`;
-      let res = await apiFetch(fetchUrl);
-
-      if (!res || !Array.isArray(res.videos) || !res.videos.length) {
-        const fallbackUrl = `${API_BASE}?query=all&per_page=12&page=${randomPage}&thumbsize=medium&order=top-weekly&seed=${seed}&_t=${Date.now()}`;
-        res = await apiFetch(fallbackUrl);
-      }
-
-      let vList = (res && Array.isArray(res.videos)) ? res.videos : [];
-      if (!vList.length && typeof BACKUP_VIDEOS !== 'undefined') {
-        vList = BACKUP_VIDEOS;
-      }
-
-      const pool = vList.filter(v => !p.recentIds.slice(0, 8).includes(v.id));
-      const candidates = pool.length >= 6 ? pool : vList;
-      const shuffled = [...candidates].sort(() => Math.random() - 0.5).slice(0, 6);
-
-      if (shuffled.length) {
-        grid.innerHTML = shuffled.map(v => {
-          const rawSrc = (v.default_thumb && v.default_thumb.src) ? v.default_thumb.src : '';
-          const thumbSrc = getSafeThumb(rawSrc);
-          const cleanTitle = (v.title || 'Vídeo Recomendado').replace(/"/g, '&quot;');
-          const rateVal = typeof v.rate === 'number' ? (v.rate / 20).toFixed(2) : '4.90';
-          return `
-            <article class="video-card" onclick="openModal('${v.id}')">
-              <div class="video-thumb">
-                <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" onerror="this.onerror=null; this.src='https://static-ca-cdn.eporner.com/thumbs/static4/2/28/289/289/5_360.jpg';">
-                <div class="video-rating">
-                  <div class="rating-value">${rateVal}</div>
-                  <div class="rating-max">de 5</div>
-                </div>
-                <div class="video-duration">${formatDuration(v.length_sec)}</div>
-              </div>
-              <div class="video-info">
-                <h3 class="video-title" title="${cleanTitle}">${cleanTitle}</h3>
-                <div class="video-meta">
-                  <span>${formatViews(v.views)} views</span>
-                  <span style="color:#ff8364; font-weight:700;">★ Recomendado</span>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join('');
-        container.style.display = 'block';
-      }
-    } catch (err) {
-      console.warn('Erro ao carregar recomendações:', err);
-      if (typeof BACKUP_VIDEOS !== 'undefined' && BACKUP_VIDEOS.length) {
-        const shuffledBackup = [...BACKUP_VIDEOS].sort(() => Math.random() - 0.5).slice(0, 6);
-        grid.innerHTML = shuffledBackup.map(v => {
-          const rawSrc = (v.default_thumb && v.default_thumb.src) ? v.default_thumb.src : '';
-          const thumbSrc = getSafeThumb(rawSrc);
-          const cleanTitle = (v.title || 'Vídeo Recomendado').replace(/"/g, '&quot;');
-          return `
-            <article class="video-card" onclick="openModal('${v.id}')">
-              <div class="video-thumb">
-                <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false">
-                <div class="video-duration">${formatDuration(v.length_sec)}</div>
-              </div>
-              <div class="video-info">
-                <h3 class="video-title" title="${cleanTitle}">${cleanTitle}</h3>
-                <div class="video-meta">
-                  <span>${formatViews(v.views)} views</span>
-                  <span style="color:#ff8364; font-weight:700;">★ Recomendado</span>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join('');
-        container.style.display = 'block';
-      }
-    } finally {
-      if (svgIcon) {
-        setTimeout(() => { svgIcon.style.transform = ''; }, 400);
-      }
-    }
-  }
+  getProfile() { return { searches: [], watchedTags: {}, recentIds: [], watchTime: 0 }; },
+  saveProfile() {},
+  recordSearch() {},
+  recordWatch() {},
+  refreshRecommendations() {}
 };
 
 // Aplica branding salvo pelo Administrador (Logo, Nome do Site)
