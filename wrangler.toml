@@ -1,7 +1,10 @@
 name = "xsodoma"
 compatibility_date = "2026-11-01"
 main = "worker.js"
-pages_build_output_dir = "dist"
+
+routes = [
+  { pattern = "*x-sodoma.com/*", zone_name = "x-sodoma.com" }
+]
 
 [assets]
 directory = "./dist"
