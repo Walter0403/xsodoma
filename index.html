@@ -2873,14 +2873,14 @@ body.vip-no-ads #prerollAdModal {
   </div>
 
   <nav class="nav">
-    <button class="nav-item active" data-filter="latest">
+    <button class="nav-item active" data-filter="latest" onclick="selectNavFilter(this, 'latest')">
       <svg class="nav-icon" viewBox="0 0 24 24">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
       </svg>
       <span id="navLblLatest">Mais recentes</span>
     </button>
 
-    <button class="nav-item" data-filter="top-weekly">
+    <button class="nav-item" data-filter="top-weekly" onclick="selectNavFilter(this, 'top-weekly')">
       <svg class="nav-icon" viewBox="0 0 24 24">
         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
         <polyline points="17 6 23 6 23 12"></polyline>
@@ -2888,7 +2888,7 @@ body.vip-no-ads #prerollAdModal {
       <span id="navLblWeekly">Top da semana</span>
     </button>
 
-    <button class="nav-item" data-filter="most-popular">
+    <button class="nav-item" data-filter="most-popular" onclick="selectNavFilter(this, 'most-popular')">
       <svg class="nav-icon" viewBox="0 0 24 24">
         <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"></path>
         <circle cx="12" cy="12" r="3"></circle>
@@ -2896,14 +2896,14 @@ body.vip-no-ads #prerollAdModal {
       <span id="navLblPopular">Mais vistos</span>
     </button>
 
-    <button class="nav-item" data-filter="top-rated">
+    <button class="nav-item" data-filter="top-rated" onclick="selectNavFilter(this, 'top-rated')">
       <svg class="nav-icon" viewBox="0 0 24 24">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
       </svg>
       <span id="navLblRated">Melhor avaliados</span>
     </button>
 
-    <button class="nav-item" data-filter="longest">
+    <button class="nav-item" data-filter="longest" onclick="selectNavFilter(this, 'longest')">
       <svg class="nav-icon" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10"></circle>
         <polyline points="12 6 12 12 16 14"></polyline>
@@ -2911,31 +2911,31 @@ body.vip-no-ads #prerollAdModal {
       <span id="navLblLongest">Longos</span>
     </button>
 
-    <button class="nav-item" data-tag="blonde">
+    <button class="nav-item" data-tag="blonde" onclick="selectNavTag(this, 'blonde', 'Loiras')">
       <span class="top-badge">TOP</span>
       <span id="navLblBlonde">Loiras</span>
     </button>
 
-    <button class="nav-item" data-tag="brunette">
+    <button class="nav-item" data-tag="brunette" onclick="selectNavTag(this, 'brunette', 'Morenas')">
       <span id="navLblBrunette">Morenas</span>
     </button>
 
-    <button class="nav-item" data-tag="redhead">
+    <button class="nav-item" data-tag="redhead" onclick="selectNavTag(this, 'redhead', 'Ruivas')">
       <span id="navLblRedhead">Ruivas</span>
     </button>
 
-    <button class="nav-item" data-tag="amateur">
+    <button class="nav-item" data-tag="amateur" onclick="selectNavTag(this, 'amateur', 'Amador')">
       <span id="navLblAmateur">Amador</span>
     </button>
 
-    <button class="nav-item" id="navFavoritesBtn">
+    <button class="nav-item" id="navFavoritesBtn" onclick="renderFavoritesPage()">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
       </svg>
       <span id="navLblFavs">Favoritos</span>
     </button>
 
-    <button class="nav-item" id="categoriesBtn">
+    <button class="nav-item" id="categoriesBtn" onclick="openCategoriesDrawer()">
       <svg class="nav-icon" viewBox="0 0 24 24">
         <rect x="3" y="3" width="7" height="7" rx="1"></rect>
         <rect x="14" y="3" width="7" height="7" rx="1"></rect>
@@ -3330,7 +3330,7 @@ body.vip-no-ads #prerollAdModal {
     <p style="color: #888888; margin-top: 0.75rem;">
       &copy; 2026 XSodoma (x-sodoma.com). All rights reserved. Restricted to Adults (18+ RTA).
     </p>
-  <div style="text-align:center; margin-top:14px;"><a href="/admin" target="_blank" style="color:#333; font-size:11px; text-decoration:none;">Painel ADM & CRM</a></div>
+  <div style="text-align:center; margin-top:14px; display:flex; justify-content:center; gap:16px;"><a href="/admin" target="_blank" style="color:#555; font-size:11px; text-decoration:none;">Painel ADM & CRM</a><a href="/llms.txt" target="_blank" style="color:#555; font-size:11px; text-decoration:none;">llms.txt (AI Search Manifest)</a><a href="/sitemap_index.xml" target="_blank" style="color:#555; font-size:11px; text-decoration:none;">Sitemap Index</a></div>
 </div>
 </footer>
 
@@ -3933,6 +3933,71 @@ const BACKUP_VIDEOS = [
     "keywords": "asian"
   }
 ];
+
+
+// Funções Globais de Navegação com Resposta Imediata aos Cliques da Navbar
+window.selectNavFilter = function(btn, filter) {
+  try { if (typeof closeModal === 'function') closeModal(); } catch (_) {}
+  try { if (typeof closeCategoriesDrawer === 'function') closeCategoriesDrawer(); } catch (_) {}
+  
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  currentOrder = filter || 'latest';
+  currentQuery = 'all';
+  currentPage = 1;
+  const sInput = document.getElementById('searchInput');
+  if (sInput) sInput.value = '';
+  
+  const titleEl = document.querySelector('.section-title');
+  if (titleEl) {
+    const titles = {
+      'latest': 'X — Vídeos Mais Recentes (Lançamentos Diários)',
+      'top-weekly': 'X — Top da Semana (Vídeos Mais Populares)',
+      'most-popular': 'X — Vídeos Mais Vistos de Todos os Tempos',
+      'top-rated': 'X — Vídeos Melhor Avaliados pelos Usuários',
+      'longest': 'X — Vídeos Longos e Filmes Completos em HD'
+    };
+    titleEl.textContent = titles[filter] || 'X — Vídeos de Sexo, Pornô Grátis & Filmes Adultos HD 4K';
+  }
+  
+  const newSeed = String(Math.floor(Math.random() * 90000) + 10000);
+  sessionStorage.setItem('xs_session_seed', newSeed);
+  if (typeof renderSkeletonCards === 'function') renderSkeletonCards();
+  loadVideos();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.selectNavTag = function(btn, tag, label) {
+  try { if (typeof closeModal === 'function') closeModal(); } catch (_) {}
+  try { if (typeof closeCategoriesDrawer === 'function') closeCategoriesDrawer(); } catch (_) {}
+  
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  
+  currentQuery = tag;
+  currentOrder = 'latest';
+  currentPage = 1;
+  const sInput = document.getElementById('searchInput');
+  if (sInput) sInput.value = label || tag;
+  
+  const titleEl = document.querySelector('.section-title');
+  if (titleEl) {
+    const labels = {
+      'blonde': 'Vídeos de Loiras Gostosas em Full HD & 4K',
+      'brunette': 'Vídeos de Morenas Safadas em Full HD & 4K',
+      'redhead': 'Vídeos de Ruivas Picantes em Full HD & 4K',
+      'amateur': 'Vídeos de Sexo Amador e Flagras Caseiros'
+    };
+    titleEl.textContent = labels[tag] || ('Vídeos de: "' + (label || tag) + '"');
+  }
+  
+  const newSeed = String(Math.floor(Math.random() * 90000) + 10000);
+  sessionStorage.setItem('xs_session_seed', newSeed);
+  if (typeof renderSkeletonCards === 'function') renderSkeletonCards();
+  loadVideos();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 // Carregar vídeos com suporte a rotação dinâmica de novidades
 async function loadVideos() {

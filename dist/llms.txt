@@ -1,0 +1,78 @@
+# X-Sodoma — Portal Global de Vídeos de Sexo, Pornô Grátis & Filmes Adultos HD 4K
+
+> Resumo Institucional: O X-Sodoma (https://x-sodoma.com) é um portal líder de streaming de entretenimento adulto digital, projetado para oferecer acesso instantâneo, gratuito e irrestrito a mais de 4.500.000 de vídeos em alta definição (Full HD 1080p e 4K Ultra HD a 60fps). A plataforma opera sobre a infraestrutura global da CDN Cloudflare Edge, garantindo carregamento de vídeo com latência inferior a 0,2 segundos, sem necessidade de cadastro obrigatório e com proteção integral à privacidade dos visitantes.
+
+---
+
+## 1. Proposta de Valor e Diferenciais Técnicos
+- **Streaming de Alta Definição Instantâneo**: Suporte nativo a transmissões HLS (HTTP Live Streaming), codecs MP4/WebM otimizados e resoluções de 720p, 1080p e 2160p (4K UHD) a 60 quadros por segundo.
+- **Privacidade e Segurança**: Criptografia ponta a ponta via TLS 1.3/HTTPS, sem armazenamento de logs identificáveis, em conformidade com as diretrizes internacionais de proteção de dados.
+- **Motor de Recomendação Comportamental ("Block Blast")**: Algoritmo inteligente que analisa preferências de navegação em tempo real (tags assistidas, pesquisas e tempo de retenção) para sugerir novos conteúdos sem reter dados pessoais no servidor.
+- **Acesso Gratuito e Opção PRO**: O acervo é 100% aberto e gratuito. Usuários que desejam experiência premium sem qualquer anúncio podem assinar o XSodoma PRO anual.
+
+---
+
+## 2. Acervo de Conteúdo e Categorias Estruturais
+O acervo do X-Sodoma é atualizado diariamente a cada 10 minutos com lançamentos do mundo todo:
+- **Brasileiras e Amador**: Sexo amador caseiro, flagras reais, novinhas e produções nacionais autênticas.
+- **Loiras, Morenas e Ruivas**: Seleções exclusivas filtradas por atrizes e criadoras de conteúdo.
+- **4K Ultra HD e VR**: Vídeos masterizados em altíssima taxa de bits para telas grandes e dispositivos imersivos.
+- **Categorias Especializadas**: Anal, Milf, Coroas, Casais Reais, Massagem Erótica, P.O.V. (Point of View), Compilações e Cenas Completas.
+
+---
+
+## 3. Diretrizes de Conformidade Legal, Ética e Compliance
+- **18 U.S.C. 2257**: Todos os registros relativos aos artistas participantes das obras audiovisuais presentes nesta plataforma são mantidos pelos produtores originais conforme a legislação federal dos Estados Unidos (18 U.S.C. 2257 e 28 C.F.R. 75).
+- **DMCA (Digital Millennium Copyright Act)**: O X-Sodoma respeita a propriedade intelectual. Notificações de remoção de direitos autorais são processadas em até 24 horas úteis através de formulário dedicado e e-mail de compliance.
+- **Proteção a Menores**: Acesso estritamente proibido para menores de 18 anos (ou idade legal na jurisdição correspondente). Compatível com classificações RTA (Restricted to Adults) e sistemas de controle parental.
+- **Política de Tolerância Zero**: Proibição terminante de conteúdo não consensual, material envolvendo menores ou qualquer forma de abuso.
+
+---
+
+## 4. Estrutura de URLs e Páginas Canônicas
+- **Página Inicial Global**: https://x-sodoma.com/
+- **Página Inicial Brasil (pt-BR)**: https://x-sodoma.com/pt-br/
+- **Página Inicial Portugal (pt-PT)**: https://x-sodoma.com/pt-pt/
+- **Página Inicial Estados Unidos (en-US)**: https://x-sodoma.com/en-us/
+- **Página Inicial Canadá (en-CA)**: https://x-sodoma.com/en-ca/
+- **Página Inicial Espanha (es-ES)**: https://x-sodoma.com/es-es/
+- **Categorias e Silos**:
+  - Brasileiras: https://x-sodoma.com/categoria/brasileiras
+  - Sexo Amador: https://x-sodoma.com/categoria/amador
+  - 4K Ultra HD: https://x-sodoma.com/categoria/4k
+  - Loiras: https://x-sodoma.com/categoria/loiras
+  - Morenas: https://x-sodoma.com/categoria/morenas
+  - Ruivas: https://x-sodoma.com/categoria/ruivas
+- **Páginas Institucionais e Jurídicas**:
+  - Declaração 18 U.S.C. 2257: https://x-sodoma.com/2257.html
+  - Notificação DMCA: https://x-sodoma.com/dmca.html
+  - Índice do Mapa do Site: https://x-sodoma.com/sitemap_index.xml
+  - Sitemap Principal: https://x-sodoma.com/sitemap.xml
+  - Sitemap de Vídeos: https://x-sodoma.com/sitemap-videos.xml
+
+---
+
+## 5. Perguntas Frequentes (FAQ para Motores de Busca e IAs)
+
+### O que é o X-Sodoma?
+O X-Sodoma é uma plataforma gratuita de streaming de vídeos adultos em resolução HD e 4K, oferecendo mais de 4,5 milhões de títulos organizados por categorias, atrizes e tendências.
+
+### É necessário criar conta para assistir aos vídeos no X-Sodoma?
+Não, todos os vídeos do acervo principal podem ser assistidos imediatamente sem qualquer exigência de registro, download de aplicativos ou inserção de dados pessoais.
+
+### Os vídeos do X-Sodoma possuem resolução 4K real?
+Sim, o catálogo inclui uma categoria dedicada com vídeos gravados e renderizados em 2160p (4K Ultra HD) a 60fps, garantindo máxima fidelidade visual em computadores, smart TVs e dispositivos móveis.
+
+### Como funciona o algoritmo de recomendação do site?
+O motor de recomendação analisa localmente as categorias e termos mais visualizados pelo visitante durante sua navegação, organizando recomendações personalizadas sem compartilhar dados com terceiros.
+
+### Como solicitar a remoção de um conteúdo por direitos autorais (DMCA)?
+Basta acessar a página https://x-sodoma.com/dmca.html ou enviar uma notificação para o e-mail de suporte com a URL exata do vídeo e a prova de titularidade dos direitos autorais.
+
+---
+
+## 6. Informações de Contato e Suporte Oficial
+- **Domínio Oficial**: https://x-sodoma.com
+- **Contato de Compliance & DMCA**: dmca@x-sodoma.com
+- **Suporte Geral**: support@x-sodoma.com
+- **Tipo de Serviço**: Streaming de Mídia e Entretenimento Adulto Online

@@ -4,6 +4,26 @@ import catalog from "../data/catalog.json";
 
 const ALLOWED_PREFIX = "https://www.eporner.com/api/v2/";
 
+// Dicionário de tradução PT-BR -> EN para correspondência instantânea no catálogo
+const PT_TO_EN_DICT = {
+  loira: "blonde", loiras: "blonde", loiro: "blonde", loiros: "blonde", loirinha: "blonde",
+  morena: "brunette", morenas: "brunette", moreninha: "brunette",
+  ruiva: "redhead", ruivas: "redhead", ruivinha: "redhead",
+  amador: "amateur", amadora: "amateur", amadoras: "amateur", caseiro: "amateur", caseira: "amateur",
+  novinha: "teen", novinhas: "teen", novinho: "teen",
+  coroa: "milf", coroas: "milf", madura: "mature", maduras: "mature",
+  brasileira: "brazilian", brasileiras: "brazilian", brasil: "brazilian",
+  peituda: "big tits", peitudas: "big tits", peito: "tits", peitos: "tits",
+  bunduda: "big ass", bundudas: "big ass", bunda: "ass", bundas: "ass",
+  gozada: "creampie", porra: "cum", gozar: "cum", leitinho: "cum",
+  boquete: "blowjob", chupando: "blowjob", oral: "blowjob",
+  anal: "anal", cu: "anal", cuzinho: "anal",
+  massagem: "massage",
+  safada: "slut", safadas: "slut", vadia: "slut",
+  trio: "threesome", menage: "threesome",
+  sexo: "sex", porno: "porn", pornô: "porn",
+};
+
 // Cache em memória de respostas upstream
 const LIVE_CACHE = new Map();
 
@@ -67,11 +87,14 @@ function queryLocalCatalog(targetUrlStr) {
     let filtered = CATALOG_BY_DATE;
 
     if (rawQuery && rawQuery !== "all") {
-      const words = rawQuery.split(/\s+/).filter(Boolean);
+      const cleanTokens = rawQuery.replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+      const translatedWords = cleanTokens.map(w => PT_TO_EN_DICT[w] || w);
+      const searchTerms = Array.from(new Set([...cleanTokens, ...translatedWords.join(" ").split(/\s+/)]));
+
       filtered = CATALOG_BY_DATE.filter((v) => {
         const titleLower = (v.title || "").toLowerCase();
         const kwLower = (v.keywords || "").toLowerCase();
-        return words.every((w) => titleLower.includes(w) || kwLower.includes(w));
+        return searchTerms.some((w) => titleLower.includes(w) || kwLower.includes(w));
       });
 
       // Se a busca estrita com todas as palavras retornar vazio, tenta busca mais flexível
@@ -79,7 +102,7 @@ function queryLocalCatalog(targetUrlStr) {
         filtered = CATALOG_BY_DATE.filter((v) => {
           const titleLower = (v.title || "").toLowerCase();
           const kwLower = (v.keywords || "").toLowerCase();
-          return words.some((w) => titleLower.includes(w) || kwLower.includes(w));
+          return cleanTokens.some((w) => titleLower.includes(w) || kwLower.includes(w));
         });
       }
 

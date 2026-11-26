@@ -196,6 +196,7 @@ export async function onRequest(context) {
     path === "/robots.txt" ||
     path === "/2257.html" ||
     path === "/dmca.html" ||
+    path.includes("llms") ||
     /\.(png|jpg|jpeg|gif|webp|avif|svg|ico|css|js|json|xml|txt|woff2?)$/i.test(path) ||
     path.startsWith("/google") ||
     path.startsWith("/f554d56")
