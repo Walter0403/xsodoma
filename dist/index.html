@@ -3963,7 +3963,10 @@ window.selectNavFilter = function(btn, filter) {
   
   const newSeed = String(Math.floor(Math.random() * 90000) + 10000);
   sessionStorage.setItem('xs_session_seed', newSeed);
-  if (typeof renderSkeletonCards === 'function') renderSkeletonCards();
+  if (typeof renderSkeletonCards === 'function') {
+    if (typeof videoGrid !== 'undefined' && videoGrid) videoGrid.innerHTML = '';
+    renderSkeletonCards();
+  }
   loadVideos();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -3994,7 +3997,10 @@ window.selectNavTag = function(btn, tag, label) {
   
   const newSeed = String(Math.floor(Math.random() * 90000) + 10000);
   sessionStorage.setItem('xs_session_seed', newSeed);
-  if (typeof renderSkeletonCards === 'function') renderSkeletonCards();
+  if (typeof renderSkeletonCards === 'function') {
+    if (typeof videoGrid !== 'undefined' && videoGrid) videoGrid.innerHTML = '';
+    renderSkeletonCards();
+  }
   loadVideos();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -5350,29 +5356,21 @@ if (searchForm) {
   });
 }
 
+// Vinculação de clique unificada para navegação instantânea
 document.querySelectorAll('.nav-item[data-filter]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    closeModal();
-    closeCategoriesDrawer();
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentOrder = btn.dataset.filter;
-    currentPage = 1;
-    loadVideos();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  btn.onclick = function(e) {
+    if (e) e.preventDefault();
+    selectNavFilter(btn, btn.dataset.filter);
+  };
 });
 
 document.querySelectorAll('.nav-item[data-tag]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    closeModal();
-    closeCategoriesDrawer();
-    currentQuery = btn.dataset.tag;
-    searchInput.value = btn.dataset.tag;
-    currentPage = 1;
-    loadVideos();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  btn.onclick = function(e) {
+    if (e) e.preventDefault();
+    const tag = btn.dataset.tag;
+    const lbl = btn.textContent.trim().replace(/^TOP\s*/, '');
+    selectNavTag(btn, tag, lbl);
+  };
 });
 
 const prevBtnEl = document.getElementById('prevBtn');
