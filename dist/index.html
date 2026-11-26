@@ -4079,13 +4079,20 @@ function slugifyTitle(text) {
 // Renderizar vídeos com proteção contra campos ausentes e estado vazio elegante
 
 function getSafeThumb(rawSrc) {
-  if (!rawSrc) return '';
+  if (!rawSrc) return 'https://static-ca-cdn.eporner.com/thumbs/static4/2/28/289/289/5_360.jpg';
   let src = String(rawSrc).trim();
-  if (src.startsWith('/api/thumb') || src.includes('/api/thumb?url=')) {
-    return src;
+  // Se veio encapsulado em /api/thumb?url=..., extrai a URL original direta do CDN
+  if (src.includes('/api/thumb?url=') || src.includes('thumb?url=')) {
+    const m = src.match(/url=([^&]+)/);
+    if (m) {
+      try { src = decodeURIComponent(m[1]); } catch (_) {}
+    }
   }
-  if (src.includes('eporner.com')) {
-    return '/api/thumb?url=' + encodeURIComponent(src);
+  // Garante protocolo HTTPS e CDN direto de alta performance
+  if (src.startsWith('//')) {
+    src = 'https:' + src;
+  } else if (src.startsWith('/')) {
+    src = 'https://static-ca-cdn.eporner.com' + src;
   }
   return src;
 }
@@ -4114,7 +4121,7 @@ function renderVideos(videos) {
     return `
       <article class="video-card" onclick="openModal('${video.id}')">
         <div class="video-thumb">
-          <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" data-no-visual-search="true" onerror="this.style.opacity='0.4';">
+          <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" data-no-visual-search="true" onerror="this.onerror=null; this.src='https://static-ca-cdn.eporner.com/thumbs/static4/2/28/289/289/5_360.jpg';">
           <div class="video-rating">
             <div class="rating-value">${rateVal}</div>
             <div class="rating-max">de 5</div>
@@ -4709,7 +4716,7 @@ async function loadRelatedVideos(keywords, order = 'top-weekly') {
           return `
             <div class="yt-related-card" onclick="openModal('${video.id}')">
               <div class="yt-thumb-box">
-                <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" data-no-visual-search="true" onerror="this.style.opacity='0.4';">
+                <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" data-no-visual-search="true" onerror="this.onerror=null; this.src='https://static-ca-cdn.eporner.com/thumbs/static4/2/28/289/289/5_360.jpg';">
                 <div class="yt-duration-badge">${formatDuration(video.length_sec)}</div>
                 ${isNew ? '<div class="yt-new-badge">Novidade</div>' : ''}
               </div>
@@ -5000,7 +5007,7 @@ window.BlockBlastEngine = {
           return `
             <article class="video-card" onclick="openModal('${v.id}')">
               <div class="video-thumb">
-                <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" onerror="this.style.opacity='0.4';">
+                <img src="${thumbSrc}" alt="${cleanTitle}" loading="lazy" draggable="false" onerror="this.onerror=null; this.src='https://static-ca-cdn.eporner.com/thumbs/static4/2/28/289/289/5_360.jpg';">
                 <div class="video-rating">
                   <div class="rating-value">${rateVal}</div>
                   <div class="rating-max">de 5</div>
@@ -5753,9 +5760,7 @@ function updateVideoSeoMeta(video) {
 
   // Thumbnail segura via proxy edge para o Googlebot nunca ter erro 403 / bloqueio de hotlink
   const rawThumb = (video.default_thumb && video.default_thumb.src) || 'https://x-sodoma.com/favicon.png';
-  const proxiedThumb = rawThumb.startsWith('http')
-    ? `https://x-sodoma.com/api/thumb?url=${encodeURIComponent(rawThumb)}`
-    : rawThumb;
+  const proxiedThumb = rawThumb;
 
   setMetaContent('meta[property="og:image"]', proxiedThumb);
   setMetaContent('meta[name="twitter:image"]', proxiedThumb);
