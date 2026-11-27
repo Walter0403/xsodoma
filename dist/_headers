@@ -1,7 +1,7 @@
 /sitemap.xml
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600
-  X-Robots-Tag: noindex
+  Access-Control-Allow-Origin: *
 
 /sitemap.xsl
   Content-Type: text/xsl; charset=utf-8
@@ -11,23 +11,24 @@
 /sitemap-videos.xml
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600
-  X-Robots-Tag: noindex
+  Access-Control-Allow-Origin: *
 
 /sitemap_index.xml
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600
-  X-Robots-Tag: noindex
+  Access-Control-Allow-Origin: *
 
 /sitemap-main.xml
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600
-  X-Robots-Tag: noindex
+  Access-Control-Allow-Origin: *
 
 /sitemap-google.xml
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600
-  X-Robots-Tag: noindex
+  Access-Control-Allow-Origin: *
 
 /robots.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
